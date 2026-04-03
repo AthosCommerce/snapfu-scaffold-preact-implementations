@@ -1,0 +1,45 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_everest' as style;
+
+//// BANNER
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$banners-banner-on: true; // enable merchandising banner styles
+
+	// CSS BLOCK
+
+	@if $banners-banner-on == true {
+		.ss__theme {
+			.ss__banner {
+				&.ss__banner--header, &.ss__banner--banner, &.ss__banner--footer {
+					margin: 0 0 20px 0;
+				}
+				&.ss__banner--header {}
+				&.ss__banner--banner {}
+				&.ss__banner--footer {}
+				&.ss__banner--left {
+					margin: 20px 0 0 0;
+				}
+			}
+		}
+	}
+
+//// INLINE BANNERS
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$banners-inline-banner-on: false; // enable merchandising inline banners
+
+	// CSS BLOCK
+
+	@if $banners-inline-banner-on == true {
+		.ss__theme {
+			.ss__inline-banner {}
+		}
+	}

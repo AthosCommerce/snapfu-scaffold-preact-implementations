@@ -1,0 +1,205 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_everest' as style;
+
+//// SLIDEOUT - DEFAULT
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$slideout-color-01: style.$color-01; // background color for toolbar
+
+	// CONFIGURATION
+
+	$slideout-on: true; // enable slideout button
+	$slideout-fixed: false; // fix slideout to top or bottom of page
+	$slideout-vertical-align: bottom; // top or bottom position if fixed
+	$slideout-vertical-position: 0; // position of toolbar if fixed
+
+	// CSS BLOCK
+
+	@if $slideout-on == true {
+		.ss__theme .ss__slideout__default {
+			@if $slideout-fixed {
+				@include mixins.position($type: fixed, $left: 0, $right: 0);
+				#{$slideout-vertical-align}: $slideout-vertical-position;
+				z-index: 10002;
+				padding: 20px;
+				background-color: $slideout-color-01;
+			}	
+		}
+	}
+
+//// SLIDEOUT - BUTTON
+//// --------------------------------------------------------------------------
+//// Note: If using slideout button,"Buttons" should probably be set to true in _config/styles/shared/_${style}.scss.
+
+	// COLORS
+
+	$slideout-button-color-01: false; // slideout button text
+	$slideout-button-color-02: false; // slideout button icon color
+	$slideout-button-color-03: false; // slideout button background color
+
+	// CONFIGURATION
+
+	$slideout-button-on: true; // enable slideout button
+	$slideout-button-height: false; // button height override
+	$slideout-button-spacing: 20px; // spacing around button
+	$slideout-button-font-size: 16px; // button font size
+	$slideout-button-icon-size: 16px; // button icon size
+	$slideout-button-icon-align: right; // left, right, or center
+	$slideout-button-icon-spacing: 5px; // spacing for icon
+
+	// CSS BLOCK
+
+	@if $slideout-button-on == true {
+		.ss__theme .ss__slideout__default .ss__slideout__button {
+			@if $slideout-button-icon-align != false {
+				@if $slideout-button-icon-align != center {
+					@include mixins.flex-parent(justify-content, normal);
+				}
+				@if $slideout-button-icon-spacing != false {
+					@include mixins.gap($slideout-button-icon-spacing);
+				}
+			}
+			@if $slideout-button-spacing != false {
+				padding: 0 $slideout-button-spacing;
+			}
+			@include mixins.if-exists((
+				height: $slideout-button-height,
+				line-height: $slideout-button-height,
+				font-size: $slideout-button-font-size,
+				color: $slideout-button-color-01,
+				background-color: $slideout-button-color-03
+			));
+			.ss__icon__wrapper {
+				@include mixins.icon-align($slideout-button-icon-align);
+				@include mixins.icon-sizing($slideout-button-icon-size);
+				.ss__icon {
+					@include mixins.if-exists((fill: $slideout-button-color-02));
+				}
+			}
+			.ss__button__label {
+				@include mixins.ellipsis;
+			}
+		}
+	}
+
+//// SLIDEOUT
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$slideout-content-color-01: rgba(0, 0, 0, 0.8); // overlay background for slideout
+	$slideout-content-color-02: style.$color-08; // header background
+	$slideout-content-color-03: style.$color-01; // header font
+	$slideout-content-color-04: false; // header icon
+	$slideout-content-color-05: style.$color-01; // footer background
+	$slideout-content-color-06: style.$color-03; // footer border
+
+	// CONFIGURATION
+
+	$slideout-content-on: true; // enable slideout menu
+	$slideout-content-spacing: 20px; // spacing around header and facets
+	$slideout-content-header-height: 60px; // height for header inside slideout
+	$slideout-content-header-icon-size: 16px; // icon size
+	$slideout-content-header-icon-align: right; // left or right
+	$slideout-content-header-icon-spacing: 10px; // spacing for icon
+	$slideout-content-footer-height: 75px; // height for footer inside slideout (if no footer, set this to false)
+
+	// LOGIC VARIABLES (leave as is)
+
+	$var-slideout-content-footer-height: if($slideout-content-footer-height != false, $slideout-content-footer-height, 0);
+
+	// CSS BLOCK
+
+	@if $slideout-content-on == true {
+		.ss__theme .ss__slideout__default {
+			.ss__overlay--active.ss__slideout__overlay {
+				cursor: pointer;
+				@include mixins.if-exists((background-color: $slideout-content-color-01));
+			}
+			.ss__slideout {
+				overflow-y: hidden;
+				padding: 0;
+				width: 100%;
+				@if theme.$slideout-direction == top or theme.$slideout-direction == bottom {
+					margin: auto;
+					right: 0;
+					max-height: calc(100% - 50px);
+				}
+				&.ss__slideout--active {
+					@if theme.$slideout-direction == top or theme.$slideout-direction == bottom {
+						@if theme.$slideout-direction == top {
+							bottom: 0;
+						}
+						@if theme.$slideout-direction == bottom {
+							top: 0;
+						}
+					}
+				}
+				.ss__slideout__header {
+					@include mixins.flex-layout((flex-flow: row nowrap, align-items: center));
+					@if $slideout-content-header-icon-spacing != false {
+						@include mixins.gap($slideout-content-header-icon-spacing);
+					}
+					padding: 0 $slideout-content-spacing;
+					height: $slideout-content-header-height;
+					@include mixins.if-exists((background-color: $slideout-content-color-02));
+					& > * {
+						@include mixins.if-exists((color: $slideout-content-color-03));
+					}
+					.ss__title {
+						margin: 0;
+						font-size: 18px;
+						line-height: 1;
+					}
+					.ss__close {
+						background-color: transparent;
+						border: 0;
+						padding: 0;
+						margin: 0;
+						@include mixins.icon-align($slideout-content-header-icon-align);
+						@include mixins.icon-sizing($slideout-content-header-icon-size);
+						.ss__icon {
+							@include mixins.if-exists((fill: $slideout-content-color-04));
+						}
+					}
+				}
+				.ss__slideout__content {
+					height: calc(100% - #{$slideout-content-header-height + $var-slideout-content-footer-height});
+					overflow-y: auto;
+					overflow-x: hidden;
+				}
+				.ss__slideout__content--facets {
+					.ss__facets__column {
+						.ss__filter-summary, .ss__facets {}
+						.ss__filter-summary {}
+						.ss__facets {}
+					}
+				}
+				@if $slideout-content-footer-height != false {
+					.ss__slideout__footer {
+						overflow: hidden;
+						height: $slideout-content-footer-height;
+						@include mixins.if-exists((background-color: $slideout-content-color-05));
+						@if $slideout-content-color-06 != false {
+							border-top: 1px solid $slideout-content-color-06;
+						}
+						.ss__slideout__footer__row {
+							@include mixins.flex-layout((flex-flow: row nowrap, align-items: center));
+							@include mixins.gap(10px);
+							padding: 0 20px;
+							height: 100%;
+							.ss__slideout__footer__column {
+								min-width: 1px;
+								@include mixins.flex;
+							}
+						}
+					}
+				}
+			}
+		}
+	}

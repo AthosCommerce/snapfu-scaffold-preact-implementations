@@ -1,0 +1,468 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_custom' as style;
+
+//// RESULTS
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$results-container-on: false; // enable results
+
+	// CSS BLOCK
+
+	@if $results-container-on == true {
+		.ss__loaded--has-results {
+			.ss__has-results {}
+		}
+		.ss__theme .ss__has-results {}
+	}
+
+//// RESULTS
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$results-on: false; // enable results
+	$results-grid-width: 2; // grid results per row (2 is default)
+	$results-list-width: 1; // list results per row (2 is default)
+	$results-article-width: 1; // article results per row (1 is default)
+
+	// CSS BLOCK
+
+	@if $results-on == true {
+		.ss__theme {
+			.ss__results {
+				@include mixins.flex-layout;
+				@include mixins.gap(20px 10px);
+				margin: 0 0 20px 0;
+				.ss__result {
+					min-width: 1px;
+					@include mixins.flex(0 1 auto);
+				}
+				.ss__result--inline-banner {
+					.ss__inline-banner {
+						height: 100%;
+					}
+				}
+			}
+			.ss__results--grid {
+				.ss__result {
+					@if $results-grid-width != false {
+						@include mixins.gap-width(10px, $results-grid-width);
+					}
+				}
+			}
+			.ss__results--list {
+				.ss__result {
+					@if $results-list-width != false {
+						@include mixins.gap-width(10px, $results-list-width);
+					}
+				}
+			}
+			.ss__results--articles {
+				.ss__result {
+					@if $results-article-width != false {
+						@include mixins.gap-width(10px, $results-article-width);
+					}
+				}
+			}
+		}
+	}
+
+//// RESULTS - BREAKPOINT 1
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$results-bp-01-on: false; // enable breakpoint
+	$results-bp-01-respond-at: theme.$bp-01;
+	$results-bp-01-grid-width: false; // grid results per row
+	$results-bp-01-list-width: false; // list results per row
+	$results-bp-01-article-width: false; // article results per row
+
+	// CSS BLOCK
+
+	@if $results-bp-01-on == true {
+		@include mixins.respond-min($results-bp-01-respond-at) {
+			.ss__theme {
+				.ss__results {
+					.ss__result {}
+					.ss__result--inline-banner {
+						.ss__inline-banner {}
+					}
+				}
+				.ss__results--grid {
+					.ss__result {
+						@if $results-bp-01-grid-width != false {
+							@include mixins.gap-width(10px, $results-bp-01-grid-width);
+						}
+					}
+				}
+				.ss__results--list {
+					.ss__result {
+						@if $results-bp-01-list-width != false {
+							@include mixins.gap-width(10px, $results-bp-01-list-width);
+						}
+					}
+				}
+				.ss__results--articles {
+					.ss__result {
+						@if $results-bp-01-article-width != false {
+							@include mixins.gap-width(10px, $results-bp-01-article-width);
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// RESULTS - BREAKPOINT 2
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$results-bp-02-on: false; // enable breakpoint
+	$results-bp-02-respond-at: theme.$bp-02;
+	$results-bp-02-grid-width: 3; // grid results per row
+	$results-bp-02-list-width: false; // list results per row
+	$results-bp-02-article-width: false; // article results per row
+
+	// CSS BLOCK
+
+	@if $results-bp-02-on == true {
+		@include mixins.respond-min($results-bp-02-respond-at) {
+			.ss__theme {
+				.ss__results {
+					@include mixins.gap(20px);
+					.ss__result {}
+					.ss__result--inline-banner {
+						.ss__inline-banner {}
+					}
+				}
+				.ss__results--grid {
+					.ss__result {
+						@if $results-bp-02-grid-width != false {
+							@include mixins.gap-width(20px, $results-bp-02-grid-width);
+						}
+					}
+				}
+				.ss__results--list {
+					.ss__result {
+						@if $results-bp-02-list-width != false {
+							@include mixins.gap-width(20px, $results-bp-02-list-width);
+						}
+					}
+				}
+				.ss__results--articles {
+					.ss__result {
+						@if $results-bp-02-article-width != false {
+							@include mixins.gap-width(20px, $results-bp-02-article-width);
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// RESULTS - BREAKPOINT 3
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$results-bp-03-on: false; // enable breakpoint
+	$results-bp-03-respond-at: theme.$bp-03;
+	$results-bp-03-grid-width: 4; // grid results per row
+	$results-bp-03-list-width: false; // list results per row
+	$results-bp-03-article-width: 2; // article results per row
+
+	// CSS BLOCK
+
+	@if $results-bp-03-on == true {
+		@include mixins.respond-min($results-bp-03-respond-at) {
+			.ss__theme {
+				.ss__results {
+					.ss__result {}
+					.ss__result--inline-banner {
+						.ss__inline-banner {}
+					}
+				}
+				.ss__results--grid {
+					.ss__result {
+						@if $results-bp-03-grid-width != false {
+							@include mixins.gap-width(20px, $results-bp-03-grid-width);
+						}
+					}
+				}
+				.ss__results--list {
+					.ss__result {
+						@if $results-bp-03-list-width != false {
+							@include mixins.gap-width(20px, $results-bp-03-list-width);
+						}
+					}
+				}
+				.ss__results--articles {
+					.ss__result {
+						@if $results-bp-03-article-width != false {
+							@include mixins.gap-width(20px, $results-bp-03-article-width);
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// RESULTS - BREAKPOINT 4
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$results-bp-04-on: false; // enable breakpoint
+	$results-bp-04-respond-at: theme.$bp-04;
+	$results-bp-04-grid-width: false; // grid results per row
+	$results-bp-04-list-width: false; // list results per row
+	$results-bp-04-article-width: false; // article results per row
+
+	// CSS BLOCK
+
+	@if $results-bp-04-on == true {
+		@include mixins.respond-min($results-bp-04-respond-at) {
+			.ss__theme {
+				.ss__results {
+					.ss__result {}
+					.ss__result--inline-banner {
+						.ss__inline-banner {}
+					}
+				}
+				.ss__results--grid {
+					.ss__result {
+						@if $results-bp-04-grid-width != false {
+							@include mixins.gap-width(20px, $results-bp-04-grid-width);
+						}
+					}
+				}
+				.ss__results--list {
+					.ss__result {
+						@if $results-bp-04-list-width != false {
+							@include mixins.gap-width(20px, $results-bp-04-list-width);
+						}
+					}
+				}
+				.ss__results--articles {
+					.ss__result {
+						@if $results-bp-04-article-width != false {
+							@include mixins.gap-width(20px, $results-bp-04-article-width);
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// NO RESULTS
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$results-none-color-01: false; // link
+	$results-none-color-02: false; // link hover
+	$results-none-color-03: false; // title
+
+	// CONFIGURATION
+
+	$results-none-on: false; // enable no results
+	$results-none-spacing: 20px; // spacing for details
+	$results-none-title-font-size: 20px; // font size for title
+	$results-none-list-style: disc; // style for suggestion list
+	$results-none-list-spacing: false; // left spacing for suggestion list
+
+	// CSS BLOCK
+
+	@if $results-none-on == true {
+		.ss__loaded--no-results {
+			@if theme.$columns-hidden != false and theme.$columns-sidebar != false and theme.$columns-content != false {
+				#{theme.$columns-sidebar} {
+					display: none;
+				}
+				#{theme.$columns-content} {
+					width: auto;
+					@include mixins.flex(1 1 100%); 
+				}
+			} 
+		}
+		.ss__theme .ss__no-results {
+			.ss__no-results__content p, .ss__no-results__content .ss__title, .ss__no-results__content .ss__list,
+			.ss__recommendation--target {
+				@if $results-none-spacing != false {
+					margin: 0 0 $results-none-spacing 0;
+				}
+			}
+			.ss__no-results__content .ss__title, .ss__recommendation--target .ss__recommendation__header .ss__title {
+				@include mixins.if-exists((
+					font-size: $results-none-title-font-size,
+					color: $results-none-color-03
+				));
+			}
+			.ss__no-results__content {
+				a {
+					@include mixins.if-exists((color: $results-none-color-01));
+					&:hover {
+						@include mixins.if-exists((color: $results-none-color-02));
+					}
+				}
+				.ss__list {
+					@include mixins.if-exists((margin-left: $results-none-list-spacing));
+					.ss__list__option {
+						@include mixins.if-exists((list-style: $results-none-list-style));
+					}
+				}
+			}
+			.ss__recommendation--target {}
+		}
+	}
+
+//// NO RESULTS - BREAKPOINT 1
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$results-none-bp-01-on: false; // enable breakpoint
+	$results-none-bp-01-respond-at: theme.$bp-01;
+	$results-none-bp-01-spacing: false; // spacing for details
+	$results-none-bp-01-title-font-size: false; // font size for title
+	$results-none-bp-01-list-spacing: false; // left spacing for suggestion list
+
+	// CSS BLOCK
+
+	@if $results-none-bp-01-on == true {
+		@include mixins.respond-min($results-none-bp-01-respond-at) {
+			.ss__theme .ss__no-results {
+				.ss__no-results__content p, .ss__no-results__content .ss__title, .ss__no-results__content .ss__list,
+				.ss__recommendation--target {
+					@if $results-none-bp-01-spacing != false {
+						margin: 0 0 $results-none-bp-01-spacing 0;
+					}
+				}
+				.ss__no-results__content .ss__title, .ss__recommendation--target .ss__recommendation__header .ss__title {
+					@include mixins.if-exists((font-size: $results-none-bp-01-title-font-size));
+				}
+				.ss__no-results__content {
+					a {}
+					.ss__list {
+						@include mixins.if-exists((margin-left: $results-none-bp-01-list-spacing));
+					}
+				}
+				.ss__recommendation--target {}
+			}
+		}
+	}
+	
+//// NO RESULTS - BREAKPOINT 2
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$results-none-bp-02-on: false; // enable breakpoint
+	$results-none-bp-02-respond-at: theme.$bp-02;
+	$results-none-bp-02-spacing: false; // spacing for details
+	$results-none-bp-02-title-font-size: false; // font size for title
+	$results-none-bp-02-list-spacing: false; // left spacing for suggestion list
+
+	// CSS BLOCK
+
+	@if $results-none-bp-02-on == true {
+		@include mixins.respond-min($results-none-bp-02-respond-at) {
+			.ss__theme .ss__no-results {
+				.ss__no-results__content p, .ss__no-results__content .ss__title, .ss__no-results__content .ss__list,
+				.ss__recommendation--target {
+					@if $results-none-bp-02-spacing != false {
+						margin: 0 0 $results-none-bp-02-spacing 0;
+					}
+				}
+				.ss__no-results__content .ss__title, .ss__recommendation--target .ss__recommendation__header .ss__title {
+					@include mixins.if-exists((font-size: $results-none-bp-02-title-font-size));
+				}
+				.ss__no-results__content {
+					a {}
+					.ss__list {
+						@include mixins.if-exists((margin-left: $results-none-bp-02-list-spacing));
+					}
+				}
+				.ss__recommendation--target {}
+			}
+		}
+	}
+	
+//// NO RESULTS - BREAKPOINT 3
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$results-none-bp-03-on: false; // enable breakpoint
+	$results-none-bp-03-respond-at: theme.$bp-03;
+	$results-none-bp-03-spacing: false; // spacing for details
+	$results-none-bp-03-title-font-size: false; // font size for title
+	$results-none-bp-03-list-spacing: false; // left spacing for suggestion list
+
+	// CSS BLOCK
+
+	@if $results-none-bp-03-on == true {
+		@include mixins.respond-min($results-none-bp-03-respond-at) {
+			.ss__theme .ss__no-results {
+				.ss__no-results__content p, .ss__no-results__content .ss__title, .ss__no-results__content .ss__list,
+				.ss__recommendation--target {
+					@if $results-none-bp-03-spacing != false {
+						margin: 0 0 $results-none-bp-03-spacing 0;
+					}
+				}
+				.ss__no-results__content .ss__title, .ss__recommendation--target .ss__recommendation__header .ss__title {
+					@include mixins.if-exists((font-size: $results-none-bp-03-title-font-size));
+				}
+				.ss__no-results__content {
+					a {}
+					.ss__list {
+						@include mixins.if-exists((margin-left: $results-none-bp-03-list-spacing));
+					}
+				}
+				.ss__recommendation--target {}
+			}
+		}
+	}
+	
+//// NO RESULTS - BREAKPOINT 4
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$results-none-bp-04-on: false; // enable breakpoint
+	$results-none-bp-04-respond-at: theme.$bp-04;
+	$results-none-bp-04-spacing: false; // spacing for details
+	$results-none-bp-04-title-font-size: false; // font size for title
+	$results-none-bp-04-list-spacing: false; // left spacing for suggestion list
+
+	// CSS BLOCK
+
+	@if $results-none-bp-04-on == true {
+		@include mixins.respond-min($results-none-bp-04-respond-at) {
+			.ss__theme .ss__no-results {
+				.ss__no-results__content p, .ss__no-results__content .ss__title, .ss__no-results__content .ss__list,
+				.ss__recommendation--target {
+					@if $results-none-bp-04-spacing != false {
+						margin: 0 0 $results-none-bp-04-spacing 0;
+					}
+				}
+				.ss__no-results__content .ss__title, .ss__recommendation--target .ss__recommendation__header .ss__title {
+					@include mixins.if-exists((font-size: $results-none-bp-04-title-font-size));
+				}
+				.ss__no-results__content {
+					a {}
+					.ss__list {
+						@include mixins.if-exists((margin-left: $results-none-bp-04-list-spacing));
+					}
+				}
+				.ss__recommendation--target {}
+			}
+		}
+	}

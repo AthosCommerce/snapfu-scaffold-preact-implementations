@@ -1,0 +1,18 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_everest' as style;
+
+//// BREADCRUMBS
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$breadcrumbs-on: false; // enable breadcrumbs
+
+	// CSS BLOCK
+
+	@if $breadcrumbs-on == true {
+		.ss__theme.ss__breadcrumbs {}
+	}

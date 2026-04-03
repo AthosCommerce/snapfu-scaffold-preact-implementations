@@ -1,0 +1,140 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_matterhorn' as style;
+
+//// IMAGE
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$image-on: true; // enable image
+	$image-height: 150%; // fluid should use percentage, fixed should use pixels
+	$image-fit-on: true; // make image fit space
+	$image-fit-position: center top; // fit position of image
+	$image-fit: cover; // fit size of image (cover, contain, 100% auto, etc.)
+	$image-hover-on: false; // enable hover image
+	$image-hover-transition: false; // number represting transition duration (false will disable)
+	$image-hover-selector: '.ss__result__image'; // parent image selector that triggers hover
+
+	// CSS BLOCK
+
+	@if $image-on == true {
+		.ss__theme {
+			.ss__image__link {
+				display: block;
+			}
+			.ss__image {
+				position: relative;
+				line-height: 0;
+				@if $image-hover-on == true and $image-hover-transition != false {
+					@include mixins.transition(opacity #{$image-hover-transition}s ease-in-out);
+					-webkit-transition-delay: #{calc($image-hover-transition / 2)}s;
+					transition-delay: #{calc($image-hover-transition / 2)}s;
+				}
+				@if $image-height != false {
+					@include mixins.fluid-sizing($image-height);
+					img {
+						@include mixins.position-fill;
+						@if $image-fit-on == true {
+							@include mixins.object-fit($image-fit-position, $image-fit);
+							@include mixins.sizing(100%, 100%);
+						} @else {
+							@include mixins.image-base;
+						}
+					}
+				}
+			}
+			@if $image-hover-on == true {
+				#{$image-hover-selector} {
+					.ss__image--base, &:hover .ss__image--hover {
+						@include mixins.position($type: relative, $z: 0);
+						opacity: 1;
+						visibility: visible;
+					}
+					&:hover .ss__image--base, .ss__image--hover {
+						@include mixins.position($type: absolute, $top: 0, $left: 0, $z: -2);
+						opacity: 0;
+						visibility: hidden;
+					}
+				}
+			}
+		}
+	}
+
+//// IMAGE - BREAKPOINT 1
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$image-bp-01-on: false; // enable breakpoint
+	$image-bp-01-respond-at: theme.$bp-01;
+	$image-bp-01-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $image-bp-01-on == true {
+		@include mixins.respond-min($image-bp-01-respond-at) {
+			.ss__theme .ss__image {
+				@include mixins.if-exists((padding-bottom: $image-bp-01-image-height));
+			}
+		}
+	}
+
+//// IMAGE - BREAKPOINT 2
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$image-bp-02-on: false; // enable breakpoint
+	$image-bp-02-respond-at: theme.$bp-02;
+	$image-bp-02-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $image-bp-02-on == true {
+		@include mixins.respond-min($image-bp-02-respond-at) {
+			.ss__theme .ss__image {
+				@include mixins.if-exists((padding-bottom: $image-bp-02-image-height));
+			}
+		}
+	}
+
+//// IMAGE - BREAKPOINT 3
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$image-bp-03-on: true; // enable breakpoint
+	$image-bp-03-respond-at: theme.$bp-03;
+	$image-bp-03-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $image-bp-03-on == true {
+		@include mixins.respond-min($image-bp-03-respond-at) {
+			.ss__theme .ss__image {
+				@include mixins.if-exists((padding-bottom: $image-bp-03-image-height));
+			}
+		}
+	}
+
+//// IMAGE - BREAKPOINT 4
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$image-bp-04-on: false; // enable breakpoint
+	$image-bp-04-respond-at: theme.$bp-04;
+	$image-bp-04-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $image-bp-04-on == true {
+		@include mixins.respond-min($image-bp-04-respond-at) {
+			.ss__theme .ss__image {
+				@include mixins.if-exists((padding-bottom: $image-bp-04-image-height));
+			}
+		}
+	}

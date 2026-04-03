@@ -1,0 +1,290 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_matterhorn' as style;
+
+//// FACETS - COLUMN
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$facets-column-color-01: style.$color-08; // title background
+	$facets-column-color-02: style.$color-01; // title
+	$facets-column-color-03: style.$color-08; // title default bottom border
+	$facets-column-color-04: style.$color-09; // title collapsed bottom border
+	$facets-column-color-05: style.$color-01; // collapse icon
+	
+	// CONFIGURATION
+
+	$facets-column-on: true; // enable facets
+	$facets-column-spacing: 20px; // spacing for column items
+	$facets-column-title-font-size: 16px; // font size for headers
+	$facets-column-collapse-on: true; // enable collapse functionality
+	$facets-column-collapse-size: false; // icon size
+	$facets-column-collapse-spacing: 10px; // spacing over icon
+	$facets-column-collapse-align: right; // left or right
+
+	// CSS BLOCK
+
+	@if $facets-column-on == true {
+		.ss__theme .ss__facets__column {
+			.ss__block {
+				// note: these are shared styles between filter summary and facets
+				.ss__block__header {
+					@if $facets-column-spacing != false {
+						padding: calc($facets-column-spacing / 2) $facets-column-spacing;
+					}
+					@if $facets-column-color-03 != false {
+						border-bottom: 1px solid $facets-column-color-03;
+					}
+					@include mixins.if-exists((background-color: $facets-column-color-01));
+					.ss__title {
+						margin: 0;
+						@include mixins.if-exists((
+							font-size: $facets-column-title-font-size,
+							color: $facets-column-color-02
+						));
+					}
+				}
+				.ss__block__section {
+					@include mixins.if-exists((padding: $facets-column-spacing));
+				}
+			}
+			.ss__facets {
+				@if $facets-column-collapse-on == true {
+					.ss__block {
+						&.ss__collapsed {
+							.ss__block__header {
+								@if $facets-column-color-04 != false {
+									border-bottom: 1px solid $facets-column-color-04;
+								}
+								.ss__icon__wrapper {
+									@include mixins.transform(rotate(0deg));
+								}
+							}
+							.ss__block__section {
+								width: 100%;
+								opacity: 0;
+								@include mixins.position($type: absolute, $top: 0, $left: -9999px);
+							}
+						}
+						.ss__block__header {
+							@include mixins.flex-layout((flex-flow: row nowrap, align-items: center));
+							@include mixins.gap($facets-column-collapse-spacing);
+							.ss__icon__wrapper {
+								@include mixins.icon-align($facets-column-collapse-align);
+								@include mixins.icon-sizing($facets-column-collapse-size);
+								@include mixins.transform(rotate(180deg));
+								@include mixins.transition(transform ease 0.5s);
+								.ss__icon {
+									@include mixins.if-exists((fill: $facets-column-color-05));
+								}
+							}
+						}
+						.ss__block__section {
+							@include mixins.transition(opacity 0.5s ease);
+							opacity: 1;
+						}
+					}
+				}
+				.ss__facet {}
+			}
+		}
+	}
+
+//// FACETS - COLUMN - BREAKPOINT 1
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$facets-column-bp-01-color-01: false; // title background
+	$facets-column-bp-01-color-02: false; // title
+	$facets-column-bp-01-color-03: false; // collapse icon
+
+	// CONFIGURATION
+
+	$facets-column-bp-01-on: false; // enable breakpoint
+	$facets-column-bp-01-respond-at: theme.$bp-01;
+	$facets-column-bp-01-title-font-size: false; // font size for headers
+
+	// CSS BLOCK
+
+	@if $facets-column-bp-01-on == true {
+		@include mixins.respond-min($facets-column-bp-01-respond-at) {
+			.ss__theme .ss__facets__column {
+				.ss__block {
+					.ss__block__header {
+						.ss__title {
+							@include mixins.if-exists((
+								font-size: $facets-column-bp-01-title-font-size,
+								color: $facets-column-bp-01-color-02
+							));
+						}
+					}
+					.ss__block__section {}
+				}
+				.ss__facets {
+					.ss__block {
+						&.ss__collapsed .ss__block__header {}
+						.ss__block__header {
+							.ss__icon__wrapper .ss__icon {
+								@include mixins.if-exists((fill: $facets-column-bp-01-color-03));
+							}
+						}
+						.ss__block__section {}
+					}
+					.ss__facet {}
+				}
+			}
+		}
+	}
+
+//// FACETS - COLUMN - BREAKPOINT 2
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$facets-column-bp-02-color-01: false; // title background
+	$facets-column-bp-02-color-02: false; // title
+	$facets-column-bp-02-color-03: false; // collapse icon
+
+	// CONFIGURATION
+
+	$facets-column-bp-02-on: true; // enable breakpoint
+	$facets-column-bp-02-respond-at: theme.$bp-02;
+	$facets-column-bp-02-title-font-size: 16px; // font size for headers
+
+	// CSS BLOCK
+
+	@if $facets-column-bp-02-on == true {
+		@include mixins.respond-min($facets-column-bp-02-respond-at) {
+			.ss__theme .ss__facets__column {
+				.ss__block {
+					margin: 0 0 30px 0;
+					border: 1px solid style.$color-09;
+					.ss__block__header {
+						border-bottom: 0;
+						@include mixins.if-exists((background-color: $facets-column-bp-02-color-01));
+						.ss__title {
+							@include mixins.if-exists((
+								font-size: $facets-column-bp-02-title-font-size,
+								color: $facets-column-bp-02-color-02
+							));
+						}
+					}
+					.ss__block__section {}
+				}
+				.ss__facets {
+					.ss__block {
+						&.ss__collapsed .ss__block__header {
+							border-bottom: 0;
+						}
+						.ss__block__header {
+							.ss__icon__wrapper .ss__icon {
+								@include mixins.if-exists((fill: $facets-column-bp-02-color-03));
+							}
+						}
+						.ss__block__section {}
+					}
+					.ss__facet {}
+				}
+			}
+		}
+	}
+
+//// FACETS - COLUMN - BREAKPOINT 3
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$facets-column-bp-03-color-01: false; // title background
+	$facets-column-bp-03-color-02: false; // title
+	$facets-column-bp-03-color-03: false; // collapse icon
+
+	// CONFIGURATION
+
+	$facets-column-bp-03-on: false; // enable breakpoint
+	$facets-column-bp-03-respond-at: theme.$bp-03;
+	$facets-column-bp-03-title-font-size: false; // font size for headers
+
+	// CSS BLOCK
+
+	@if $facets-column-bp-03-on == true {
+		@include mixins.respond-min($facets-column-bp-03-respond-at) {
+			.ss__theme .ss__facets__column {
+				.ss__block {
+					.ss__block__header {
+						@include mixins.if-exists((background-color: $facets-column-bp-03-color-01));
+						.ss__title {
+							@include mixins.if-exists((
+								font-size: $facets-column-bp-03-title-font-size,
+								color: $facets-column-bp-03-color-02
+							));
+						}
+					}
+					.ss__block__section {}
+				}
+				.ss__facets {
+					.ss__block {
+						&.ss__collapsed .ss__block__header {}
+						.ss__block__header {
+							.ss__icon__wrapper .ss__icon {
+								@include mixins.if-exists((fill: $facets-column-bp-03-color-03));
+							}
+						}
+						.ss__block__section {}
+					}
+					.ss__facet {}
+				}
+			}
+		}
+	}
+
+//// FACETS - COLUMN - BREAKPOINT 4
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$facets-column-bp-04-color-01: false; // title background
+	$facets-column-bp-04-color-02: false; // title
+	$facets-column-bp-04-color-03: false; // collapse icon
+
+	// CONFIGURATION
+
+	$facets-column-bp-04-on: false; // enable breakpoint
+	$facets-column-bp-04-respond-at: theme.$bp-04;
+	$facets-column-bp-04-title-font-size: false; // font size for headers
+
+	// CSS BLOCK
+
+	@if $facets-column-bp-04-on == true {
+		@include mixins.respond-min($facets-column-bp-04-respond-at) {
+			.ss__theme .ss__facets__column {
+				.ss__block {
+					.ss__block__header {
+						@include mixins.if-exists((background-color: $facets-column-bp-04-color-01));
+						.ss__title {
+							@include mixins.if-exists((
+								font-size: $facets-column-bp-04-title-font-size,
+								color: $facets-column-bp-04-color-02
+							));
+						}
+					}
+					.ss__block__section {}
+				}
+				.ss__facets {
+					.ss__block {
+						&.ss__collapsed .ss__block__header {}
+						.ss__block__header {
+							.ss__icon__wrapper .ss__icon {
+								@include mixins.if-exists((fill: $facets-column-bp-04-color-03));
+							}
+						}
+						.ss__block__section {}
+					}
+					.ss__facet {}
+				}
+			}
+		}
+	}

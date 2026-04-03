@@ -1,0 +1,45 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_matterhorn' as style;
+
+//// PRICING
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$pricing-color-01: style.$color-06; // msrp
+	$pricing-color-02: false; // regular
+	$pricing-color-03: style.$color-08; // sale
+
+	// CONFIGURATION
+
+	$pricing-on: true; // enable pricing
+	$pricing-font-size: false; // font size for final price
+
+	// CSS BLOCK
+
+	@if $pricing-on == true {
+		.ss__theme {
+			.ss__result__pricing {
+				span ~ span {
+					padding: 0 0 0 5px;
+				}
+				.ss__result__msrp {
+					text-decoration: line-through;
+					@include mixins.if-exists((color: $pricing-color-01));
+				}
+				.ss__result__price {
+					@include mixins.if-exists((
+						color: $pricing-color-02,
+						font-size: $pricing-font-size,
+						font-weight: style.$font-weight-01
+					));
+				}
+				.ss__result__price--on-sale {
+					@include mixins.if-exists((color: $pricing-color-03));
+				}
+			}
+		}
+	}

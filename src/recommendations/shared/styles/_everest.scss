@@ -1,0 +1,815 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_everest' as style;
+
+//// RECOMMENDATIONS SHARED
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$shared-color-01: false; // title font color
+	$shared-color-02: false; // description font color
+	$shared-color-03: false; // nav button color
+	$shared-color-04: false; // nav button icon color
+	$shared-color-05: style.$color-02; // cta background
+	$shared-color-06: style.$color-03; // cta border
+	$shared-color-07: style.$color-07; // cta bag icon
+	$shared-color-08: style.$color-05; // cta font color
+	$shared-color-09: false; // cta title font color
+
+	// CONFIGURATION
+
+	$shared-on: true; // enable carousel
+	$shared-spacing: 20px; // spacing for recommendations
+	$shared-title-font-size: 18px; // font size of title
+	$shared-description-font-size: false; // font size of description
+	$shared-header-button-size: false; // size of header buttons (default is 24px)
+	$shared-header-icon-size: false; // size of header icons in button (default is 8px) 
+	$shared-header-align: right; // align nav buttons left or right
+	$shared-cta-on: true; // enable cta styles
+	$shared-cta-text-align: center; // align content to left, right, or center
+	$shared-cta-bag-icon-size: 32px; // size of bag icon
+	$shared-cta-font-size: false; // font size for cta
+	$shared-cta-title-font-size: 16px; // font size for cta title
+	$shared-cta-pricing-font-size: false; // font size for pricing elements
+	$shared-cta-pricing-final-font-size: false; // font size for final price
+	$shared-cta-button-width: false; // full or auto width (defaults to full)
+	$shared-cta-button-height: false; // button height override
+	$shared-cta-button-font-size: false; // button font size
+
+	// LOGIC VARIABLES (leave as is)
+
+	$var-shared-spacing-double: calc($shared-spacing * 2);
+	$var-shared-spacing-half: calc($shared-spacing / 2);
+	$var-shared-spacing-quarter: calc($shared-spacing / 4);
+
+	// CSS BLOCK
+
+	@if $shared-on == true {
+		[athos-recommend], .ss__theme.ss__recommendation--target {
+			min-width: 1px;
+		}
+		.ss__theme.ss__recommendation--target {
+			position: relative;
+			margin: $var-shared-spacing-double 0;
+			& > * {
+				margin: 0 0 $shared-spacing 0;
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
+			.ss__carousel__navigation, .ss__recommendation .ss__carousel__recommendation {
+				& > {
+					.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+						div {
+							@include mixins.if-exists((background-color: $shared-color-03));
+							.ss__icon__wrapper {
+								.ss__icon {
+									@include mixins.if-exists((fill: $shared-color-04));
+								}
+							}
+						}
+					}
+				}
+			}
+			.ss__recommendation__header {
+				@include mixins.gap($var-shared-spacing-half);
+				& > * {
+					min-width: 1px;
+					margin: 0;
+				}
+				&, .ss__carousel__navigation {
+					@include mixins.flex-layout((align-items: center));
+				}
+				.ss__title {
+					order: 1;
+					@include mixins.flex;
+					@include mixins.if-exists((
+						font-size: $shared-title-font-size,
+						color: $shared-color-01
+					));
+					a {
+						font-family: inherit;
+						color: inherit;
+					}
+				}
+				.ss__carousel__navigation {
+					@if $shared-header-align == left {
+						order: 0;
+					} @else {
+						order: 1;
+					}
+					@include mixins.gap($var-shared-spacing-quarter);
+					.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+						@if $shared-header-button-size != false {
+							@include mixins.sizing($shared-header-button-size, $shared-header-button-size);
+						}
+						div {
+							.ss__icon__wrapper {
+								@if $shared-header-icon-size != false {
+									@include mixins.icon-sizing($shared-header-icon-size);
+								}
+							}
+						}
+					}
+				}
+				.ss__recommendation__description {
+					order: 2;
+					@include mixins.flex(1 1 100%);
+					@include mixins.if-exists((
+						font-size: $shared-description-font-size,
+						color: $shared-color-02
+					));
+				}
+			}
+			.ss__results {
+				display: block;
+			}
+			@if $shared-cta-on == true {
+				.ss__recommendation-bundle__wrapper__cta {
+					.ss__recommendation-bundle__wrapper__cta__subtotal {
+						padding: $shared-spacing;
+						@include mixins.if-exists((
+							background-color: $shared-color-05,
+							border: 1px solid $shared-color-06,
+						));
+						&, .ss__cta__content {
+							@include mixins.flex-layout((align-content: center));
+							@include mixins.gap($var-shared-spacing-half);
+							@include mixins.if-exists((
+								text-align: $shared-cta-text-align,
+							));
+							& > * {
+								@include mixins.flex(1 1 100%);
+								min-width: 1px;
+								margin: 0;
+							}
+						}
+						.ss__cta__bag {
+							line-height: 1;
+							.ss__icon__wrapper {
+								@if $shared-cta-bag-icon-size != false {
+									@include mixins.sizing($shared-cta-bag-icon-size, $shared-cta-bag-icon-size);
+								}
+								.ss__icon {
+									@include mixins.if-exists((fill: $shared-color-07));
+								}
+							}
+						}
+						.ss__cta__content {
+							a, div, p, .ss__title {
+								line-height: 1.5;
+							}
+							a, div, p {
+								@include mixins.if-exists((
+									font-size: $shared-cta-font-size,
+									color: $shared-color-08
+								));
+							}
+							.ss__title {
+								@include mixins.if-exists((
+									font-size: $shared-cta-title-font-size,
+									color: $shared-color-09
+								));
+							}
+							.ss__result__pricing {
+								span {
+									@include mixins.if-exists((font-size: $shared-cta-pricing-font-size));
+								}
+								.ss__result__price {
+									@include mixins.if-exists((font-size: $shared-cta-pricing-final-font-size));
+								}
+							}
+							.ss__button {
+								@if $shared-cta-button-width == auto {
+									@include mixins.flex(0 1 auto);
+								}
+								@if $shared-cta-text-align == center or $shared-cta-text-align == right {
+									margin-left: auto;
+								}
+								@if $shared-cta-text-align == center {
+									margin-right: auto;
+								}
+								margin-top: $var-shared-spacing-quarter;
+								@include mixins.if-exists((
+									height: $shared-cta-button-height,
+									line-height: $shared-cta-button-height,
+									font-size: $shared-cta-button-font-size
+								));
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// RECOMMENDATIONS SHARED - BREAKPOINT 1
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$shared-bp-01-color-01: false; // title font color
+	$shared-bp-01-color-02: false; // description font color
+	$shared-bp-01-color-03: false; // nav button color
+	$shared-bp-01-color-04: false; // nav button icon color
+	$shared-bp-01-color-05: false; // cta background
+	$shared-bp-01-color-06: false; // cta border
+	$shared-bp-01-color-07: false; // cta bag icon
+	$shared-bp-01-color-08: false; // cta font color
+	$shared-bp-01-color-09: false; // cta title font color
+
+	// CONFIGURATION
+
+	$shared-bp-01-on: true; // enable breakpoint
+	$shared-bp-01-respond-at: theme.$bp-01; // breakpoint to respond at
+	$shared-bp-01-title-font-size: 22px; // font size of title
+	$shared-bp-01-description-font-size: false; // font size of description
+	$shared-bp-01-header-button-size: false; // size of header buttons
+	$shared-bp-01-header-icon-size: false; // size of header icons in button
+	$shared-bp-01-header-align: false; // align nav buttons left or right
+	$shared-bp-01-cta-on: false; // enable cta styles
+	$shared-bp-01-cta-text-align: false; // align content to left, right, or center
+	$shared-bp-01-cta-bag-icon-size: false; // size of bag icon
+	$shared-bp-01-cta-font-size: false; // font size for cta
+	$shared-bp-01-cta-title-font-size: false; // font size for cta title
+	$shared-bp-01-cta-pricing-font-size: false; // font size for pricing elements
+	$shared-bp-01-cta-pricing-final-font-size: false; // font size for final price
+	$shared-bp-01-cta-button-width: false; // full or auto width (defaults to full)
+	$shared-bp-01-cta-button-height: false; // button height override
+	$shared-bp-01-cta-button-font-size: false; // button font size
+
+	// CSS BLOCK
+
+	@if $shared-bp-01-on == true {
+		@include mixins.respond-min($shared-bp-01-respond-at) {
+			.ss__theme.ss__recommendation--target {
+				.ss__carousel__navigation, .ss__recommendation .ss__carousel__recommendation {
+					& > {
+						.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+							div {
+								@include mixins.if-exists((background-color: $shared-bp-01-color-03));
+								.ss__icon__wrapper {
+									.ss__icon {
+										@include mixins.if-exists((fill: $shared-bp-01-color-04));
+									}
+								}
+							}
+						}
+					}
+				}
+				.ss__recommendation__header {
+					.ss__title {
+						@include mixins.if-exists((
+							font-size: $shared-bp-01-title-font-size,
+							color: $shared-bp-01-color-01
+						));
+					}
+					.ss__carousel__navigation {
+						@if $shared-bp-01-header-align != false and $shared-bp-01-header-align != $shared-header-align {
+							@if $shared-bp-01-header-align == left {
+								order: 0;
+							} @else {
+								order: 1;
+							}
+						}
+						.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+							@if $shared-bp-01-header-button-size != false {
+								@include mixins.sizing($shared-bp-01-header-button-size, $shared-bp-01-header-button-size);
+							}
+							div {
+								.ss__icon__wrapper {
+									@if $shared-bp-01-header-icon-size != false {
+										@include mixins.icon-sizing($shared-bp-01-header-icon-size);
+									}
+								}
+							}
+						}
+					}	
+					.ss__recommendation__description {
+						@include mixins.if-exists((
+							font-size: $shared-bp-01-description-font-size,
+							color: $shared-bp-01-color-02
+						));
+					}
+				}
+				@if $shared-bp-01-cta-on == true {
+					.ss__recommendation-bundle__wrapper__cta {
+						.ss__recommendation-bundle__wrapper__cta__subtotal {
+							@include mixins.if-exists((
+								background-color: $shared-bp-01-color-05,
+								border: 1px solid $shared-bp-01-color-06,
+								text-align: $shared-bp-01-cta-text-align,
+							));
+							.ss__cta__bag {
+								.ss__icon__wrapper {
+									@if $shared-bp-01-cta-bag-icon-size != false {
+										@include mixins.sizing($shared-bp-01-cta-bag-icon-size, $shared-bp-01-cta-bag-icon-size);
+									}
+									.ss__icon {
+										@include mixins.if-exists((fill: $shared-bp-01-color-07));
+									}
+								}
+							}
+							.ss__cta__content {
+								a, div, p {
+									@include mixins.if-exists((
+										font-size: $shared-bp-01-cta-font-size,
+										color: $shared-bp-01-color-08
+									));
+								}
+								.ss__title {
+									@include mixins.if-exists((
+										font-size: $shared-bp-01-cta-title-font-size,
+										color: $shared-bp-01-color-09
+									));
+								}
+								.ss__result__pricing {
+									span {
+										@include mixins.if-exists((font-size: $shared-bp-01-cta-pricing-font-size));
+									}
+									.ss__result__price {
+										@include mixins.if-exists((font-size: $shared-bp-01-cta-pricing-final-font-size));
+									}
+								}
+								.ss__button {
+									@if $shared-bp-01-cta-button-width == auto {
+										@include mixins.flex(0 1 auto);
+									}
+									@if $shared-bp-01-cta-text-align == center or $shared-bp-01-cta-text-align == right {
+										margin-left: auto;
+									}
+									@if $shared-bp-01-cta-text-align == center {
+										margin-right: auto;
+									}
+									@include mixins.if-exists((
+										height: $shared-bp-01-cta-button-height,
+										line-height: $shared-bp-01-cta-button-height,
+										font-size: $shared-bp-01-cta-button-font-size
+									));
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// RECOMMENDATIONS SHARED - BREAKPOINT 2
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$shared-bp-02-color-01: false; // title font color
+	$shared-bp-02-color-02: false; // description font color
+	$shared-bp-02-color-03: false; // nav button color
+	$shared-bp-02-color-04: false; // nav button icon color
+	$shared-bp-02-color-05: false; // cta background
+	$shared-bp-02-color-06: false; // cta border
+	$shared-bp-02-color-07: false; // cta bag icon
+	$shared-bp-02-color-08: false; // cta font color
+	$shared-bp-02-color-09: false; // cta title font color
+
+	// CONFIGURATION
+
+	$shared-bp-02-on: true; // enable breakpoint
+	$shared-bp-02-respond-at: theme.$bp-02; // breakpoint to respond at
+	$shared-bp-02-title-font-size: false; // font size of title
+	$shared-bp-02-description-font-size: false; // font size of description
+	$shared-bp-02-header-button-size: 28px; // size of header buttons
+	$shared-bp-02-header-icon-size: 10px; // size of header icons in button
+	$shared-bp-02-header-align: false; // align nav buttons left or right
+	$shared-bp-02-cta-on: false; // enable cta styles
+	$shared-bp-02-cta-text-align: false; // align content to left, right, or center
+	$shared-bp-02-cta-bag-icon-size: false; // size of bag icon
+	$shared-bp-02-cta-font-size: false; // font size for cta
+	$shared-bp-02-cta-title-font-size: false; // font size for cta title
+	$shared-bp-02-cta-pricing-font-size: false; // font size for pricing elements
+	$shared-bp-02-cta-pricing-final-font-size: false; // font size for final price
+	$shared-bp-02-cta-button-width: false; // full or auto width (defaults to full)
+	$shared-bp-02-cta-button-height: false; // button height override
+	$shared-bp-02-cta-button-font-size: false; // button font size
+
+	// CSS BLOCK
+
+	@if $shared-bp-02-on == true {
+		@include mixins.respond-min($shared-bp-02-respond-at) {
+			.ss__theme.ss__recommendation--target {
+				.ss__carousel__navigation, .ss__recommendation .ss__carousel__recommendation {
+					& > {
+						.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+							div {
+								@include mixins.if-exists((background-color: $shared-bp-02-color-03));
+								.ss__icon__wrapper {
+									.ss__icon {
+										@include mixins.if-exists((fill: $shared-bp-02-color-04));
+									}
+								}
+							}
+						}
+					}
+				}
+				.ss__recommendation__header {
+					.ss__title {
+						@include mixins.if-exists((
+							font-size: $shared-bp-02-title-font-size,
+							color: $shared-bp-02-color-01
+						));
+					}
+					.ss__carousel__navigation {
+						@if $shared-bp-02-header-align != false and $shared-bp-02-header-align != $shared-bp-01-header-align {
+							@if $shared-bp-02-header-align == left {
+								order: 0;
+							} @else {
+								order: 1;
+							}
+						}
+						.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+							@if $shared-bp-02-header-button-size != false {
+								@include mixins.sizing($shared-bp-02-header-button-size, $shared-bp-02-header-button-size);
+							}
+							div {
+								.ss__icon__wrapper {
+									@if $shared-bp-02-header-icon-size != false {
+										@include mixins.icon-sizing($shared-bp-02-header-icon-size);
+									}
+								}
+							}
+						}
+					}	
+					.ss__recommendation__description {
+						@include mixins.if-exists((
+							font-size: $shared-bp-02-description-font-size,
+							color: $shared-bp-02-color-02
+						));
+					}
+				}
+				@if $shared-bp-02-cta-on == true {
+					.ss__recommendation-bundle__wrapper__cta {
+						.ss__recommendation-bundle__wrapper__cta__subtotal {
+							@include mixins.if-exists((
+								background-color: $shared-bp-02-color-05,
+								border: 1px solid $shared-bp-02-color-06,
+								text-align: $shared-bp-02-cta-text-align,
+							));
+							.ss__cta__bag {
+								.ss__icon__wrapper {
+									@if $shared-bp-02-cta-bag-icon-size != false {
+										@include mixins.sizing($shared-bp-02-cta-bag-icon-size, $shared-bp-02-cta-bag-icon-size);
+									}
+									.ss__icon {
+										@include mixins.if-exists((fill: $shared-bp-02-color-07));
+									}
+								}
+							}
+							.ss__cta__content {
+								a, div, p {
+									@include mixins.if-exists((
+										font-size: $shared-bp-02-cta-font-size,
+										color: $shared-bp-02-color-08
+									));
+								}
+								.ss__title {
+									@include mixins.if-exists((
+										font-size: $shared-bp-02-cta-title-font-size,
+										color: $shared-bp-02-color-09
+									));
+								}
+								.ss__result__pricing {
+									span {
+										@include mixins.if-exists((font-size: $shared-bp-02-cta-pricing-font-size));
+									}
+									.ss__result__price {
+										@include mixins.if-exists((font-size: $shared-bp-02-cta-pricing-final-font-size));
+									}
+								}
+								.ss__button {
+									@if $shared-bp-02-cta-button-width == auto {
+										@include mixins.flex(0 1 auto);
+									}
+									@if $shared-bp-02-cta-text-align == center or $shared-bp-02-cta-text-align == right {
+										margin-left: auto;
+									}
+									@if $shared-bp-02-cta-text-align == center {
+										margin-right: auto;
+									}
+									@include mixins.if-exists((
+										height: $shared-bp-02-cta-button-height,
+										line-height: $shared-bp-02-cta-button-height,
+										font-size: $shared-bp-02-cta-button-font-size
+									));
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+//// RECOMMENDATIONS SHARED - BREAKPOINT 3
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$shared-bp-03-color-01: false; // title font color
+	$shared-bp-03-color-02: false; // description font color
+	$shared-bp-03-color-03: false; // nav button color
+	$shared-bp-03-color-04: false; // nav button icon color
+	$shared-bp-03-color-05: false; // cta background
+	$shared-bp-03-color-06: false; // cta border
+	$shared-bp-03-color-07: false; // cta bag icon
+	$shared-bp-03-color-08: false; // cta font color
+	$shared-bp-03-color-09: false; // cta title font color
+
+	// CONFIGURATION
+
+	$shared-bp-03-on: true; // enable breakpoint
+	$shared-bp-03-respond-at: theme.$bp-03; // breakpoint to respond at
+	$shared-bp-03-title-font-size: false; // font size of title
+	$shared-bp-03-description-font-size: false; // font size of description
+	$shared-bp-03-header-button-size: false; // size of header buttons
+	$shared-bp-03-header-icon-size: false; // size of header icons in button
+	$shared-bp-03-header-align: false; // align nav buttons left or right
+	$shared-bp-03-cta-on: false; // enable cta styles
+	$shared-bp-03-cta-text-align: false; // align content to left, right, or center
+	$shared-bp-03-cta-bag-icon-size: false; // size of bag icon
+	$shared-bp-03-cta-font-size: false; // font size for cta
+	$shared-bp-03-cta-title-font-size: false; // font size for cta title
+	$shared-bp-03-cta-pricing-font-size: false; // font size for pricing elements
+	$shared-bp-03-cta-pricing-final-font-size: false; // font size for final price
+	$shared-bp-03-cta-button-width: false; // full or auto width (defaults to full)
+	$shared-bp-03-cta-button-height: false; // button height override
+	$shared-bp-03-cta-button-font-size: false; // button font size
+
+	// CSS BLOCK
+
+	@if $shared-bp-03-on == true {
+		@include mixins.respond-min($shared-bp-03-respond-at) {
+			.ss__theme.ss__recommendation--target {
+				.ss__carousel__navigation, .ss__recommendation .ss__carousel__recommendation {
+					& > {
+						.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+							div {
+								@include mixins.if-exists((background-color: $shared-bp-03-color-03));
+								.ss__icon__wrapper {
+									.ss__icon {
+										@include mixins.if-exists((fill: $shared-bp-03-color-04));
+									}
+								}
+							}
+						}
+					}
+				}
+				.ss__recommendation__header {
+					.ss__title {
+						@include mixins.if-exists((
+							font-size: $shared-bp-03-title-font-size,
+							color: $shared-bp-03-color-01
+						));
+					}
+					.ss__carousel__navigation {
+						@if $shared-bp-03-header-align != false and $shared-bp-03-header-align != $shared-bp-02-header-align {
+							@if $shared-bp-03-header-align == left {
+								order: 0;
+							} @else {
+								order: 1;
+							}
+						}
+						.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+							@if $shared-bp-03-header-button-size != false {
+								@include mixins.sizing($shared-bp-03-header-button-size, $shared-bp-03-header-button-size);
+							}
+							div {
+								.ss__icon__wrapper {
+									@if $shared-bp-03-header-icon-size != false {
+										@include mixins.icon-sizing($shared-bp-03-header-icon-size);
+									}
+								}
+							}
+						}
+					}	
+					.ss__recommendation__description {
+						@include mixins.if-exists((
+							font-size: $shared-bp-03-description-font-size,
+							color: $shared-bp-03-color-02
+						));
+					}
+				}
+				@if $shared-bp-03-cta-on == true {
+					.ss__recommendation-bundle__wrapper__cta {
+						.ss__recommendation-bundle__wrapper__cta__subtotal {
+							@include mixins.if-exists((
+								background-color: $shared-bp-03-color-05,
+								border: 1px solid $shared-bp-03-color-06,
+								text-align: $shared-bp-03-cta-text-align,
+							));
+							.ss__cta__bag {
+								.ss__icon__wrapper {
+									@if $shared-bp-03-cta-bag-icon-size != false {
+										@include mixins.sizing($shared-bp-03-cta-bag-icon-size, $shared-bp-03-cta-bag-icon-size);
+									}
+									.ss__icon {
+										@include mixins.if-exists((fill: $shared-bp-03-color-07));
+									}
+								}
+							}
+							.ss__cta__content {
+								a, div, p {
+									@include mixins.if-exists((
+										font-size: $shared-bp-03-cta-font-size,
+										color: $shared-bp-03-color-08
+									));
+								}
+								.ss__title {
+									@include mixins.if-exists((
+										font-size: $shared-bp-03-cta-title-font-size,
+										color: $shared-bp-03-color-09
+									));
+								}
+								.ss__result__pricing {
+									span {
+										@include mixins.if-exists((font-size: $shared-bp-03-cta-pricing-font-size));
+									}
+									.ss__result__price {
+										@include mixins.if-exists((font-size: $shared-bp-03-cta-pricing-final-font-size));
+									}
+								}
+								.ss__button {
+									@if $shared-bp-03-cta-button-width == auto {
+										@include mixins.flex(0 1 auto);
+									}
+									@if $shared-bp-03-cta-text-align == center or $shared-bp-03-cta-text-align == right {
+										margin-left: auto;
+									}
+									@if $shared-bp-03-cta-text-align == center {
+										margin-right: auto;
+									}
+									@include mixins.if-exists((
+										height: $shared-bp-03-cta-button-height,
+										line-height: $shared-bp-03-cta-button-height,
+										font-size: $shared-bp-03-cta-button-font-size
+									));
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// RECOMMENDATIONS SHARED - BREAKPOINT 4
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$shared-bp-04-color-01: false; // title font color
+	$shared-bp-04-color-02: false; // description font color
+	$shared-bp-04-color-03: false; // nav button color
+	$shared-bp-04-color-04: false; // nav button icon color
+	$shared-bp-04-color-05: false; // cta background
+	$shared-bp-04-color-06: false; // cta border
+	$shared-bp-04-color-07: false; // cta bag icon
+	$shared-bp-04-color-08: false; // cta font color
+	$shared-bp-04-color-09: false; // cta title font color
+
+	// CONFIGURATION
+
+	$shared-bp-04-on: false; // enable breakpoint
+	$shared-bp-04-respond-at: theme.$bp-04; // breakpoint to respond at
+	$shared-bp-04-title-font-size: false; // font size of title
+	$shared-bp-04-description-font-size: false; // font size of description
+	$shared-bp-04-header-button-size: false; // size of header buttons
+	$shared-bp-04-header-icon-size: false; // size of header icons in button
+	$shared-bp-04-header-align: false; // align nav buttons left or right
+	$shared-bp-04-cta-on: false; // enable cta styles
+	$shared-bp-04-cta-text-align: false; // align content to left, right, or center
+	$shared-bp-04-cta-bag-icon-size: false; // size of bag icon
+	$shared-bp-04-cta-font-size: false; // font size for cta
+	$shared-bp-04-cta-title-font-size: false; // font size for cta title
+	$shared-bp-04-cta-pricing-font-size: false; // font size for pricing elements
+	$shared-bp-04-cta-pricing-final-font-size: false; // font size for final price
+	$shared-bp-04-cta-button-width: false; // full or auto width (defaults to full)
+	$shared-bp-04-cta-button-height: false; // button height override
+	$shared-bp-04-cta-button-font-size: false; // button font size
+
+	// CSS BLOCK
+
+	@if $shared-bp-04-on == true {
+		@include mixins.respond-min($shared-bp-04-respond-at) {
+			.ss__theme.ss__recommendation--target {
+				.ss__carousel__navigation, .ss__recommendation .ss__carousel__recommendation {
+					& > {
+						.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+							div {
+								@include mixins.if-exists((background-color: $shared-bp-04-color-03));
+								.ss__icon__wrapper {
+									.ss__icon {
+										@include mixins.if-exists((fill: $shared-bp-04-color-04));
+									}
+								}
+							}
+						}
+					}
+				}
+				.ss__recommendation__header {
+					.ss__title {
+						@include mixins.if-exists((
+							font-size: $shared-bp-04-title-font-size,
+							color: $shared-bp-04-color-01
+						));
+					}
+					.ss__carousel__navigation {
+						@if $shared-bp-04-header-align != false and $shared-bp-04-header-align != $shared-bp-03-header-align {
+							@if $shared-bp-04-header-align == left {
+								order: 0;
+							} @else {
+								order: 1;
+							}
+						}
+						.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+							@if $shared-bp-04-header-button-size != false {
+								@include mixins.sizing($shared-bp-04-header-button-size, $shared-bp-04-header-button-size);
+							}
+							div {
+								.ss__icon__wrapper {
+									@if $shared-bp-04-header-icon-size != false {
+										@include mixins.icon-sizing($shared-bp-04-header-icon-size);
+									}
+								}
+							}
+						}
+					}	
+					.ss__recommendation__description {
+						@include mixins.if-exists((
+							font-size: $shared-bp-04-description-font-size,
+							color: $shared-bp-04-color-02
+						));
+					}
+				}
+				@if $shared-bp-04-cta-on == true {
+					.ss__recommendation-bundle__wrapper__cta {
+						.ss__recommendation-bundle__wrapper__cta__subtotal {
+							@include mixins.if-exists((
+								background-color: $shared-bp-04-color-05,
+								border: 1px solid $shared-bp-04-color-06,
+								text-align: $shared-bp-04-cta-text-align,
+							));
+							.ss__cta__bag {
+								.ss__icon__wrapper {
+									@if $shared-bp-04-cta-bag-icon-size != false {
+										@include mixins.sizing($shared-bp-04-cta-bag-icon-size, $shared-bp-04-cta-bag-icon-size);
+									}
+									.ss__icon {
+										@include mixins.if-exists((fill: $shared-bp-04-color-07));
+									}
+								}
+							}
+							.ss__cta__content {
+								a, div, p {
+									@include mixins.if-exists((
+										font-size: $shared-bp-04-cta-font-size,
+										color: $shared-bp-04-color-08
+									));
+								}
+								.ss__title {
+									@include mixins.if-exists((
+										font-size: $shared-bp-04-cta-title-font-size,
+										color: $shared-bp-04-color-09
+									));
+								}
+								.ss__result__pricing {
+									span {
+										@include mixins.if-exists((font-size: $shared-bp-04-cta-pricing-font-size));
+									}
+									.ss__result__price {
+										@include mixins.if-exists((font-size: $shared-bp-04-cta-pricing-final-font-size));
+									}
+								}
+								.ss__button {
+									@if $shared-bp-04-cta-button-width == auto {
+										@include mixins.flex(0 1 auto);
+									}
+									@if $shared-bp-04-cta-text-align == center or $shared-bp-04-cta-text-align == right {
+										margin-left: auto;
+									}
+									@if $shared-bp-04-cta-text-align == center {
+										margin-right: auto;
+									}
+									@include mixins.if-exists((
+										height: $shared-bp-04-cta-button-height,
+										line-height: $shared-bp-04-cta-button-height,
+										font-size: $shared-bp-04-cta-button-font-size
+									));
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}

@@ -1,0 +1,50 @@
+// use sass functions
+@use './_functions';
+
+// encode svg
+@function svg-encode($svg) {
+	// Add missing namespace
+	@if not str-index($svg, xmlns) {
+		$svg: functions.str-replace($svg, '<svg','<svg xmlns="http://www.w3.org/2000/svg"');   
+	}
+
+	// Encode characters in svg
+	$encoded: functions.str-replace($svg, '%', '%25');
+	$encoded: functions.str-replace($encoded, '#', '%23');
+	$encoded: functions.str-replace($encoded, '{', '%7B');
+	$encoded: functions.str-replace($encoded, '}', '%7D');
+	$encoded: functions.str-replace($encoded, '<', '%3C');
+	$encoded: functions.str-replace($encoded, '>', '%3E');
+
+	@return url("data:image/svg+xml, #{$encoded}");
+}
+
+// generate icons for background display
+// it can be used in the following way:
+// 		@include icons.icon-bg($path: 'mySVGpath', $fill: red);
+// for usage, inspect the svg path in the Snap gallery and grab the value inside the "d" attribute
+// 		https://athoscommerce.github.io/snap/packages/snap-preact/components/docs/?path=/story/atoms-icon--gallery
+@mixin icon-bg($path: false, $fill: false, $vb-width: false, $vb-height: false, $stroke: false, $stroke-width: false, $bgprop: true) {
+	// set icon variables
+	$var-path: if($path != false, $path, 'M0 0h56v56h-56z');
+	$var-fill: if($fill != false, $fill, #000000);
+	$var-vb-width: if($vb-width != false, $vb-width, 56);
+	$var-vb-height: if($vb-height != false, $vb-height, 56);
+
+	// set icon html
+	$svg-open: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + $var-vb-width + ' ' + $var-vb-height + '" preserveAspectRatio="xMinYMid">';
+	$svg-close: '</svg>';
+
+	// should the svg have a stroke or not?
+	$svg: $svg-open + '<path fill="' + $var-fill + '" d="' + $var-path + '" />' + $svg-close;
+	@if $stroke != false and $stroke-width != false {
+		$svg: $svg-open + '<path fill="' + $var-fill + '" stroke="' + $stroke + '" stroke-width="' + $stroke-width + '" d="' + $var-path + '" />' + $svg-close;
+	}
+
+	// should the svg have background image properties?
+	@if ($bgprop == true) {
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
+	background-image: svg-url($svg);
+}

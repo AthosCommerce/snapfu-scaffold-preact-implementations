@@ -1,0 +1,252 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_matterhorn' as style;
+
+//// PAGINATION
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$pagination-color-01: false; // page link
+	$pagination-color-02: style.$color-08; // page active
+	$pagination-color-03: false; // previous / next icon color
+
+	// CONFIGURATION
+
+	$pagination-on: true; // enable header
+	$pagination-spacing: 20px; // spacing for pagination
+	$pagination-font-size: 16px; // font size for pagination
+	$pagination-icon-size: 14px; // width of previous / next icon
+
+	// CSS BLOCK
+
+	@if $pagination-on == true {
+		.ss__theme .ss__pagination {
+			.ss__pagination__row {
+				@include mixins.flex-layout((align-items: center));
+				@if $pagination-spacing != false {
+					@include mixins.gap($pagination-spacing);
+				}
+				.ss__pagination__column {
+					@include mixins.flex(0 1 auto);
+					min-width: 1px;
+					.ss__pagination__link, .ss__pagination__label {
+						@include mixins.if-exists((font-size: $pagination-font-size));
+						display: block;
+						@include mixins.if-exists((color: $pagination-color-01));
+					}
+					.ss__pagination__link {}
+					.ss__pagination__label {}
+				}
+				.ss__pagination__current .ss__pagination__label {
+					@include mixins.if-exists((
+						color: $pagination-color-02,
+						font-weight: style.$font-weight-01
+					));
+				}
+				.ss__pagination__first {}
+				.ss__pagination__last {}
+				.ss__pagination__hellip {}
+				.ss__pagination__previous, .ss__pagination__next {
+					.ss__pagination__link {
+						@include mixins.flex-layout((align-items: center));
+						@if $pagination-spacing != false {
+							@include mixins.gap(calc($pagination-spacing / 2));
+						}
+						.ss__icon__wrapper {
+							@include mixins.icon-sizing($pagination-icon-size);
+							.ss__icon {
+								@include mixins.if-exists((fill: $pagination-color-03));
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// PAGINATION - BREAKPOINT 1
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$pagination-bp-01-on: false; // enable breakpoint
+	$pagination-bp-01-respond-at: theme.$bp-01;
+	$pagination-bp-01-spacing: false; // spacing for pagination
+	$pagination-bp-01-font-size: false; // font size for pagination
+	$pagination-bp-01-icon-size: false; // width of previous / next icon
+
+	// CSS BLOCK
+
+	@if $pagination-bp-01-on == true {
+		@include mixins.respond-min($pagination-bp-01-respond-at) {
+			.ss__theme .ss__pagination {
+				.ss__pagination__row {
+					@if $pagination-bp-01-spacing != false {
+						@include mixins.gap($pagination-bp-01-spacing);
+					}
+					.ss__pagination__column {
+						.ss__pagination__link, .ss__pagination__label {
+							@include mixins.if-exists((font-size: $pagination-bp-01-font-size));
+						}
+						.ss__pagination__link {}
+						.ss__pagination__label {}
+					}
+					.ss__pagination__current .ss__pagination__label {}
+					.ss__pagination__first {}
+					.ss__pagination__last {}
+					.ss__pagination__hellip {}
+					.ss__pagination__previous, .ss__pagination__next {
+						.ss__pagination__link {
+							@if $pagination-bp-01-spacing != false {
+								@include mixins.gap(calc($pagination-bp-01-spacing / 2));
+							}
+							.ss__icon__wrapper {
+								@include mixins.icon-sizing($pagination-bp-01-icon-size);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// PAGINATION - BREAKPOINT 2
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$pagination-bp-02-on: true; // enable breakpoint
+	$pagination-bp-02-respond-at: theme.$bp-02;
+	$pagination-bp-02-spacing: 10px; // spacing for pagination
+	$pagination-bp-02-font-size: 14px; // font size for pagination
+	$pagination-bp-02-icon-size: 12px; // width of previous / next icon
+
+	// CSS BLOCK
+
+	@if $pagination-bp-02-on == true {
+		@include mixins.respond-min($pagination-bp-02-respond-at) {
+			.ss__theme .ss__pagination {
+				.ss__pagination__row {
+					@if $pagination-bp-02-spacing != false {
+						@include mixins.gap($pagination-bp-02-spacing);
+					}
+					.ss__pagination__column {
+						.ss__pagination__link, .ss__pagination__label {
+							@include mixins.if-exists((font-size: $pagination-bp-02-font-size));
+						}
+						.ss__pagination__link {}
+						.ss__pagination__label {}
+					}
+					.ss__pagination__current .ss__pagination__label {}
+					.ss__pagination__first {}
+					.ss__pagination__last {}
+					.ss__pagination__hellip {}
+					.ss__pagination__previous, .ss__pagination__next {
+						.ss__pagination__link {
+							@if $pagination-bp-02-spacing != false {
+								@include mixins.gap(calc($pagination-bp-02-spacing / 2));
+							}
+							.ss__icon__wrapper {
+								@include mixins.icon-sizing($pagination-bp-02-icon-size);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// PAGINATION - BREAKPOINT 3
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$pagination-bp-03-on: false; // enable breakpoint
+	$pagination-bp-03-respond-at: theme.$bp-03;
+	$pagination-bp-03-spacing: false; // spacing for pagination
+	$pagination-bp-03-font-size: false; // font size for pagination
+	$pagination-bp-03-icon-size: false; // width of previous / next icon
+
+	// CSS BLOCK
+
+	@if $pagination-bp-03-on == true {
+		@include mixins.respond-min($pagination-bp-03-respond-at) {
+			.ss__theme .ss__pagination {
+				.ss__pagination__row {
+					@if $pagination-bp-03-spacing != false {
+						@include mixins.gap($pagination-bp-03-spacing);
+					}
+					.ss__pagination__column {
+						.ss__pagination__link, .ss__pagination__label {
+							@include mixins.if-exists((font-size: $pagination-bp-03-font-size));
+						}
+						.ss__pagination__link {}
+						.ss__pagination__label {}
+					}
+					.ss__pagination__current .ss__pagination__label {}
+					.ss__pagination__first {}
+					.ss__pagination__last {}
+					.ss__pagination__hellip {}
+					.ss__pagination__previous, .ss__pagination__next {
+						.ss__pagination__link {
+							@if $pagination-bp-03-spacing != false {
+								@include mixins.gap(calc($pagination-bp-03-spacing / 2));
+							}
+							.ss__icon__wrapper {
+								@include mixins.icon-sizing($pagination-bp-03-icon-size);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// PAGINATION - BREAKPOINT 4
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$pagination-bp-04-on: false; // enable breakpoint
+	$pagination-bp-04-respond-at: theme.$bp-04;
+	$pagination-bp-04-spacing: false; // spacing for pagination
+	$pagination-bp-04-font-size: false; // font size for pagination
+	$pagination-bp-04-icon-size: false; // width of previous / next icon
+
+	// CSS BLOCK
+
+	@if $pagination-bp-04-on == true {
+		@include mixins.respond-min($pagination-bp-04-respond-at) {
+			.ss__theme .ss__pagination {
+				.ss__pagination__row {
+					@if $pagination-bp-04-spacing != false {
+						@include mixins.gap($pagination-bp-04-spacing);
+					}
+					.ss__pagination__column {
+						.ss__pagination__link, .ss__pagination__label {
+							@include mixins.if-exists((font-size: $pagination-bp-04-font-size));
+						}
+						.ss__pagination__link {}
+						.ss__pagination__label {}
+					}
+					.ss__pagination__current .ss__pagination__label {}
+					.ss__pagination__first {}
+					.ss__pagination__last {}
+					.ss__pagination__hellip {}
+					.ss__pagination__previous, .ss__pagination__next {
+						.ss__pagination__link {
+							@if $pagination-bp-04-spacing != false {
+								@include mixins.gap(calc($pagination-bp-04-spacing / 2));
+							}
+							.ss__icon__wrapper {
+								@include mixins.icon-sizing($pagination-bp-04-icon-size);
+							}
+						}
+					}
+				}
+			}
+		}
+	}

@@ -1,0 +1,473 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_everest' as style;
+
+//// TOOLBAR
+//// --------------------------------------------------------------------------
+//// Note: for width variables, assign value as fill to fill empty space. 
+
+	// COLORS
+
+	$toolbar-color-01: false; // count
+	$toolbar-color-02: false; // count range
+	$toolbar-color-03: false; // count total
+
+	// CONFIGURATION
+
+	$toolbar-on: true; // enable toolbar
+	$toolbar-spacing: false; // spacing for toolbar
+	$toolbar-count-width: fill; // width of count
+	$toolbar-count-min-width: calc(100% - 100px); // min-width of count (breaks some columns to new line)
+	$toolbar-count-title-font-size: 18px; // font size of count
+	$toolbar-sort-width: 60%; // width of sort
+	$toolbar-per-page-width: 50%; // width of per page
+	$toolbar-slideout-width: 40%; // width of slideout
+	$toolbar-pagination-align: center; // right or center
+
+	// LOGIC VARIABLES (leave as is)
+
+	$var-toolbar-spacing: if($toolbar-spacing != false, $toolbar-spacing, 10px);
+	$var-toolbar-spacing-half: calc($var-toolbar-spacing / 2);
+
+	// CSS BLOCK
+
+	@if $toolbar-on == true {
+		.ss__theme {
+			.ss__toolbar {
+				.ss__toolbar__row {
+					@include mixins.flex-layout((align-items: center));
+					@include mixins.gap($var-toolbar-spacing);
+					.ss__toolbar__column {
+						@include mixins.flex(0 1 auto);
+						min-width: 1px;
+					}
+					.ss__toolbar__column--count {
+						@if $toolbar-count-width == fill {
+							@include mixins.flex;
+						} @else if $toolbar-count-width != false {
+							@if ($toolbar-count-width == auto) {
+								width: auto;
+							} @else {
+								width: calc($toolbar-count-width - $var-toolbar-spacing-half);
+							}
+						}
+						@include mixins.if-exists((min-width: $toolbar-count-min-width));
+					}
+					.ss__toolbar__column--sort {
+						@if $toolbar-sort-width == fill {
+							@include mixins.flex;
+						} @else if $toolbar-sort-width != false {
+							@if ($toolbar-sort-width == auto) {
+								width: auto;
+							} @else {
+								width: calc($toolbar-sort-width - $var-toolbar-spacing-half);
+							}
+						}
+					}
+					.ss__toolbar__column--per-page {
+						@if $toolbar-per-page-width == fill {
+							@include mixins.flex;
+						} @else if $toolbar-per-page-width != false {
+							@if ($toolbar-per-page-width == auto) {
+								width: auto;
+							} @else {
+								width: calc($toolbar-per-page-width - $var-toolbar-spacing-half);
+							}
+						}
+					}
+					.ss__toolbar__column--slideout {
+						@if $toolbar-slideout-width == fill {
+							@include mixins.flex;
+						} @else if $toolbar-slideout-width != false {
+							@if ($toolbar-slideout-width == auto) {
+								width: auto;
+							} @else {
+								width: calc($toolbar-slideout-width - $var-toolbar-spacing-half);
+							}
+						}
+					}
+				}
+				.ss__count {
+					margin: 0;
+					@include mixins.if-exists((
+						font-size: $toolbar-count-title-font-size,
+						color: $toolbar-color-01
+					));
+					.ss__count__range {
+						@include mixins.if-exists((color: $toolbar-color-02));
+					}
+					.ss__count__total {
+						@include mixins.if-exists((color: $toolbar-color-03));
+					}
+				}
+				.ss__dropdown {}
+				.ss__pagination {
+					.ss__pagination__row {
+						@if $toolbar-pagination-align == right {
+							@include mixins.flex-parent(justify-content, flex-end);
+						} @else if $toolbar-pagination-align == center {
+							@include mixins.flex-parent(justify-content, center);
+						} 
+					}
+				}
+			}
+			.ss__toolbar--top {
+				margin: 0 0 calc($var-toolbar-spacing * 2) 0;
+			}
+			.ss__toolbar--bottom {}
+		}
+	}
+
+//// TOOLBAR - BREAKPOINT 1
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$toolbar-bp-01-on: false; // enable breakpoint
+	$toolbar-bp-01-respond-at: theme.$bp-01;
+	$toolbar-bp-01-count-width: false; // width of count
+	$toolbar-bp-01-count-min-width: false; // min-width of count
+	$toolbar-bp-01-count-title-font-size: false; // font size of count
+	$toolbar-bp-01-sort-width: false; // width of sort
+	$toolbar-bp-01-per-page-width: false; // width of per page
+	$toolbar-bp-01-slideout-width: false; // width of slideout
+	$toolbar-bp-01-pagination-align: false; // right or center
+
+	// CSS BLOCK
+
+	@if $toolbar-bp-01-on == true {
+		@include mixins.respond-min($toolbar-bp-01-respond-at) {
+			.ss__theme {
+				.ss__toolbar {
+					.ss__toolbar__row {
+						.ss__toolbar__column--count {
+							@if $toolbar-bp-01-count-width == fill {
+								@include mixins.flex;
+							} @else if $toolbar-bp-01-count-width != false {
+								@if ($toolbar-bp-01-count-width == auto) {
+									width: auto;
+								} @else {
+									width: calc($toolbar-bp-01-count-width - $var-toolbar-spacing-half);
+								}
+							}
+							@include mixins.if-exists((min-width: $toolbar-bp-01-count-min-width));
+						}
+						.ss__toolbar__column--sort {
+							@if $toolbar-bp-01-sort-width == fill {
+								@include mixins.flex;
+							} @else if $toolbar-bp-01-sort-width != false {
+								@if ($toolbar-bp-01-sort-width == auto) {
+									width: auto;
+								} @else {
+									width: calc($toolbar-bp-01-sort-width - $var-toolbar-spacing-half);
+								}
+							}
+						}
+						.ss__toolbar__column--per-page {
+							@if $toolbar-bp-01-per-page-width == fill {
+								@include mixins.flex;
+							} @else if $toolbar-bp-01-per-page-width != false {
+								@if ($toolbar-bp-01-per-page-width == auto) {
+									width: auto;
+								} @else {
+									width: calc($toolbar-bp-01-per-page-width - $var-toolbar-spacing-half);
+								}
+							}
+						}
+						.ss__toolbar__column--slideout {
+							@if $toolbar-bp-01-slideout-width == fill {
+								@include mixins.flex;
+							} @else if $toolbar-bp-01-slideout-width != false {
+								@if ($toolbar-bp-01-slideout-width == auto) {
+									width: auto;
+								} @else {
+									width: calc($toolbar-bp-01-slideout-width - $var-toolbar-spacing-half);
+								}
+							}
+						}
+					}
+					.ss__count {
+						@include mixins.if-exists((font-size: $toolbar-bp-01-count-title-font-size));
+					}
+					.ss__dropdown {}
+					.ss__pagination {
+						.ss__pagination__row {
+							@if $toolbar-bp-01-pagination-align == right {
+								@include mixins.flex-parent(justify-content, flex-end);
+							} @else if $toolbar-bp-01-pagination-align == center {
+								@include mixins.flex-parent(justify-content, center);
+							} 
+						}
+					}
+				}
+				.ss__toolbar--top {}
+				.ss__toolbar--bottom {}
+			}
+		}
+	}
+
+//// TOOLBAR - BREAKPOINT 2
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$toolbar-bp-02-on: true; // enable breakpoint
+	$toolbar-bp-02-respond-at: theme.$bp-02;
+	$toolbar-bp-02-count-width: false; // width of count
+	$toolbar-bp-02-count-min-width: false; // min-width of count
+	$toolbar-bp-02-count-title-font-size: 16px; // font size of count
+	$toolbar-bp-02-sort-width: 50%; // width of sort
+	$toolbar-bp-02-per-page-width: false; // width of per page
+	$toolbar-bp-02-slideout-width: false; // width of slideout
+	$toolbar-bp-02-pagination-align: false; // right or center
+
+	// CSS BLOCK
+
+	@if $toolbar-bp-02-on == true {
+		@include mixins.respond-min($toolbar-bp-02-respond-at) {
+			.ss__theme {
+				.ss__toolbar {
+					.ss__toolbar__row {
+						.ss__toolbar__column--count {
+							@if $toolbar-bp-02-count-width == fill {
+								@include mixins.flex;
+							} @else if $toolbar-bp-02-count-width != false {
+								@if ($toolbar-bp-02-count-width == auto) {
+									width: auto;
+								} @else {
+									width: calc($toolbar-bp-02-count-width - $var-toolbar-spacing-half);
+								}
+							}
+							@include mixins.if-exists((min-width: $toolbar-bp-02-count-min-width));
+						}
+						.ss__toolbar__column--sort {
+							@if $toolbar-bp-02-sort-width == fill {
+								@include mixins.flex;
+							} @else if $toolbar-bp-02-sort-width != false {
+								@if ($toolbar-bp-02-sort-width == auto) {
+									width: auto;
+								} @else {
+									width: calc($toolbar-bp-02-sort-width - $var-toolbar-spacing-half);
+								}
+							}
+						}
+						.ss__toolbar__column--per-page {
+							@if $toolbar-bp-02-per-page-width == fill {
+								@include mixins.flex;
+							} @else if $toolbar-bp-02-per-page-width != false {
+								@if ($toolbar-bp-02-per-page-width == auto) {
+									width: auto;
+								} @else {
+									width: calc($toolbar-bp-02-per-page-width - $var-toolbar-spacing-half);
+								}
+							}
+						}
+						.ss__toolbar__column--slideout {
+							@if $toolbar-bp-02-slideout-width == fill {
+								@include mixins.flex;
+							} @else if $toolbar-bp-02-slideout-width != false {
+								@if ($toolbar-bp-02-slideout-width == auto) {
+									width: auto;
+								} @else {
+									width: calc($toolbar-bp-02-slideout-width - $var-toolbar-spacing-half);
+								}
+							}
+						}
+					}
+					.ss__count {
+						@include mixins.if-exists((font-size: $toolbar-bp-02-count-title-font-size));
+					}
+					.ss__dropdown {}
+					.ss__pagination {
+						.ss__pagination__row {
+							@if $toolbar-bp-02-pagination-align == right {
+								@include mixins.flex-parent(justify-content, flex-end);
+							} @else if $toolbar-bp-02-pagination-align == center {
+								@include mixins.flex-parent(justify-content, center);
+							} 
+						}
+					}
+				}
+				.ss__toolbar--top {}
+				.ss__toolbar--bottom {}
+			}
+		}
+	}
+
+//// TOOLBAR - BREAKPOINT 3
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$toolbar-bp-03-on: true; // enable breakpoint
+	$toolbar-bp-03-respond-at: theme.$bp-03;
+	$toolbar-bp-03-count-width: false; // width of count
+	$toolbar-bp-03-count-min-width: 1px; // min-width of count
+	$toolbar-bp-03-count-title-font-size: false; // font size of count
+	$toolbar-bp-03-sort-width: auto; // width of sort
+	$toolbar-bp-03-per-page-width: auto; // width of per page
+	$toolbar-bp-03-slideout-width: false; // width of slideout
+	$toolbar-bp-03-pagination-align: false; // right or center
+
+	// CSS BLOCK
+
+	@if $toolbar-bp-03-on == true {
+		@include mixins.respond-min($toolbar-bp-03-respond-at) {
+			.ss__theme {
+				.ss__toolbar {
+					.ss__toolbar__row {
+						.ss__toolbar__column--count {
+							@if $toolbar-bp-03-count-width == fill {
+								@include mixins.flex;
+							} @else if $toolbar-bp-03-count-width != false {
+								@if ($toolbar-bp-03-count-width == auto) {
+									width: auto;
+								} @else {
+									width: calc($toolbar-bp-03-count-width - $var-toolbar-spacing-half);
+								}
+							}
+							@include mixins.if-exists((min-width: $toolbar-bp-03-count-min-width));
+						}
+						.ss__toolbar__column--sort {
+							@if $toolbar-bp-03-sort-width == fill {
+								@include mixins.flex;
+							} @else if $toolbar-bp-03-sort-width != false {
+								@if ($toolbar-bp-03-sort-width == auto) {
+									width: auto;
+								} @else {
+									width: calc($toolbar-bp-03-sort-width - $var-toolbar-spacing-half);
+								}
+							}
+						}
+						.ss__toolbar__column--per-page {
+							@if $toolbar-bp-03-per-page-width == fill {
+								@include mixins.flex;
+							} @else if $toolbar-bp-03-per-page-width != false {
+								@if ($toolbar-bp-03-per-page-width == auto) {
+									width: auto;
+								} @else {
+									width: calc($toolbar-bp-03-per-page-width - $var-toolbar-spacing-half);
+								}
+							}
+						}
+						.ss__toolbar__column--slideout {
+							@if $toolbar-bp-03-slideout-width == fill {
+								@include mixins.flex;
+							} @else if $toolbar-bp-03-slideout-width != false {
+								@if ($toolbar-bp-03-slideout-width == auto) {
+									width: auto;
+								} @else {
+									width: calc($toolbar-bp-03-slideout-width - $var-toolbar-spacing-half);
+								}
+							}
+						}
+					}
+					.ss__count {
+						@include mixins.if-exists((font-size: $toolbar-bp-03-count-title-font-size));
+					}
+					.ss__dropdown {}
+					.ss__pagination {
+						.ss__pagination__row {
+							@if $toolbar-bp-03-pagination-align == right {
+								@include mixins.flex-parent(justify-content, flex-end);
+							} @else if $toolbar-bp-03-pagination-align == center {
+								@include mixins.flex-parent(justify-content, center);
+							} 
+						}
+					}
+				}
+				.ss__toolbar--top {}
+				.ss__toolbar--bottom {}
+			}
+		}
+	}
+
+//// TOOLBAR - BREAKPOINT 4
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$toolbar-bp-04-on: false; // enable breakpoint
+	$toolbar-bp-04-respond-at: theme.$bp-04;
+	$toolbar-bp-04-count-width: false; // width of count
+	$toolbar-bp-04-count-min-width: false; // min-width of count
+	$toolbar-bp-04-count-title-font-size: false; // font size of count
+	$toolbar-bp-04-sort-width: false; // width of sort
+	$toolbar-bp-04-per-page-width: false; // width of per page
+	$toolbar-bp-04-slideout-width: false; // width of slideout
+	$toolbar-bp-04-pagination-align: false; // right or center
+
+	// CSS BLOCK
+
+	@if $toolbar-bp-04-on == true {
+		@include mixins.respond-min($toolbar-bp-04-respond-at) {
+			.ss__theme {
+				.ss__toolbar {
+					.ss__toolbar__row {
+						.ss__toolbar__column--count {
+							@if $toolbar-bp-04-count-width == fill {
+								@include mixins.flex;
+							} @else if $toolbar-bp-04-count-width != false {
+								@if ($toolbar-bp-04-count-width == auto) {
+									width: auto;
+								} @else {
+									width: calc($toolbar-bp-04-count-width - $var-toolbar-spacing-half);
+								}
+							}
+							@include mixins.if-exists((min-width: $toolbar-bp-04-count-min-width));
+						}
+						.ss__toolbar__column--sort {
+							@if $toolbar-bp-04-sort-width == fill {
+								@include mixins.flex;
+							} @else if $toolbar-bp-04-sort-width != false {
+								@if ($toolbar-bp-04-sort-width == auto) {
+									width: auto;
+								} @else {
+									width: calc($toolbar-bp-04-sort-width - $var-toolbar-spacing-half);
+								}
+							}
+						}
+						.ss__toolbar__column--per-page {
+							@if $toolbar-bp-04-per-page-width == fill {
+								@include mixins.flex;
+							} @else if $toolbar-bp-04-per-page-width != false {
+								@if ($toolbar-bp-04-per-page-width == auto) {
+									width: auto;
+								} @else {
+									width: calc($toolbar-bp-04-per-page-width - $var-toolbar-spacing-half);
+								}
+							}
+						}
+						.ss__toolbar__column--slideout {
+							@if $toolbar-bp-04-slideout-width == fill {
+								@include mixins.flex;
+							} @else if $toolbar-bp-04-slideout-width != false {
+								@if ($toolbar-bp-04-slideout-width == auto) {
+									width: auto;
+								} @else {
+									width: calc($toolbar-bp-04-slideout-width - $var-toolbar-spacing-half);
+								}
+							}
+						}
+					}
+					.ss__count {
+						@include mixins.if-exists((font-size: $toolbar-bp-04-count-title-font-size));
+					}
+					.ss__dropdown {}
+					.ss__pagination {
+						.ss__pagination__row {
+							@if $toolbar-bp-04-pagination-align == right {
+								@include mixins.flex-parent(justify-content, flex-end);
+							} @else if $toolbar-bp-04-pagination-align == center {
+								@include mixins.flex-parent(justify-content, center);
+							} 
+						}
+					}
+				}
+				.ss__toolbar--top {}
+				.ss__toolbar--bottom {}
+			}
+		}
+	}

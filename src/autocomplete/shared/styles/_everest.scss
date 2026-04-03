@@ -1,0 +1,926 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_everest' as style;
+
+//// AUTOCOMPLETE
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$shared-color-01: false; // link
+	$shared-color-02: style.$color-07; // header color
+	$shared-color-03: style.$color-08; // active and focus highlight text
+
+	// CONFIGURATION
+
+	$shared-on: true; // enable autocomplete
+	$shared-font-size: 12px; // font size for main autocomplete text
+	$shared-active-font-weight: style.$font-weight-01; // font weight for active elements like terms, facets, and results
+	$shared-title-font-size: 14px; // font size for autocomplete headers
+	$shared-title-font-family: style.$font-family-02; // font family for autocomplete headers
+	$shared-title-font-weight: style.$font-weight-02; // font weight for autocomplete headers
+	$shared-title-font-style: style.$font-style; // font style for autocomplete headers
+	$shared-title-font-transform: style.$font-transform; // text transform for autocomplete headers
+	$shared-merchandising-image-height: 150px; // max height for merchandising images
+
+	// CSS BLOCK
+
+	@if $shared-on == true {
+		.ss__autocomplete--target {
+			.ss__autocomplete {
+				a, div, p {
+					text-align: left;
+					font-size: $shared-font-size;
+					line-height: 1.5;
+					@include mixins.if-exists((color: $shared-color-01));
+				}
+				a {
+					display: block;
+				}
+				.ss__autocomplete__terms .ss__autocomplete__title h5, .ss__autocomplete__facets .ss__facets .ss__facet .ss__facet__header, .ss__autocomplete__content__results .ss__autocomplete__title h5, .ss__autocomplete__content__info a {
+					margin: 0 0 20px 0;
+					line-height: 1.2;
+					font-size: $shared-title-font-size;
+					@include mixins.if-exists((
+						color: $shared-color-02,
+						font-family: $shared-title-font-family,
+						font-weight: $shared-title-font-weight,
+						font-style: $shared-title-font-style,
+						text-transform: $shared-title-font-transform
+					));
+				}
+				.ss__autocomplete__terms .ss__autocomplete__terms__options .ss__autocomplete__terms__option--active a, 
+				.ss__autocomplete__facets .ss__facets .ss__facet .ss__facet__options .ss__facet-list-options .ss__facet-list-options__option--filtered, 
+				.ss__autocomplete__content__results .ss__results .ss__result:hover .ss__result__details .ss__result__details__title a,
+				.ss__autocomplete__content__info a:hover {
+					@include mixins.if-exists((
+						font-weight: $shared-active-font-weight,
+						color: $shared-color-03
+					));
+				}
+				.ss__banner {
+					img {
+						max-width: 100%;
+						@include mixins.if-exists((max-height: $shared-merchandising-image-height));
+						height: auto !important;
+					}
+				}
+			}
+		}
+	}
+
+//// AUTOCOMPLETE - TERMS
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$shared-terms-color-01: style.$color-05; // override for em inside term
+	$shared-terms-font-size: 14px; // terms font size
+
+	// CSS BLOCK
+
+	@if $shared-on == true {
+		.ss__autocomplete--target .ss__autocomplete .ss__autocomplete__terms {
+			@include mixins.flex-layout((flex-flow: row nowrap));
+			@include mixins.gap(20px);
+			& > div {
+				min-width: 1px;
+				@include mixins.flex;
+			}
+			.ss__autocomplete__terms__trending {}
+			.ss__autocomplete__terms__history {}
+			.ss__autocomplete__title h5 {}
+			.ss__autocomplete__terms__options {
+				@include mixins.flex-layout;
+				@include mixins.gap(5px 20px);
+				.ss__autocomplete__terms__option {
+					@include mixins.flex(0 1 auto);
+					a {
+						@include mixins.if-exists((font-size: $shared-terms-font-size));
+						@include mixins.if-exists((color: $shared-color-03));
+						em {
+							font-style: normal;
+							font-size: inherit;
+							font-weight: inherit;
+							@include mixins.if-exists((color: $shared-terms-color-01));
+						}
+					}
+				}
+				.ss__autocomplete__terms__option--active {
+					a em {
+						color: inherit;
+					}
+				}
+			}
+		}
+	}
+
+//// AUTOCOMPLETE - FACETS
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$shared-facets-grid-width: 38px; // override for grid width
+	$shared-facets-palette-grid-width: 38px; // override for palette grid width
+	$shared-facets-palette-list-spacing: 30px; // spacing for list palette
+	$shared-facets-palette-list-align: left; // alignment for list palette
+	$shared-facets-palette-list-vertical: -2.5px; // top position of palette
+	$shared-facets-palette-list-horizontal: false; // left or right position of palette
+	$shared-facets-palette-list-size: 20px; // size for list palette
+
+	// LOGIC VARIABLES (leave as is)
+
+	$var-shared-facets-palette-list-align: if($shared-facets-palette-list-align == right, right, left);
+	$var-shared-facets-palette-list-align-reverse: if($shared-facets-palette-list-align == right, left, right);
+
+	// CSS BLOCK
+
+	@if $shared-on == true {
+		.ss__autocomplete--target .ss__autocomplete .ss__autocomplete__facets {
+			.ss__facets {
+				@include mixins.flex-layout((flex-flow: row nowrap));
+				@include mixins.gap(20px);
+				& > div {
+					min-width: 1px;
+					@include mixins.flex;
+				}
+				.ss__facet {
+					.ss__facet__options {
+						.ss__facet-list-options {
+							.ss__facet-list-options__option {
+								margin: 0 0 5px 0;
+								&:last-child {
+									margin-bottom: 0;
+								}
+							}
+						}
+						.ss__grid {
+							@if ($shared-facets-grid-width != false) {
+								@include mixins.grid-columns($shared-facets-grid-width);
+							}
+						}
+						.ss__palette {
+							.ss__palette__option {
+								.ss__palette__link {}
+							}
+						}
+						.ss__palette--grid {
+							@if ($shared-facets-palette-grid-width != false) {
+								@include mixins.grid-columns($shared-facets-palette-grid-width);
+							}
+						}
+						.ss__palette--list {
+							.ss__palette__link {
+								@if $shared-facets-palette-list-align != false and $shared-facets-palette-list-spacing != false {
+									padding-#{$var-shared-facets-palette-list-align}: $shared-facets-palette-list-spacing;
+									padding-#{$var-shared-facets-palette-list-align-reverse}: 0;
+								}
+								.ss__palette__block {
+									@if $shared-facets-palette-list-vertical != false {
+										top: $shared-facets-palette-list-vertical;
+									}
+									@if $shared-facets-palette-list-align != false and $shared-facets-palette-list-horizontal != false {
+										#{$var-shared-facets-palette-list-align}: $shared-facets-palette-list-horizontal;
+										#{$var-shared-facets-palette-list-align-reverse}: auto;
+									}
+									@if ($shared-facets-palette-list-size != false) {
+										@include mixins.icon-sizing($shared-facets-palette-list-size);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// AUTOCOMPLETE - RESULTS
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$shared-results-color-01: false; // item name
+
+	// CONFIGURATION
+
+	$shared-results-item-layout: grid; // grid or list
+	$shared-results-item-columns: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10); // array to set column widths for results
+	$shared-results-item-layout-list-vertical-align: true; // enable vertical center of image and details
+	$shared-results-item-layout-list-image-width: 80px; // image width
+	$shared-results-item-image-height: 100%; // fluid should use percentage, fixed should use pixels
+	$shared-results-item-image-fit-on: true; // make image fit space
+	$shared-results-item-image-fit-position: center top; // fit position of image
+	$shared-results-item-image-fit: cover; // fit size of image (cover, contain, 100% auto, etc.)
+	$shared-results-grid-inline-banner-height: 250px; // max-height for grid inline banner
+	$shared-results-list-inline-banner-height: 100px; // max-height for list inline banner
+	$shared-no-results-font-size: $shared-font-size + 2px; // no results font size
+
+	// CSS BLOCK
+
+	@if $shared-on == true {
+		.ss__autocomplete--target .ss__autocomplete {
+			.ss__autocomplete__content__results {
+				.ss__autocomplete__title h5 {}
+				.ss__results {
+					margin: 0;
+					.ss__result, .ss__inline-banner {
+						min-width: 1px;
+					}
+					.ss__result {
+						.ss__result__image-wrapper {
+							.ss__image {
+								position: relative;
+								line-height: 0;
+								@if $shared-results-item-image-height != false {
+									@include mixins.fluid-sizing($shared-results-item-image-height);
+									img {
+										@include mixins.position-fill;
+										@if $shared-results-item-image-fit-on == true {
+											@include mixins.object-fit($shared-results-item-image-fit-position, $shared-results-item-image-fit);
+											@include mixins.sizing(100%, 100%);
+										} @else {
+											@include mixins.image-base;
+										}
+									}
+								}
+							}
+						}
+						.ss__result__details {
+							& > * {
+								margin: 0 0 5px 0;
+								&:last-child {
+									margin-bottom: 0;
+								}
+							}
+							.ss__result__details__title a {
+								@include mixins.line-clamp(2);
+								@include mixins.if-exists((color: $shared-results-color-01));
+							}
+							.ss__result__pricing span {
+								font-size: $shared-font-size;
+							}
+						}
+					}
+					.ss__inline-banner {
+						overflow: hidden;
+					}
+				}
+				.ss__results-grid {
+					@include mixins.flex-layout;
+					@include mixins.gap(20px 10px);
+					@each $column in $shared-results-item-columns {
+						&.ss__results-#{$column} {
+							.ss__result, .ss__inline-banner {
+								@include mixins.flex(0 1 auto);
+								@include mixins.gap-width(10px, $column);
+							}
+						}
+					}
+					.ss__result {
+						.ss__result__image-wrapper {
+							margin: 0 0 10px 0;
+						}
+						.ss__result__details {
+							a, p {
+								text-align: center;
+							}
+						}
+					}
+					.ss__inline-banner {
+						@include mixins.if-exists((max-height: $shared-results-grid-inline-banner-height));
+					}
+				}
+				.ss__results-list {
+					@include mixins.gap(10px);
+					.ss__result, .ss__inline-banner {
+						@include mixins.flex(1 1 100%);
+					}
+					.ss__result {
+						@if $shared-results-item-layout-list-vertical-align == true {
+							@include mixins.flex-layout((flex-flow: row nowrap, align-items: center));
+						} @else {
+							@include mixins.flex-layout((flex-flow: row nowrap));
+						}
+						@include mixins.gap(10px);
+						.ss__result__image-wrapper, .ss__result__details {
+							min-width: 1px;
+						}
+						.ss__result__image-wrapper {
+							@include mixins.flex(0 1 auto);
+							width: $shared-results-item-layout-list-image-width;
+							margin: 0;
+							.ss__image {
+								height: auto;
+								padding-bottom: 0;
+								img {
+									position: static;
+									margin: 0;
+									width: 100%;
+								}
+							}
+						}
+						.ss__result__details {
+							@include mixins.flex;
+							@include mixins.flex-layout((align-items: center));
+							@include mixins.gap(5px);
+							& > * {
+								@include mixins.flex(1 1 100%);
+								min-width: 1px;
+								margin: 0;
+							}
+							.ss__callout-badge {
+								@include mixins.flex-parent(justify-content, flex-start);
+							}
+						}
+					}
+					.ss__inline-banner {
+						@include mixins.if-exists((max-height: $shared-results-list-inline-banner-height));
+					}
+				}
+			}
+			.ss__autocomplete__content__no-results {
+				p {
+					display: inline;
+					margin: 0;
+					padding: 0;
+					@include mixins.if-exists((font-size: $shared-no-results-font-size));
+					& ~ p {
+						padding-left: 4px;
+					}
+				}
+			}
+		}
+	}
+
+//// AUTOCOMPLETE - SEE MORE RESULTS
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$shared-more-color-01: false; // see more icon
+
+	// CONFIGURATION
+
+	$shared-more-icon-size: false; // icon size
+	$shared-more-icon-spacing: 17px; // spacing for icon
+	$shared-more-icon-align: right; // icon alignment left or right
+	$shared-more-icon-vertical: 0; // adjust vertical position of icon
+	$shared-more-icon-horizontal: 0; // adjust horizontal position of icon
+
+	// CSS BLOCK
+
+	@if $shared-on == true {
+		.ss__autocomplete--target .ss__autocomplete .ss__autocomplete__content__info {
+			a {
+				display: inline-block;
+				position: relative;
+				margin: 0;
+				@if $shared-more-icon-spacing != false and $shared-more-icon-align != false {
+					padding-#{$shared-more-icon-align}: $shared-more-icon-spacing;
+				}
+				.ss__icon__wrapper {
+					@include mixins.icon-sizing($shared-more-icon-size);
+					@if $shared-more-icon-vertical != false and $shared-more-icon-align != false and $shared-more-icon-horizontal!= false {
+						@include mixins.position($type: absolute, $top: $shared-more-icon-vertical, $bottom: 0);
+						#{$shared-more-icon-align}: $shared-more-icon-horizontal;
+						margin: auto 0;
+					}
+					.ss__icon {
+						@include mixins.if-exists((fill: $shared-more-color-01));
+					}
+				}
+			}
+		}
+	}
+
+//// AUTOCOMPLETE - BREAKPOINT 1
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$shared-bp-01-on: true; // enable breakpoint
+	$shared-bp-01-respond-at: theme.$bp-01;
+	$shared-bp-01-title-font-size: false; // font size for autocomplete headers
+	$shared-bp-01-terms-font-size: false; // terms font size
+	$shared-bp-01-facets-grid-width: false; // override for grid width
+	$shared-bp-01-facets-palette-grid-width: false; // override for palette grid width
+	$shared-bp-01-facets-palette-list-spacing: false; // spacing for list palette
+	$shared-bp-01-facets-palette-list-align: false; // alignment for list palette
+	$shared-bp-01-facets-palette-list-vertical: false; // top position of palette
+	$shared-bp-01-facets-palette-list-horizontal: false; // left or right position of palette
+	$shared-bp-01-facets-palette-list-size: false; // override for palette list size
+	$shared-bp-01-results-item-layout-list-image-width: false; // image width
+	$shared-bp-01-results-item-image-height: false; // fluid should use percentage, fixed should use pixels
+	$shared-bp-01-no-results-font-size: false; // no results font size	
+	$shared-bp-01-more-icon-vertical: false; // adjust vertical position of icon
+
+	// LOGIC VARIABLES (leave as is)
+
+	$var-shared-bp-01-facets-palette-list-align: if($shared-bp-01-facets-palette-list-align == right, right, left);
+	$var-shared-bp-01-facets-palette-list-align-reverse: if($shared-bp-01-facets-palette-list-align == right, left, right);	
+
+	// CSS BLOCK
+
+	@if $shared-bp-01-on == true {
+		@include mixins.respond-min($shared-bp-01-respond-at) {
+			.ss__autocomplete--target {
+				.ss__autocomplete {
+					.ss__autocomplete__terms .ss__autocomplete__title h5, .ss__autocomplete__facets .ss__facets .ss__facet .ss__facet__header, .ss__autocomplete__content__results .ss__autocomplete__title h5, .ss__autocomplete__content__info a {
+						@include mixins.if-exists((font-size: $shared-bp-01-title-font-size));
+					}
+					.ss__autocomplete__terms {
+						.ss__autocomplete__terms__suggestions {}
+						.ss__autocomplete__terms__trending {}
+						.ss__autocomplete__terms__history {}
+						.ss__autocomplete__title h5 {}
+						.ss__autocomplete__terms__options {
+							.ss__autocomplete__terms__option a {
+								@include mixins.if-exists((font-size: $shared-bp-01-terms-font-size));
+							}
+						}
+					}
+					.ss__autocomplete__facets {
+						.ss__facets {
+							.ss__facet {
+								.ss__facet__header {}
+								.ss__facet__options {
+									.ss__facet-list-options {}
+									.ss__grid {
+										@if ($shared-bp-01-facets-grid-width != false) {
+											@include mixins.grid-columns($shared-bp-01-facets-grid-width);
+										}
+									}
+									.ss__palette {}
+									.ss__palette--grid {
+										@if ($shared-bp-01-facets-palette-grid-width != false) {
+											@include mixins.grid-columns($shared-bp-01-facets-palette-grid-width);
+										}
+									}
+									.ss__palette--list {
+										.ss__palette__link {
+											@if $shared-bp-01-facets-palette-list-align != false and $shared-bp-01-facets-palette-list-spacing != false {
+												padding-#{$var-shared-bp-01-facets-palette-list-align}: $shared-bp-01-facets-palette-list-spacing;
+												padding-#{$var-shared-bp-01-facets-palette-list-align-reverse}: 0;
+											}
+											.ss__palette__block {
+												@if $shared-bp-01-facets-palette-list-vertical != false {
+													top: $shared-bp-01-facets-palette-list-vertical;
+												}
+												@if $shared-bp-01-facets-palette-list-align != false and $shared-bp-01-facets-palette-list-horizontal != false {
+													#{$var-shared-bp-01-facets-palette-list-align}: $shared-bp-01-facets-palette-list-horizontal;
+													#{$var-shared-bp-01-facets-palette-list-align-reverse}: auto;
+												}
+												@if ($shared-bp-01-facets-palette-list-size != false) {
+													@include mixins.icon-sizing($shared-bp-01-facets-palette-list-size);
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					.ss__autocomplete__content__results {
+						.ss__autocomplete__title h5 {}
+						.ss__results {
+							.ss__result {
+								.ss__result__image-wrapper {
+									.ss__image {
+										@if $shared-bp-01-results-item-image-height != false {
+											padding-bottom: $shared-bp-01-results-item-image-height;
+										}
+									}
+								}
+							}
+						}
+						.ss__results-grid {
+							.ss__result {}
+						}
+						.ss__results-list {
+							.ss__result {
+								.ss__result__image-wrapper {
+									@if $shared-bp-01-results-item-layout-list-image-width {
+										width: $shared-bp-01-results-item-layout-list-image-width;
+									}
+								}
+							}
+						}
+					}
+					.ss__autocomplete__content__no-results {
+						p {
+							@include mixins.if-exists((font-size: $shared-bp-01-no-results-font-size));
+						}
+					}
+					.ss__autocomplete__content__info a {
+						.ss__icon__wrapper {
+							@include mixins.if-exists((top: $shared-bp-01-more-icon-vertical));
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// AUTOCOMPLETE - BREAKPOINT 2
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$shared-bp-02-on: true; // enable breakpoint
+	$shared-bp-02-respond-at: theme.$bp-02;
+	$shared-bp-02-title-font-size: false; // font size for autocomplete headers
+	$shared-bp-02-terms-font-size: false; // terms font size
+	$shared-bp-02-facets-grid-width: false; // override for grid width
+	$shared-bp-02-facets-palette-grid-width: false; // override for palette grid width
+	$shared-bp-02-facets-palette-list-spacing: false; // spacing for list palette
+	$shared-bp-02-facets-palette-list-align: false; // alignment for list palette
+	$shared-bp-02-facets-palette-list-vertical: false; // top position of palette
+	$shared-bp-02-facets-palette-list-horizontal: false; // left or right position of palette
+	$shared-bp-02-facets-palette-list-size: false; // override for palette list size
+	$shared-bp-02-results-item-layout-list-image-width: false; // image width
+	$shared-bp-02-results-item-image-height: false; // fluid should use percentage, fixed should use pixels
+	$shared-bp-02-no-results-font-size: false; // no results font size	
+	$shared-bp-02-more-icon-vertical: false; // adjust vertical position of icon
+
+	// LOGIC VARIABLES (leave as is)
+
+	$var-shared-bp-02-facets-palette-list-align: if($shared-bp-02-facets-palette-list-align == right, right, left);
+	$var-shared-bp-02-facets-palette-list-align-reverse: if($shared-bp-02-facets-palette-list-align == right, left, right);	
+
+	// CSS BLOCK
+
+	@if $shared-bp-02-on == true {
+		@include mixins.respond-min($shared-bp-02-respond-at) {
+			.ss__autocomplete--target {
+				.ss__autocomplete {
+					.ss__autocomplete__terms .ss__autocomplete__title h5, .ss__autocomplete__facets .ss__facets .ss__facet .ss__facet__header, .ss__autocomplete__content__results .ss__autocomplete__title h5, .ss__autocomplete__content__info a {
+						@include mixins.if-exists((font-size: $shared-bp-02-title-font-size));
+					}
+					.ss__autocomplete__terms {
+						.ss__autocomplete__terms__suggestions {}
+						.ss__autocomplete__terms__trending {}
+						.ss__autocomplete__terms__history {}
+						.ss__autocomplete__title h5 {}
+						.ss__autocomplete__terms__options {
+							.ss__autocomplete__terms__option {
+								a {
+									@include mixins.if-exists((font-size: $shared-bp-02-terms-font-size));
+								}
+							}
+						}
+					}
+					.ss__autocomplete__facets {
+						.ss__facets {
+							.ss__facet {
+								.ss__facet__header {}
+								.ss__facet__options {
+									.ss__facet-list-options {}
+									.ss__grid {
+										@if ($shared-bp-02-facets-grid-width != false) {
+											@include mixins.grid-columns($shared-bp-02-facets-grid-width);
+										}
+									}
+									.ss__palette {}
+									.ss__palette--grid {
+										@if ($shared-bp-02-facets-palette-grid-width != false) {
+											@include mixins.grid-columns($shared-bp-02-facets-palette-grid-width);
+										}
+									}
+									.ss__palette--list {
+										.ss__palette__link {
+											@if $shared-bp-02-facets-palette-list-align != false and $shared-bp-02-facets-palette-list-spacing != false {
+												padding-#{$var-shared-bp-02-facets-palette-list-align}: $shared-bp-02-facets-palette-list-spacing;
+												padding-#{$var-shared-bp-02-facets-palette-list-align-reverse}: 0;
+											}
+											.ss__palette__block {
+												@if $shared-bp-02-facets-palette-list-vertical != false {
+													top: $shared-bp-02-facets-palette-list-vertical;
+												}
+												@if $shared-bp-02-facets-palette-list-align != false and $shared-bp-02-facets-palette-list-horizontal != false {
+													#{$var-shared-bp-02-facets-palette-list-align}: $shared-bp-02-facets-palette-list-horizontal;
+													#{$var-shared-bp-02-facets-palette-list-align-reverse}: auto;
+												}
+												@if ($shared-bp-02-facets-palette-list-size != false) {
+													@include mixins.icon-sizing($shared-bp-02-facets-palette-list-size);
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					.ss__autocomplete__content__results {
+						.ss__autocomplete__title h5 {}
+						.ss__results {
+							.ss__result {
+								.ss__result__image-wrapper {
+									.ss__image {
+										@if $shared-bp-02-results-item-image-height != false {
+											padding-bottom: $shared-bp-02-results-item-image-height;
+										}
+									}
+								}
+							}
+						}
+						.ss__results-grid {
+							@include mixins.gap(20px);
+							.ss__result {}
+							@each $column in $shared-results-item-columns {
+								&.ss__results-#{$column} {
+									.ss__result, .ss__inline-banner {
+										@include mixins.gap-width(20px, $column);
+									}
+								}
+							}
+						}
+						.ss__results-list {
+							.ss__result {
+								.ss__result__image-wrapper {
+									@if $shared-bp-02-results-item-layout-list-image-width {
+										width: $shared-bp-02-results-item-layout-list-image-width;
+									}
+								}
+							}
+						}
+					}
+					.ss__autocomplete__content__no-results {
+						p {
+							@include mixins.if-exists((font-size: $shared-bp-02-no-results-font-size));
+						}
+					}
+					.ss__autocomplete__content__info {
+						text-align: right;
+						a {
+							.ss__icon__wrapper {
+								@include mixins.if-exists((top: $shared-bp-02-more-icon-vertical));
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// AUTOCOMPLETE - BREAKPOINT 3
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$shared-bp-03-on: true; // enable breakpoint
+	$shared-bp-03-respond-at: theme.$bp-03;
+	$shared-bp-03-title-font-size: false; // font size for autocomplete headers
+	$shared-bp-03-terms-font-size: false; // terms font size
+	$shared-bp-03-facets-grid-width: false; // override for grid width
+	$shared-bp-03-facets-palette-grid-width: false; // override for palette grid width
+	$shared-bp-03-facets-palette-list-spacing: false; // spacing for list palette
+	$shared-bp-03-facets-palette-list-align: false; // alignment for list palette
+	$shared-bp-03-facets-palette-list-vertical: false; // top position of palette
+	$shared-bp-03-facets-palette-list-horizontal: false; // left or right position of palette
+	$shared-bp-03-facets-palette-list-size: false; // override for palette list size
+	$shared-bp-03-results-item-layout-list-image-width: false; // image width
+	$shared-bp-03-results-item-image-height: false; // fluid should use percentage, fixed should use pixels
+	$shared-bp-03-no-results-font-size: false; // no results font size	
+	$shared-bp-03-more-icon-vertical: false; // adjust vertical position of icon
+
+	// LOGIC VARIABLES (leave as is)
+
+	$var-shared-bp-03-facets-palette-list-align: if($shared-bp-03-facets-palette-list-align == right, right, left);
+	$var-shared-bp-03-facets-palette-list-align-reverse: if($shared-bp-03-facets-palette-list-align == right, left, right);	
+
+	// CSS BLOCK
+
+	@if $shared-bp-03-on == true {
+		@include mixins.respond-min($shared-bp-03-respond-at) {
+			.ss__autocomplete--target {
+				.ss__autocomplete {
+					.ss__autocomplete__terms .ss__autocomplete__title h5, .ss__autocomplete__facets .ss__facets .ss__facet .ss__facet__header, .ss__autocomplete__content__results .ss__autocomplete__title h5, .ss__autocomplete__content__info a {
+						@include mixins.if-exists((font-size: $shared-bp-03-title-font-size));
+					}
+					.ss__autocomplete__terms {
+						.ss__autocomplete__terms__suggestions {}
+						.ss__autocomplete__terms__trending {}
+						.ss__autocomplete__terms__history {}
+						.ss__autocomplete__title h5 {}
+						.ss__autocomplete__terms__options {
+							.ss__autocomplete__terms__option {
+								a {
+									@include mixins.if-exists((font-size: $shared-bp-03-terms-font-size));
+								}
+							}
+						}
+					}
+					.ss__autocomplete__facets {
+						.ss__facets {
+							.ss__facet {
+								.ss__facet__header {}
+								.ss__facet__options {
+									.ss__facet-list-options {}
+									.ss__grid {
+										@if ($shared-bp-03-facets-grid-width != false) {
+											@include mixins.grid-columns($shared-bp-03-facets-grid-width);
+										}
+									}
+									.ss__palette {}
+									.ss__palette--grid {
+										@if ($shared-bp-03-facets-palette-grid-width != false) {
+											@include mixins.grid-columns($shared-bp-03-facets-palette-grid-width);
+										}
+									}
+									.ss__palette--list {
+										.ss__palette__link {
+											@if $shared-bp-03-facets-palette-list-align != false and $shared-bp-03-facets-palette-list-spacing != false {
+												padding-#{$var-shared-bp-03-facets-palette-list-align}: $shared-bp-03-facets-palette-list-spacing;
+												padding-#{$var-shared-bp-03-facets-palette-list-align-reverse}: 0;
+											}
+											.ss__palette__block {
+												@if $shared-bp-03-facets-palette-list-vertical != false {
+													top: $shared-bp-03-facets-palette-list-vertical;
+												}
+												@if $shared-bp-03-facets-palette-list-align != false and $shared-bp-03-facets-palette-list-horizontal != false {
+													#{$var-shared-bp-03-facets-palette-list-align}: $shared-bp-03-facets-palette-list-horizontal;
+													#{$var-shared-bp-03-facets-palette-list-align-reverse}: auto;
+												}
+												@if ($shared-bp-03-facets-palette-list-size != false) {
+													@include mixins.icon-sizing($shared-bp-03-facets-palette-list-size);
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					.ss__autocomplete__content__results {
+						.ss__autocomplete__title h5 {}
+						.ss__results {
+							.ss__result {
+								.ss__result__image-wrapper {
+									.ss__image {
+										@if $shared-bp-03-results-item-image-height != false {
+											padding-bottom: $shared-bp-03-results-item-image-height;
+										}
+									}
+								}
+							}
+						}
+						.ss__results-grid {
+							.ss__result {}
+						}
+						.ss__results-list {
+							.ss__result {
+								.ss__result__image-wrapper {
+									@if $shared-bp-03-results-item-layout-list-image-width {
+										width: $shared-bp-03-results-item-layout-list-image-width;
+									}
+								}
+							}
+						}
+					}
+					.ss__autocomplete__content__no-results {
+						p {
+							@include mixins.if-exists((font-size: $shared-bp-03-no-results-font-size));
+						}
+					}
+					.ss__autocomplete__content__info a {
+						.ss__icon__wrapper {
+							@include mixins.if-exists((top: $shared-bp-03-more-icon-vertical));
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// AUTOCOMPLETE - BREAKPOINT 4
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$shared-bp-04-on: true; // enable breakpoint
+	$shared-bp-04-respond-at: theme.$bp-04;
+	$shared-bp-04-title-font-size: 16px; // font size for autocomplete headers
+	$shared-bp-04-terms-font-size: 16px; // terms font size
+	$shared-bp-04-facets-grid-width: false; // override for grid width
+	$shared-bp-04-facets-palette-grid-width: false; // override for palette grid width
+	$shared-bp-04-facets-palette-list-spacing: false; // spacing for list palette
+	$shared-bp-04-facets-palette-list-align: false; // alignment for list palette
+	$shared-bp-04-facets-palette-list-vertical: false; // top position of palette
+	$shared-bp-04-facets-palette-list-horizontal: false; // left or right position of palette
+	$shared-bp-04-facets-palette-list-size: false; // override for palette list size
+	$shared-bp-04-results-item-layout-list-image-width: false; // image width
+	$shared-bp-04-results-item-image-height: false; // fluid should use percentage, fixed should use pixels
+	$shared-bp-04-no-results-font-size: false; // no results font size	
+	$shared-bp-04-more-icon-vertical: false; // adjust vertical position of icon
+
+	// LOGIC VARIABLES (leave as is)
+
+	$var-shared-bp-04-facets-palette-list-align: if($shared-bp-04-facets-palette-list-align == right, right, left);
+	$var-shared-bp-04-facets-palette-list-align-reverse: if($shared-bp-04-facets-palette-list-align == right, left, right);	
+
+	// CSS BLOCK
+
+	@if $shared-bp-04-on == true {
+		@include mixins.respond-min($shared-bp-04-respond-at) {
+			.ss__autocomplete--target {
+				.ss__autocomplete {
+					.ss__autocomplete__terms .ss__autocomplete__title h5, .ss__autocomplete__facets .ss__facets .ss__facet .ss__facet__header, .ss__autocomplete__content__results .ss__autocomplete__title h5, .ss__autocomplete__content__info a {
+						@include mixins.if-exists((font-size: $shared-bp-04-title-font-size));
+					}
+					.ss__autocomplete__terms {
+						.ss__autocomplete__terms__suggestions {}
+						.ss__autocomplete__terms__trending {}
+						.ss__autocomplete__terms__history {}
+						.ss__autocomplete__title h5 {}
+						.ss__autocomplete__terms__options {
+							.ss__autocomplete__terms__option {
+								a {
+									@include mixins.if-exists((font-size: $shared-bp-04-terms-font-size));
+								}
+							}
+						}
+					}
+					.ss__autocomplete__facets {
+						.ss__facets {
+							.ss__facet {
+								.ss__facet__header {}
+								.ss__facet__options {
+									.ss__facet-list-options {}
+									.ss__grid {
+										@if ($shared-bp-04-facets-grid-width != false) {
+											@include mixins.grid-columns($shared-bp-04-facets-grid-width);
+										}
+									}
+									.ss__palette {}
+									.ss__palette--grid {
+										@if ($shared-bp-04-facets-palette-grid-width != false) {
+											@include mixins.grid-columns($shared-bp-04-facets-palette-grid-width);
+										}
+									}
+									.ss__palette--list {
+										.ss__palette__link {
+											@if $shared-bp-04-facets-palette-list-align != false and $shared-bp-04-facets-palette-list-spacing != false {
+												padding-#{$var-shared-bp-04-facets-palette-list-align}: $shared-bp-04-facets-palette-list-spacing;
+												padding-#{$var-shared-bp-04-facets-palette-list-align-reverse}: 0;
+											}
+											.ss__palette__block {
+												@if $shared-bp-04-facets-palette-list-vertical != false {
+													top: $shared-bp-04-facets-palette-list-vertical;
+												}
+												@if $shared-bp-04-facets-palette-list-align != false and $shared-bp-04-facets-palette-list-horizontal != false {
+													#{$var-shared-bp-04-facets-palette-list-align}: $shared-bp-04-facets-palette-list-horizontal;
+													#{$var-shared-bp-04-facets-palette-list-align-reverse}: auto;
+												}
+												@if ($shared-bp-04-facets-palette-list-size != false) {
+													@include mixins.icon-sizing($shared-bp-04-facets-palette-list-size);
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					.ss__autocomplete__content__results {
+						.ss__autocomplete__title h5 {}
+						.ss__results {
+							.ss__result {
+								.ss__result__image-wrapper {
+									.ss__image {
+										@if $shared-bp-04-results-item-image-height != false {
+											padding-bottom: $shared-bp-04-results-item-image-height;
+										}
+									}
+								}
+							}
+						}
+						.ss__results-grid {
+							.ss__result {}
+						}
+						.ss__results-list {
+							.ss__result {
+								.ss__result__image-wrapper {
+									@if $shared-bp-04-results-item-layout-list-image-width {
+										width: $shared-bp-04-results-item-layout-list-image-width;
+									}
+								}
+							}
+						}
+					}
+					.ss__autocomplete__content__no-results {
+						p {
+							@include mixins.if-exists((font-size: $shared-bp-04-no-results-font-size));
+						}
+					}
+					.ss__autocomplete__content__info a {
+						.ss__icon__wrapper {
+							@include mixins.if-exists((top: $shared-bp-04-more-icon-vertical));
+						}
+					}
+				}
+			}
+		}
+	}

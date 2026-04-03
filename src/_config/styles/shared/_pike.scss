@@ -1,0 +1,575 @@
+// use theme and variables
+@use '../utils/_mixins';
+@use '../utils/_functions';
+@use '../themes/_theme';
+@use '../themes/_pike' as style;
+
+//// SHARED STYLES AND HELPERS
+//// --------------------------------------------------------------------------
+//// Note: You may use this style block to define "shared" CSS styles and helpers for re-usable elements across components.
+
+	// COLORS
+
+	$shared-color-01: style.$color-05; // main font color
+	$shared-color-02: style.$color-05; // main link color
+	$shared-color-03: style.$color-07; // header color
+
+	// CONFIGURATION
+
+	$shared-box-sizing: true; // box-sizing for elements
+	$shared-clearfix: false; // clearfix helper for floats
+	$shared-pointer: true; // pointer helper for links
+	$shared-sr-only: true; // screen reader only css rules
+
+	// CSS BLOCK
+	
+	.ss__theme {
+		@if $shared-box-sizing == true {
+			&, *, *:before, *:after {
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+		}
+		p, ul li {
+			@include mixins.if-exists((
+				font-family: style.$font-family-01,
+				color: $shared-color-01
+			));
+		}
+		a {
+			@include mixins.if-exists((
+				font-family: style.$font-family-01,
+				color: $shared-color-02
+			));
+			text-decoration: none;
+		}
+		.ss__title {
+			@include mixins.if-exists((
+				color: $shared-color-03,
+				font-family: style.$font-family-02,
+				font-weight: style.$font-weight-02,
+				font-style: style.$font-style,
+				text-transform: style.$font-transform
+			));
+		}
+		@if $shared-clearfix == true {
+			.ss__clearfix {
+				@include mixins.clearfix('&');
+			}
+		}
+		@if $shared-pointer == true {
+			.ss__pointer {
+				cursor: pointer;
+			}
+		}
+		@if $shared-sr-only == true {
+			.ss__sr-only {
+				@include mixins.sr-only;
+			}
+		}
+	}
+
+//// SWIPER
+//// --------------------------------------------------------------------------
+//// Shared styles for swiper when using Snap Carousel component.
+
+	// COLORS
+
+	$shared-swiper-color-01: false; // swiper button color
+	$shared-swiper-color-02: false; // swiper button icon color
+	$shared-swiper-color-03: style.$color-02; // swiper inactive pagination background
+	$shared-swiper-color-04: style.$color-03; // swiper inactive pagination border
+	$shared-swiper-color-05: style.$color-08; // swiper active pagination background
+	$shared-swiper-color-06: style.$color-08; // swiper active pagination border
+	$shared-swiper-color-07: style.$color-02; // swiper back scrollbar background
+	$shared-swiper-color-08: style.$color-03; // swiper back scrollbar border
+	$shared-swiper-color-09: style.$color-08; // swiper front scrollbar background
+	$shared-swiper-color-10: style.$color-08; // swiper front scrollbar border
+
+	// CONFIGURATION
+	
+	$shared-swiper: true; // enable swiper styles for carousel
+	$shared-swiper-nav-button-size: 24px; // size of buttons (default is 24px)
+	$shared-swiper-nav-icon-size: 8px; // size of icon in buttons
+	$shared-swiper-pagination-spacing: 24px; // spacing between pagination and slides
+	$shared-swiper-pagination-size: 12px; // size of pagination bullet
+	$shared-swiper-scrollbar-size: 6px; // size of scrollbar
+	$shared-swiper-grid-spacing: 20px; // spacing for buttom of swiper slides on grid layout
+
+	// LOGIC VARIABLES (leave as is)
+
+	$var-swiper-nav-button-size: if($shared-swiper-nav-button-size != false, $shared-swiper-nav-button-size, 24px);
+
+	@if $shared-swiper == true {
+		.ss__theme {
+			.ss__carousel, .ss__carousel__navigation {
+				& > {
+					.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+						@include mixins.sizing($var-swiper-nav-button-size, $var-swiper-nav-button-size);
+						div {
+							padding: 0;
+							@include mixins.if-exists((background-color: $shared-swiper-color-01));
+							@include mixins.sizing(100%, 100%);
+							line-height: 1;
+							.ss__icon__wrapper {
+								@if $shared-swiper-nav-icon-size != false {
+									@include mixins.icon-sizing($shared-swiper-nav-icon-size);
+								}
+								.ss__icon {
+									@include mixins.if-exists((fill: $shared-swiper-color-02));
+								}
+							}
+						}
+						.swiper-button-disabled {
+							cursor: not-allowed;
+							opacity: 0.50;
+						}
+					}
+					.ss__carousel__prev-wrapper--hidden, .ss__carousel__next-wrapper--hidden {
+						display: none !important;
+						div {
+							cursor: not-allowed;
+							opacity: 0.50;
+						}
+					}
+				}
+			}
+			.ss__carousel {
+				width: 100%;
+				min-width: 1px;
+				.swiper-container {
+					margin: 0 auto;
+					padding: 0;
+					overflow: hidden;
+					&, & > .swiper-wrapper, & .swiper-wrapper > .swiper-slide {
+						position: relative;
+					}
+					& > .swiper-wrapper {
+						@include mixins.flex-layout((flex-flow: row nowrap));
+						@include mixins.sizing(100%, 100%);
+						&, & > .swiper-slide {
+							transition-property: transform;
+						}
+						& > .swiper-slide {
+							flex-shrink: 0;
+							& > *, .ss__result {
+								padding: 0;
+								margin: 0;
+								@include mixins.sizing(auto, 100%);
+							}
+						}
+					}
+					& > .swiper-pagination {
+						@include mixins.flex-layout((flex-flow: row nowrap, justify-content: center));
+						@include mixins.gap(5px);
+						margin: 10px 0 0 0;
+						.swiper-pagination-bullet {
+							min-width: 1px;
+							@include mixins.flex(0 1 auto);
+							@include mixins.sizing($shared-swiper-pagination-size, $shared-swiper-pagination-size);
+							@include mixins.if-exists((background-color: $shared-swiper-color-03));
+							@if $shared-swiper-color-04 != false {
+								border: 1px solid $shared-swiper-color-04;
+							}
+							@include mixins.border-radius(50%);
+							cursor: pointer;
+						}
+						.swiper-pagination-bullet-active {
+							@include mixins.if-exists((background-color: $shared-swiper-color-05));
+							@if $shared-swiper-color-06 != false {
+								border: 1px solid $shared-swiper-color-06;
+							}
+						}
+					}
+					& > .swiper-scrollbar {
+						margin: 10px 0 0 0;
+						height: $shared-swiper-scrollbar-size;
+						@include mixins.if-exists((background-color: $shared-swiper-color-07));
+						@include mixins.border-radius($shared-swiper-scrollbar-size);
+						overflow: hidden;
+						cursor: pointer;
+						&, .swiper-scrollbar-drag {
+							position: relative;
+						}
+						&:after {
+							content: '';
+							@include mixins.position-fill($z: 1);
+							@if $shared-swiper-color-08 != false {
+								border: 1px solid $shared-swiper-color-08;
+							}
+						}
+						.swiper-scrollbar-drag {
+							height: 100%;
+							z-index: 2;
+							@include mixins.if-exists((background-color: $shared-swiper-color-09));
+							@if $shared-swiper-color-10 != false {
+								border: 1px solid $shared-swiper-color-10;
+							}
+						}
+					}
+				}
+				.swiper-grid-column {
+					& > .swiper-wrapper {
+						@include mixins.flex-flow(row wrap);
+						& > .swiper-slide {
+							height: auto !important;
+							margin-top: 0 !important;
+							margin-bottom: $shared-swiper-grid-spacing;
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// SCROLLBAR
+//// --------------------------------------------------------------------------
+//// Note: Colors for scrollbar tracks. Will not work for all browsers. See here: https://caniuse.com/#search=scrollbar.
+////
+//// Example:
+////	<div className="ss__scrollbar"></div>
+
+	// COLORS
+
+	$shared-scrollbar-color-01: style.$color-02; // scrollbar top background
+	$shared-scrollbar-color-02: style.$color-03; // scrollbar bottom background
+
+	// CONFIGURATION
+
+	$shared-scrollbar-on: true; // enable scrollbar
+	$shared-scrollbar-width: 8px; // scrollbar width
+	$shared-scrollbar-height: 8px; // scrollbar height
+
+	// CSS BLOCK
+
+	@if $shared-scrollbar-on == true {
+		.ss__theme .ss__scrollbar {
+			&::-webkit-scrollbar {
+				@include mixins.if-exists((
+					width: $shared-scrollbar-width,
+					height: $shared-scrollbar-height
+				));
+			}
+			&::-webkit-scrollbar-track {
+				@include mixins.if-exists((
+					background-color: $shared-scrollbar-color-01
+				))
+			}
+			&::-webkit-scrollbar-thumb {
+				@include mixins.if-exists((
+					background-color: $shared-scrollbar-color-02
+				));
+			}
+		}
+	}
+
+//// BUTTONS
+//// --------------------------------------------------------------------------
+//// Example:
+////	<div className="ss__button" role="button" tabindex="0"><span className="ss__button__label">Button label</span></div>
+////	<button className="ss__button" type="button"><span className="ss__button__label">Button label</span></button>
+
+	// COLORS
+
+	$shared-button-color-01: style.$color-08; // button background
+	$shared-button-color-02: style.$color-01; // button font
+
+	// CONFIGURATION
+
+	$shared-button-on: true; // enable button
+	$shared-button-height: 35px; // height for the visible element
+	$shared-button-spacing: 0 20px; // spacing that controls button padding
+
+	// CSS BLOCK
+
+	@if $shared-button-on == true {
+		.ss__theme {
+			.ss__button {
+				@include mixins.flex-layout((display: inline-flex, flex-flow: row nowrap, align-items: center, justify-content: center));
+				padding: $shared-button-spacing;
+				@if style.$miscellaneous-border-radius {
+					@include mixins.border-radius(style.$miscellaneous-border-radius);
+				}
+				@include mixins.if-exists((
+					background-color: $shared-button-color-01,
+					color: $shared-button-color-02,
+					font-family: style.$font-family-02,
+					font-weight: style.$font-weight-02,
+					font-style: style.$font-style,
+					text-transform: style.$font-transform
+				));
+				height: $shared-button-height;
+				line-height: $shared-button-height;
+				cursor: pointer;
+				.ss__button__label {
+					min-width: 1px;
+					@include mixins.ellipsis;
+				}
+			}
+			.ss__button--full {
+				width: 100%;
+			}
+			.ss__button--disabled, .ss__button[disabled] {
+				cursor: not-allowed;
+				opacity: 0.50;
+			}
+		}
+	}
+
+//// ICONS
+//// --------------------------------------------------------------------------
+//// Example:
+////	<span className="ss__icon__wrapper"><Icon icon={config.theme.icons.name} /></span>
+
+	// CONFIGURATION
+
+	$shared-icons-on: true; // enable icon
+	$shared-icons-size: 12px;
+
+	// CSS BLOCK
+
+	@if $shared-icons-on == true {
+		.ss__theme .ss__icon__wrapper {
+			@include mixins.flex-layout((display: inline-flex, flex-flow: column nowrap));
+			@include mixins.flex(0 0 auto);
+			@include mixins.icon-sizing($shared-icons-size);
+			.ss__icon {
+				margin: auto;
+				@include mixins.sizing(auto, auto);
+				max-width: 100%;
+				max-height: 100%;
+				line-height: 1;
+				fill: currentColor;
+			}
+		}
+	}
+
+//// ACTIVE STATE
+//// --------------------------------------------------------------------------
+//// Example:
+//// <div className="ss__active">
+//// 	<a>active item 1</a>
+//// </div>
+
+	// COLORS
+
+	$shared-active-color-01: style.$color-08; // active link color
+
+	// CONFIGURATION
+
+	$shared-active-on: true; // enable active link
+
+	// CSS BLOCK
+
+	@if $shared-active-on == true {
+		.ss__theme .ss__active {
+			a, label {
+				@include mixins.if-exists((
+					color: $shared-active-color-01,
+					font-weight: style.$font-weight-01
+				));
+			}
+		}
+	}	
+	
+//// LIST OPTION
+//// --------------------------------------------------------------------------
+//// Example:
+//// <div className="ss__list">
+//// 	<div className="ss__list__option">
+//// 		<a className="ss__list__link">list item 1</a>
+//// 		<a className="ss__list__link">list item 2</a>
+//// 	</div>
+//// </div>
+
+	// COLORS
+
+	$shared-list-color-01: false; // default link color
+
+	// CONFIGURATION
+
+	$shared-list-on: true; // enable list
+
+	// CSS BLOCK
+
+	@if $shared-list-on == true {
+		.ss__theme .ss__list {
+			.ss__list__option {
+				margin: 0 0 5px 0;
+				&:last-child {
+					margin-bottom: 0;
+				}
+				.ss__list__link {
+					@include mixins.if-exists((color: $shared-list-color-01));
+				}
+			}
+		}
+	}
+
+//// CHECKBOXES
+//// --------------------------------------------------------------------------
+//// Example:
+//// <div className={classnames('ss__checkbox', {'ss__checkbox--round': isRound})}>
+//// 	<span className="ss__checkbox__icon ss__icon__wrapper">
+//// 		{isActive && (<Icon icon={config.theme.icons.check} />)}
+//// 	</span> Checkbox label
+//// </div>
+
+	// COLORS
+
+	$shared-checkbox-color-01: style.$color-02; // default checkbox background
+	$shared-checkbox-color-02: style.$color-03; // default checkbox border
+	$shared-checkbox-color-03: style.$color-01; // active checkbox background
+	$shared-checkbox-color-04: style.$color-04; // active checkbox border
+	$shared-checkbox-color-05: style.$color-08; // active checkmark
+	$shared-checkbox-color-06: style.$color-01; // dropdown checkbox background
+	$shared-checkbox-color-07: style.$color-01; // dropdown active checkbox background
+
+	// CONFIGURATION
+
+	$shared-checkbox-on: true; // enable checkboxes
+	$shared-checkbox-size: 16px; // checkbox size
+	$shared-checkbox-spacing: 26px; // spacing for checkbox
+	$shared-checkbox-align: left; // left or right
+	$shared-checkbox-vertical: 1px; // adjust vertical position of icon
+	$shared-checkbox-horizontal: 0; // adjust horizontal position of icon
+	$shared-checkbox-icon-size: 10px; // size of icon
+
+	// LOGIC VARIABLES (leave as is)
+
+	$var-shared-checkbox-size: if($shared-checkbox-size != false, $shared-checkbox-size, 12px);
+	$var-shared-checkbox-icon-size: if($shared-checkbox-icon-size != false, $shared-checkbox-icon-size, $var-shared-checkbox-size);
+
+	// CSS BLOCK
+
+	@if $shared-checkbox-on == true {
+		.ss__theme {
+			.ss__checkbox {
+				position: relative;
+				display: block;
+				padding-#{$shared-checkbox-align}: $shared-checkbox-spacing;
+				.ss__checkbox__icon {
+					cursor: pointer;
+					@include mixins.position($type: absolute, $top: $shared-checkbox-vertical);
+					#{$shared-checkbox-align}: $shared-checkbox-horizontal;
+					@include mixins.icon-sizing($shared-checkbox-size);
+					@include mixins.if-exists((
+						background-color: $shared-checkbox-color-01
+					));
+					@if $shared-checkbox-color-02 != false {
+						border: 1px solid $shared-checkbox-color-02;
+					}
+					@if style.$miscellaneous-border-radius {
+						@include mixins.border-radius(style.$miscellaneous-border-radius);
+					}
+					&:has(.ss__icon) {
+						@include mixins.if-exists((
+							background-color: $shared-checkbox-color-03
+						));
+						@if $shared-checkbox-color-04 != false {
+							border: 1px solid $shared-checkbox-color-04;
+						}
+						.ss__icon {
+							@include mixins.if-exists((fill: $shared-checkbox-color-05));
+							@if $var-shared-checkbox-size != $var-shared-checkbox-icon-size {
+								padding: calc(($var-shared-checkbox-size - $var-shared-checkbox-icon-size) / 2);
+							}
+						}
+					}
+				}
+			}
+			.ss__checkbox--round {
+				.ss__checkbox__icon {
+					&, .ss__icon {
+						@include mixins.border-radius(50%);
+					}
+				}
+			}
+			@if $shared-checkbox-color-06 != false and $shared-checkbox-color-07 != false {
+				.ss__dropdown--theme {
+					.ss__checkbox .ss__checkbox__icon {
+						background-color: $shared-checkbox-color-06;
+					}
+					.ss__active .ss__checkbox .ss__checkbox__icon {
+						background-color: $shared-checkbox-color-07;
+					}
+				}
+			}
+		}
+	}
+
+//// COLUMN LAYOUT
+//// --------------------------------------------------------------------------	
+//// Note: Can be used if we are providing a column layout for the client. Uses flex classes above.
+//// If you want a full width element above the sidebar and content, change the $shared-layout-wrap variable
+//// and give the full width flex child a style of @include mixins.flex(1 1 100%).
+//// 
+//// Example:
+//// <div class="ss__layout ss__theme">
+//// 	<div class="ss__layout__row">
+//// 		<div class="ss__layout__column ss__layout__sidebar">
+//// 			<div id="athos-sidebar"></div>
+//// 		</div>
+//// 		<div class="ss__layout__column ss__layout__content">
+//// 			<div id="athos-content"></div>
+//// 		</div>
+//// 	</div>
+//// </div>
+
+	// CONFIGURATION
+
+	$shared-layout-on: false; // enable column layout
+	$shared-layout-wrap: nowrap; // to wrap columns, change to wrap
+	$shared-layout-max-width: false; // max width for column layout
+	$shared-layout-spacing: false; // spacing for column layout
+	$shared-layout-margin: false; // margins around row	
+	$shared-layout-padding: false; // padding around row
+	$shared-layout-sidebar-width: 200px; // width of sidebar
+	$shared-layout-sidebar-bp: theme.$bp-02; // breakpoint to show sidebar again
+
+	// CSS BLOCK
+
+	@if $shared-layout-on == true {
+		.ss__layout {
+			.ss__layout__row {
+				@include mixins.flex-layout((flex-flow: row $shared-layout-wrap));
+				@if $shared-layout-spacing != false {
+					@include mixins.gap($shared-layout-spacing);
+				}
+				position: relative;
+				overflow: hidden;
+				@include mixins.if-exists((
+					max-width: $shared-layout-max-width,
+					margin: $shared-layout-margin,
+					padding: $shared-layout-padding
+				));
+				&, .ss__layout__sidebar, .ss__layout__content {
+					min-height: 500px;
+					min-width: 1px;
+				}
+				.ss__layout__column {}
+				.ss__layout__sidebar {
+					display: none;
+					@include mixins.flex(0 1 auto);
+					@include mixins.if-exists((width: $shared-layout-sidebar-width));
+				}
+				.ss__layout__content {
+					@include mixins.flex(1 1 100%);
+				}
+			}
+		}
+		@include mixins.respond-min($shared-layout-sidebar-bp) {
+			.ss__layout {
+				.ss__layout__row {
+					.ss__layout__column {}
+					.ss__layout__sidebar {
+						display: block;
+					}
+					.ss__layout__content {
+						@include mixins.flex;
+					}
+				}
+			}
+		}
+	}

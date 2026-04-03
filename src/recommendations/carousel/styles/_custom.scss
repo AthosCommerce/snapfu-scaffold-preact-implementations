@@ -1,0 +1,612 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_custom' as style;
+
+//// RECOMMENDATIONS CAROUSEL
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$carousel-on: true; // enable carousel
+	$carousel-header-nav-on: true; // show navigation in header
+	$carousel-header-text-align: false; // alignment of header text
+	$carousel-sides-on: false; // show navigation on sides
+	$carousel-sides-spacing: false; // spacing on sides
+	$carousel-sides-button-size: 32px; // size of sides buttons (default is 24px)
+	$carousel-sides-icon-size: 12px; // size of sides icons in button (default is 8px) 
+	$carousel-sides-top: 0; // top position of buttons
+	$carousel-sides-bottom: calc(7.5rem - 10px); // bottom position of buttons
+	$carousel-sides-prev-left: 0; // left position of previous button
+	$carousel-sides-prev-right: false; // right position of previous button
+	$carousel-sides-next-left: false; // left position of next button
+	$carousel-sides-next-right: 0; // right position of next button
+	$carousel-result-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $carousel-on == true {
+		.ss__theme.ss__recommendation--carousel {
+			&.ss__recommendation--no-title {
+				.ss__recommendation__header {
+					.ss__carousel__navigation {
+						display: none;
+					}
+					.ss__recommendation__description {
+						margin: 0;
+					}
+				}
+				.ss__recommendation .ss__carousel__recommendation {
+					& > {
+						.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+							display: block;
+						}
+					}
+				}
+			}
+			.ss__recommendation__header {
+				@include mixins.if-exists((text-align: $carousel-header-text-align));
+				.ss__carousel__navigation {
+					@if $carousel-header-nav-on == false {
+						display: none;
+					}
+				}
+			}
+			.ss__recommendation {
+				.ss__carousel__recommendation {
+					position: relative;
+					@if $carousel-sides-spacing != false {
+						padding: $carousel-sides-spacing;
+					}
+					& > {
+						.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+							@if $carousel-sides-on == false {
+								display: none;
+							}
+							position: absolute;
+							@include mixins.if-exists((
+								top: $carousel-sides-top,
+								bottom: $carousel-sides-bottom,
+							));
+							z-index: 2;
+							margin: auto;
+							@if $carousel-sides-button-size != false {
+								@include mixins.sizing($carousel-sides-button-size, $carousel-sides-button-size);
+							}
+							div {
+								.ss__icon__wrapper {
+									@if $carousel-sides-icon-size != false {
+										@include mixins.icon-sizing($carousel-sides-icon-size);
+									}
+								}
+							}
+						}
+						.ss__carousel__prev-wrapper {
+							@include mixins.if-exists((
+								left: $carousel-sides-prev-left,
+								right: $carousel-sides-prev-right
+							));
+						}
+						.ss__carousel__next-wrapper {
+							@include mixins.if-exists((
+								left: $carousel-sides-next-left,
+								right: $carousel-sides-next-right
+							));
+						}
+						.swiper-container {
+							& > .swiper-wrapper {
+								& > .swiper-slide {}
+							}
+						}
+					}
+				}
+			}
+			.ss__results {
+				.ss__result {
+					.ss__result__image {
+						.ss__image {
+							@include mixins.if-exists((padding-bottom: $carousel-result-image-height));
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// RECOMMENDATIONS CAROUSEL - BREAKPOINT 1
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$carousel-bp-01-on: false; // enable breakpoint
+	$carousel-bp-01-respond-at: theme.$bp-01; // breakpoint to respond at
+	$carousel-bp-01-header-nav-on: true; // show navigation in header
+	$carousel-bp-01-header-text-align: false; // alignment of header text
+	$carousel-bp-01-sides-on: false; // show navigation on sides
+	$carousel-bp-01-sides-spacing: false; // spacing on sides
+	$carousel-bp-01-sides-button-size: false; // size of sides buttons
+	$carousel-bp-01-sides-icon-size: false; // size of sides icons in button
+	$carousel-bp-01-sides-top: false; // top position of buttons
+	$carousel-bp-01-sides-bottom: false; // bottom position of buttons
+	$carousel-bp-01-sides-prev-left: false; // left position of previous button
+	$carousel-bp-01-sides-prev-right: false; // right position of previous button
+	$carousel-bp-01-sides-next-left: false; // left position of next button
+	$carousel-bp-01-sides-next-right: false; // right position of next button
+	$carousel-bp-01-result-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $carousel-bp-01-on == true {
+		@include mixins.respond-min($carousel-bp-01-respond-at) {
+			.ss__theme.ss__recommendation--carousel:not(.ss__recommendation--mini) {
+				.ss__recommendation__header {
+					@include mixins.if-exists((text-align: $carousel-bp-01-header-text-align));
+					.ss__carousel__navigation {
+						@if $carousel-bp-01-header-nav-on != $carousel-header-nav-on {
+							@if $carousel-bp-01-header-nav-on == true {
+								@include mixins.flex-display;
+							}
+							@if $carousel-bp-01-header-nav-on == false {
+								display: none;
+							}
+						}
+					}
+				}
+				.ss__recommendation {
+					.ss__carousel__recommendation {
+						@if $carousel-bp-01-sides-spacing != false {
+							padding: $carousel-bp-01-sides-spacing;
+						}
+						& > {
+							.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+								@if $carousel-bp-01-sides-on != $carousel-sides-on {
+									@if $carousel-bp-01-sides-on == true {
+										display: block;
+									}
+									@if $carousel-bp-01-sides-on == false {
+										display: none;
+									}
+								}
+								@include mixins.if-exists((
+									top: $carousel-bp-01-sides-top,
+									bottom: $carousel-bp-01-sides-bottom,
+								));
+								@if $carousel-bp-01-sides-button-size != false {
+									@include mixins.sizing($carousel-bp-01-sides-button-size, $carousel-bp-01-sides-button-size);
+								}
+								div {
+									.ss__icon__wrapper {
+										@if $carousel-bp-01-sides-icon-size != false {
+											@include mixins.icon-sizing($carousel-bp-01-sides-icon-size);
+										}
+									}
+								}
+							}
+							.ss__carousel__prev-wrapper {
+								@include mixins.if-exists((
+									left: $carousel-bp-01-sides-prev-left,
+									right: $carousel-bp-01-sides-prev-right
+								));
+							}
+							.ss__carousel__next-wrapper {
+								@include mixins.if-exists((
+									left: $carousel-bp-01-sides-next-left,
+									right: $carousel-bp-01-sides-next-right
+								));
+							}
+						}
+					}
+				}
+				.ss__results {
+					.ss__result {
+						.ss__result__image {
+							.ss__image {
+								@include mixins.if-exists((padding-bottom: $carousel-bp-01-result-image-height));
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// RECOMMENDATIONS CAROUSEL - BREAKPOINT 2
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$carousel-bp-02-on: true; // enable breakpoint
+	$carousel-bp-02-respond-at: theme.$bp-02; // breakpoint to respond at
+	$carousel-bp-02-header-nav-on: true; // show navigation in header
+	$carousel-bp-02-header-text-align: false; // alignment of header text
+	$carousel-bp-02-sides-on: false; // show navigation on sides
+	$carousel-bp-02-sides-spacing: false; // spacing on sides
+	$carousel-bp-02-sides-button-size: false; // size of sides buttons
+	$carousel-bp-02-sides-icon-size: false; // size of sides icons in button
+	$carousel-bp-02-sides-top: false; // top position of buttons
+	$carousel-bp-02-sides-bottom: false; // bottom position of buttons
+	$carousel-bp-02-sides-prev-left: false; // left position of previous button
+	$carousel-bp-02-sides-prev-right: false; // right position of previous button
+	$carousel-bp-02-sides-next-left: false; // left position of next button
+	$carousel-bp-02-sides-next-right: false; // right position of next button
+	$carousel-bp-02-result-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $carousel-bp-02-on == true {
+		@include mixins.respond-min($carousel-bp-02-respond-at) {
+			.ss__theme.ss__recommendation--carousel:not(.ss__recommendation--mini) {
+				.ss__recommendation__header {
+					@include mixins.if-exists((text-align: $carousel-bp-02-header-text-align));
+					.ss__carousel__navigation {
+						@if $carousel-bp-02-header-nav-on != $carousel-bp-01-header-nav-on {
+							@if $carousel-bp-02-header-nav-on == true {
+								@include mixins.flex-display;
+							}
+							@if $carousel-bp-02-header-nav-on == false {
+								display: none;
+							}
+						}
+					}
+				}
+				.ss__recommendation {
+					.ss__carousel__recommendation {
+						@if $carousel-bp-02-sides-spacing != false {
+							padding: $carousel-bp-02-sides-spacing;
+						}
+						& > {
+							.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+								@if $carousel-bp-02-sides-on != $carousel-bp-01-sides-on {
+									@if $carousel-bp-02-sides-on == true {
+										display: block;
+									}
+									@if $carousel-bp-02-sides-on == false {
+										display: none;
+									}
+								}
+								@include mixins.if-exists((
+									top: $carousel-bp-02-sides-top,
+									bottom: $carousel-bp-02-sides-bottom,
+								));
+								@if $carousel-bp-02-sides-button-size != false {
+									@include mixins.sizing($carousel-bp-02-sides-button-size, $carousel-bp-02-sides-button-size);
+								}
+								div {
+									.ss__icon__wrapper {
+										@if $carousel-bp-02-sides-icon-size != false {
+											@include mixins.icon-sizing($carousel-bp-02-sides-icon-size);
+										}
+									}
+								}
+							}
+							.ss__carousel__prev-wrapper {
+								@include mixins.if-exists((
+									left: $carousel-bp-02-sides-prev-left,
+									right: $carousel-bp-02-sides-prev-right
+								));
+							}
+							.ss__carousel__next-wrapper {
+								@include mixins.if-exists((
+									left: $carousel-bp-02-sides-next-left,
+									right: $carousel-bp-02-sides-next-right
+								));
+							}
+						}
+					}
+				}
+				.ss__results {
+					.ss__result {
+						.ss__result__image {
+							.ss__image {
+								@include mixins.if-exists((padding-bottom: $carousel-bp-02-result-image-height));
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+//// RECOMMENDATIONS CAROUSEL - BREAKPOINT 3
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$carousel-bp-03-on: true; // enable breakpoint
+	$carousel-bp-03-respond-at: theme.$bp-03; // breakpoint to respond at
+	$carousel-bp-03-header-nav-on: false; // show navigation in header
+	$carousel-bp-03-header-text-align: center; // alignment of header text
+	$carousel-bp-03-sides-on: true; // show navigation on sides
+	$carousel-bp-03-sides-spacing: 0 52px; // spacing on sides
+	$carousel-bp-03-sides-button-size: false; // size of sides buttons
+	$carousel-bp-03-sides-icon-size: false; // size of sides icons in button
+	$carousel-bp-03-sides-top: false; // top position of buttons
+	$carousel-bp-03-sides-bottom: false; // bottom position of buttons
+	$carousel-bp-03-sides-prev-left: false; // left position of previous button
+	$carousel-bp-03-sides-prev-right: false; // right position of previous button
+	$carousel-bp-03-sides-next-left: false; // left position of next button
+	$carousel-bp-03-sides-next-right: false; // right position of next button
+	$carousel-bp-03-result-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $carousel-bp-03-on == true {
+		@include mixins.respond-min($carousel-bp-03-respond-at) {
+			.ss__theme.ss__recommendation--carousel:not(.ss__recommendation--mini) {
+				.ss__recommendation__header {
+					@include mixins.if-exists((text-align: $carousel-bp-03-header-text-align));
+					.ss__carousel__navigation {
+						@if $carousel-bp-03-header-nav-on != $carousel-bp-02-header-nav-on {
+							@if $carousel-bp-03-header-nav-on == true {
+								@include mixins.flex-display;
+							}
+							@if $carousel-bp-03-header-nav-on == false {
+								display: none;
+							}
+						}
+					}
+				}
+				.ss__recommendation {
+					.ss__carousel__recommendation {
+						@if $carousel-bp-03-sides-spacing != false {
+							padding: $carousel-bp-03-sides-spacing;
+						}
+						& > {
+							.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+								@if $carousel-bp-03-sides-on != $carousel-bp-02-sides-on {
+									@if $carousel-bp-03-sides-on == true {
+										display: block;
+									}
+									@if $carousel-bp-03-sides-on == false {
+										display: none;
+									}
+								}
+								@include mixins.if-exists((
+									top: $carousel-bp-03-sides-top,
+									bottom: $carousel-bp-03-sides-bottom,
+								));
+								@if $carousel-bp-03-sides-button-size != false {
+									@include mixins.sizing($carousel-bp-03-sides-button-size, $carousel-bp-03-sides-button-size);
+								}
+								div {
+									.ss__icon__wrapper {
+										@if $carousel-bp-03-sides-icon-size != false {
+											@include mixins.icon-sizing($carousel-bp-03-sides-icon-size);
+										}
+									}
+								}
+							}
+							.ss__carousel__prev-wrapper {
+								@include mixins.if-exists((
+									left: $carousel-bp-03-sides-prev-left,
+									right: $carousel-bp-03-sides-prev-right
+								));
+							}
+							.ss__carousel__next-wrapper {
+								@include mixins.if-exists((
+									left: $carousel-bp-03-sides-next-left,
+									right: $carousel-bp-03-sides-next-right
+								));
+							}
+						}
+					}
+				}
+				.ss__results {
+					.ss__result {
+						.ss__result__image {
+							.ss__image {
+								@include mixins.if-exists((padding-bottom: $carousel-bp-03-result-image-height));
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// RECOMMENDATIONS CAROUSEL - BREAKPOINT 4
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$carousel-bp-04-on: false; // enable breakpoint
+	$carousel-bp-04-respond-at: theme.$bp-04; // breakpoint to respond at
+	$carousel-bp-04-header-nav-on: false; // show navigation in header
+	$carousel-bp-04-header-text-align: false; // alignment of header text
+	$carousel-bp-04-sides-on: true; // show navigation on sides
+	$carousel-bp-04-sides-spacing: false; // spacing on sides
+	$carousel-bp-04-sides-button-size: false; // size of sides buttons
+	$carousel-bp-04-sides-icon-size: false; // size of sides icons in button
+	$carousel-bp-04-sides-top: false; // top position of buttons
+	$carousel-bp-04-sides-bottom: false; // bottom position of buttons
+	$carousel-bp-04-sides-prev-left: false; // left position of previous button
+	$carousel-bp-04-sides-prev-right: false; // right position of previous button
+	$carousel-bp-04-sides-next-left: false; // left position of next button
+	$carousel-bp-04-sides-next-right: false; // right position of next button
+	$carousel-bp-04-result-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $carousel-bp-04-on == true {
+		@include mixins.respond-min($carousel-bp-04-respond-at) {
+			.ss__theme.ss__recommendation--carousel:not(.ss__recommendation--mini) {
+				.ss__recommendation__header {
+					@include mixins.if-exists((text-align: $carousel-bp-04-header-text-align));
+					.ss__carousel__navigation {
+						@if $carousel-bp-04-header-nav-on != $carousel-bp-03-header-nav-on {
+							@if $carousel-bp-04-header-nav-on == true {
+								@include mixins.flex-display;
+							}
+							@if $carousel-bp-04-header-nav-on == false {
+								display: none;
+							}
+						}
+					}
+				}
+				.ss__recommendation {
+					.ss__carousel__recommendation {
+						@if $carousel-bp-04-sides-spacing != false {
+							padding: $carousel-bp-04-sides-spacing;
+						}
+						& > {
+							.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+								@if $carousel-bp-04-sides-on != $carousel-bp-03-sides-on {
+									@if $carousel-bp-04-sides-on == true {
+										display: block;
+									}
+									@if $carousel-bp-04-sides-on == false {
+										display: none;
+									}
+								}
+								@include mixins.if-exists((
+									top: $carousel-bp-04-sides-top,
+									bottom: $carousel-bp-04-sides-bottom,
+								));
+								@if $carousel-bp-04-sides-button-size != false {
+									@include mixins.sizing($carousel-bp-04-sides-button-size, $carousel-bp-04-sides-button-size);
+								}
+								div {
+									.ss__icon__wrapper {
+										@if $carousel-bp-04-sides-icon-size != false {
+											@include mixins.icon-sizing($carousel-bp-04-sides-icon-size);
+										}
+									}
+								}
+							}
+							.ss__carousel__prev-wrapper {
+								@include mixins.if-exists((
+									left: $carousel-bp-04-sides-prev-left,
+									right: $carousel-bp-04-sides-prev-right
+								));
+							}
+							.ss__carousel__next-wrapper {
+								@include mixins.if-exists((
+									left: $carousel-bp-04-sides-next-left,
+									right: $carousel-bp-04-sides-next-right
+								));
+							}
+						}
+					}
+				}
+				.ss__results {
+					.ss__result {
+						.ss__result__image {
+							.ss__image {
+								@include mixins.if-exists((padding-bottom: $carousel-bp-04-result-image-height));
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// RECOMMENDATIONS CAROUSEL - MINI
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$carousel-mini-on: true; // enable carousel
+	$carousel-mini-spacing: 20px; // spacing for mini recommendations
+	$carousel-mini-title-font-size: 16px; // font size of title
+	$carousel-mini-description-font-size: false; // font size of description
+	$carousel-mini-header-button-size: 24px; // size of header buttons
+	$carousel-mini-header-icon-size: 8px; // size of header icons in button
+	$carousel-mini-header-nav-on: true; // show navigation in header
+	$carousel-mini-header-text-align: false; // alignment of header text
+	$carousel-mini-sides-on: false; // show navigation on sides
+	$carousel-mini-sides-spacing: false; // spacing on sides
+	$carousel-mini-sides-button-size: 24px; // size of sides buttons
+	$carousel-mini-sides-icon-size: 8px; // size of sides icons in button
+	$carousel-mini-sides-top: false; // top position of buttons
+	$carousel-mini-sides-bottom: false; // bottom position of buttons
+	$carousel-mini-sides-prev-left: false; // left position of previous button
+	$carousel-mini-sides-prev-right: false; // right position of previous button
+	$carousel-mini-sides-next-left: false; // left position of next button
+	$carousel-mini-sides-next-right: false; // right position of next button
+
+	// CSS BLOCK
+
+	@if $carousel-mini-on == true {
+		.ss__theme.ss__recommendation--carousel.ss__recommendation--mini {
+			margin: $carousel-mini-spacing 0;
+			.ss__recommendation__header {
+				margin: 0 0 calc($carousel-mini-spacing / 2) 0;
+				@include mixins.if-exists((text-align: $carousel-mini-header-text-align));
+				.ss__title {
+					@include mixins.if-exists((font-size: $carousel-mini-title-font-size));
+				}
+				.ss__carousel__navigation {
+					@if $carousel-mini-header-nav-on != $carousel-header-nav-on {
+						@if $carousel-mini-header-nav-on == true {
+							@include mixins.flex-display;
+						}
+						@if $carousel-mini-header-nav-on == false {
+							display: none;
+						}
+					}
+					.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+						@if $carousel-mini-header-button-size != false {
+							@include mixins.sizing($carousel-mini-header-button-size, $carousel-mini-header-button-size);
+						}
+						div {
+							.ss__icon__wrapper {
+								@if $carousel-mini-header-icon-size != false {
+									@include mixins.icon-sizing($carousel-mini-header-icon-size);
+								}
+							}
+						}
+					}
+				}
+				.ss__recommendation__description {
+					@include mixins.if-exists((font-size: $carousel-mini-description-font-size));
+				}
+			}
+			.ss__recommendation {
+				.ss__carousel__recommendation {
+					@if $carousel-mini-sides-spacing != false {
+						padding: $carousel-mini-sides-spacing;
+					}
+					& > {
+						.ss__carousel__prev-wrapper, .ss__carousel__next-wrapper {
+							@if $carousel-mini-sides-on != $carousel-sides-on {
+								@if $carousel-mini-sides-on == true {
+									display: block;
+								}
+								@if $carousel-mini-sides-on == false {
+									display: none;
+								}
+							}
+							@include mixins.if-exists((
+								top: $carousel-mini-sides-top,
+								bottom: $carousel-mini-sides-bottom,
+							));
+							@if $carousel-mini-sides-button-size != false {
+								@include mixins.sizing($carousel-mini-sides-button-size, $carousel-mini-sides-button-size);
+							}
+							div {
+								.ss__icon__wrapper {
+									@if $carousel-mini-sides-icon-size != false {
+										@include mixins.icon-sizing($carousel-mini-sides-icon-size);
+									}
+								}
+							}
+						}
+						.ss__carousel__prev-wrapper {
+							@include mixins.if-exists((
+								left: $carousel-mini-sides-prev-left,
+								right: $carousel-mini-sides-prev-right
+							));
+						}
+						.ss__carousel__next-wrapper {
+							@include mixins.if-exists((
+								left: $carousel-mini-sides-next-left,
+								right: $carousel-mini-sides-next-right
+							));
+						}
+					}
+				}
+			}
+		}
+	}

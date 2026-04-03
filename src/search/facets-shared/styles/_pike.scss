@@ -1,0 +1,537 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_pike' as style;
+
+//// FACETS - SHARED
+//// --------------------------------------------------------------------------
+//// Note: If using this layout, "List Option" should probably be set to true in _config/styles/shared/_${style}.scss.
+
+	// COLORS
+
+	$facets-shared-color-01: style.$color-06; // facet count
+	$facets-shared-color-02: style.$color-08; // show more link
+	$facets-shared-color-03: style.$color-08; // show more icon
+	$facets-shared-color-04: false; // list and hierarchy links
+	$facets-shared-color-05: false; // hierarchy icon color
+	$facets-shared-color-06: style.$color-08; // active hierarchy level
+	
+	// CONFIGURATION
+
+	$facets-shared-on: true; // enable facets
+	$facets-shared-overflow: 410px; // add a pixel value to add overflow scroll
+	$facets-shared-show-more-on: true; // enable show more icon
+	$facets-shared-show-more-size: 10px; // icon size
+	$facets-shared-show-more-spacing: 10px; // spacing that controls padding and alignment of show more icon
+	$facets-shared-show-more-align: left; // left or right
+	$facets-shared-hierarchy-on: true; // enable hierarchy styles
+	$facets-shared-hierarchy-indent: 30px; // left padding for child levels
+	$facets-shared-hierarchy-icon-size: 10px; // icon size
+	$facets-shared-grid-width: false; // override for grid width
+	$facets-shared-palette-grid-width: false; // override for palette width
+
+	// LOGIC VARIABLES (leave as is)
+
+	$var-facets-shared-show-more-size: if($facets-shared-show-more-size != false, $facets-shared-show-more-size, 12px);
+
+	// CSS BLOCK
+
+	@if $facets-shared-on == true {
+		.ss__theme .ss__facets {
+			.ss__facet {
+				.ss__scrollbar {
+					@if $facets-shared-overflow != false {
+						max-height: $facets-shared-overflow;
+						overflow-y: auto;
+						overflow-x: hidden;
+						padding-right: 10px;
+					}
+				}
+				.ss__facet__count {
+					font-size: 10px;
+					@include mixins.if-exists((color: $facets-shared-color-01));
+				}
+				.ss__show-more {
+					margin: 10px 0 0 0;
+					.ss__show-more__button {
+						background-color: transparent;
+						padding: 0;
+						margin: 0;
+						border: 0;
+						@include mixins.if-exists((
+							color: $facets-shared-color-02,
+							font-weight: style.$font-weight-01
+						));
+						@if $facets-shared-show-more-on == true {
+							@include mixins.flex-layout((display: inline-flex, flex-flow: row nowrap, align-items: center));
+							@include mixins.gap($facets-shared-show-more-spacing);
+							line-height: 1;
+							.ss__icon__wrapper {
+								@include mixins.icon-align($facets-shared-show-more-align, false);
+								@include mixins.icon-sizing($facets-shared-show-more-size);
+								.ss__icon {
+									@include mixins.if-exists((fill: $facets-shared-color-03));
+								}
+							}
+						}
+					}
+				}
+				.ss__list .ss__list__option .ss__list__link, .ss__hierarchy .ss__hierarchy__option .ss__hierarchy__link {
+					@include mixins.if-exists((color: $facets-shared-color-04));
+				}
+				.ss__list {
+					.ss__list__option {
+						.ss__list__link {}
+					}
+					.ss__active {
+						.ss__list__link {}
+					}
+				}
+				.ss__hierarchy {
+					@if $facets-shared-hierarchy-on == true {
+						.ss__hierarchy__option {
+							margin: 0 0 5px 0;
+							&:last-child {
+								margin-bottom: 0;
+							}
+							.ss__hierarchy__link {}
+						}
+						.ss__hierarchy__option--return .ss__hierarchy__link {
+							.ss__icon__wrapper {
+								@include mixins.icon-sizing($facets-shared-hierarchy-icon-size);
+								& ~ .ss__icon__wrapper {
+									margin: 0 5px 0 -5px;
+								}
+								.ss__icon {
+									@include mixins.if-exists((fill: $facets-shared-color-05));
+								}
+							}
+						}
+						.ss__hierarchy__option--current {
+							.ss__hierarchy__label {
+								@include mixins.if-exists((
+									color: $facets-shared-color-06,
+									font-weight: style.$font-weight-01
+								));
+							}
+							& ~ .ss__hierarchy__option {
+								@include mixins.if-exists((padding-left: $facets-shared-hierarchy-indent));
+							}
+						}
+					}
+				}
+				.ss__grid {
+					@if ($facets-shared-grid-width != false) {
+						@include mixins.grid-columns($facets-shared-grid-width);
+					}
+					.ss__grid__option {
+						.ss__grid__link {}
+					}
+				}
+				.ss__palette {
+					.ss__palette__option {
+						.ss__palette__link {}
+					}
+				}
+				.ss__palette--grid {
+					@if ($facets-shared-palette-grid-width != false) {
+						@include mixins.grid-columns($facets-shared-palette-grid-width);
+					}
+				}
+				.ss__palette--list {}
+			}
+		}
+	}
+
+//// FACETS - SHARED - BREAKPOINT 1
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$facets-shared-bp-01-on: false; // enable breakpoint
+	$facets-shared-bp-01-respond-at: theme.$bp-01;
+	$facets-shared-bp-01-grid-width: false; // override for grid width
+	$facets-shared-bp-01-palette-grid-width: false; // override for palette width
+
+	// CSS BLOCK
+
+	@if $facets-shared-bp-01-on == true {
+		@include mixins.respond-min($facets-shared-bp-01-respond-at) {
+			.ss__theme .ss__facets {
+				.ss__facet {
+					.ss__list {
+						.ss__list__option {
+							.ss__list__link {}
+						}
+					}
+					.ss__hierarchy {
+						.ss__hierarchy__option {
+							.ss__hierarchy__link {}
+						}
+					}
+					.ss__grid {
+						@if ($facets-shared-bp-01-grid-width != false) {
+							@include mixins.grid-columns($facets-shared-bp-01-grid-width);
+						}
+					}
+					.ss__palette {}
+					.ss__palette--grid {
+						@if ($facets-shared-bp-01-palette-grid-width != false) {
+							@include mixins.grid-columns($facets-shared-bp-01-palette-grid-width);
+						}
+					}
+					.ss__palette--list {}
+				}
+			}
+		}
+	}
+
+//// FACETS - SHARED - BREAKPOINT 2
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$facets-shared-bp-02-on: false; // enable breakpoint
+	$facets-shared-bp-02-respond-at: theme.$bp-02;
+	$facets-shared-bp-02-grid-width: false; // override for grid width
+	$facets-shared-bp-02-palette-grid-width: false; // override for palette width
+
+	// CSS BLOCK
+
+	@if $facets-shared-bp-02-on == true {
+		@include mixins.respond-min($facets-shared-bp-02-respond-at) {
+			.ss__theme .ss__facets {
+				.ss__facet {
+					.ss__list {
+						.ss__list__option {
+							.ss__list__link {}
+						}
+					}
+					.ss__hierarchy {
+						.ss__hierarchy__option {
+							.ss__hierarchy__link {}
+						}
+					}
+					.ss__grid {
+						@if ($facets-shared-bp-02-grid-width != false) {
+							@include mixins.grid-columns($facets-shared-bp-02-grid-width);
+						}
+					}
+					.ss__palette {}
+					.ss__palette--grid {
+						@if ($facets-shared-bp-02-palette-grid-width != false) {
+							@include mixins.grid-columns($facets-shared-bp-02-palette-grid-width);
+						}
+					}
+					.ss__palette--list {}
+				}
+			}
+		}
+	}
+
+//// FACETS - SHARED - BREAKPOINT 3
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$facets-shared-bp-03-on: false; // enable breakpoint
+	$facets-shared-bp-03-respond-at: theme.$bp-03;
+	$facets-shared-bp-03-grid-width: false; // override for grid width
+	$facets-shared-bp-03-palette-grid-width: false; // override for palette width
+
+	// CSS BLOCK
+
+	@if $facets-shared-bp-03-on == true {
+		@include mixins.respond-min($facets-shared-bp-03-respond-at) {
+			.ss__theme .ss__facets {
+				.ss__facet {
+					.ss__list {
+						.ss__list__option {
+							.ss__list__link {}
+						}
+					}
+					.ss__hierarchy {
+						.ss__hierarchy__option {
+							.ss__hierarchy__link {}
+						}
+					}
+					.ss__grid {
+						@if ($facets-shared-bp-03-grid-width != false) {
+							@include mixins.grid-columns($facets-shared-bp-03-grid-width);
+						}
+					}
+					.ss__palette {}
+					.ss__palette--grid {
+						@if ($facets-shared-bp-03-palette-grid-width != false) {
+							@include mixins.grid-columns($facets-shared-bp-03-palette-grid-width);
+						}
+					}
+					.ss__palette--list {}
+				}
+			}
+		}
+	}
+
+//// FACETS - SHARED - BREAKPOINT 4
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$facets-shared-bp-04-on: false; // enable breakpoint
+	$facets-shared-bp-04-respond-at: theme.$bp-04;
+	$facets-shared-bp-04-grid-width: false; // override for grid width
+	$facets-shared-bp-04-palette-grid-width: false; // override for palette width
+
+	// CSS BLOCK
+
+	@if $facets-shared-bp-04-on == true {
+		@include mixins.respond-min($facets-shared-bp-04-respond-at) {
+			.ss__theme .ss__facets {
+				.ss__facet {
+					.ss__list {
+						.ss__list__option {
+							.ss__list__link {}
+						}
+					}
+					.ss__hierarchy {
+						.ss__hierarchy__option {
+							.ss__hierarchy__link {}
+						}
+					}
+					.ss__grid {
+						@if ($facets-shared-bp-04-grid-width != false) {
+							@include mixins.grid-columns($facets-shared-bp-04-grid-width);
+						}
+					}
+					.ss__palette {}
+					.ss__palette--grid {
+						@if ($facets-shared-bp-04-palette-grid-width != false) {
+							@include mixins.grid-columns($facets-shared-bp-04-palette-grid-width);
+						}
+					}
+					.ss__palette--list {}
+				}
+			}
+		}
+	}
+
+//// FACETS - SLIDER
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$facets-shared-slider-color-01: style.$color-02; // back bar
+	$facets-shared-slider-color-02: style.$color-03; // back bar border
+	$facets-shared-slider-color-03: style.$color-07; // front bar
+	$facets-shared-slider-color-04: style.$color-07; // front bar border
+	$facets-shared-slider-color-05: style.$color-08; // handle
+	$facets-shared-slider-color-06: style.$color-08; // handle border
+	$facets-shared-slider-color-07: style.$color-01; // handle inner dot
+	$facets-shared-slider-color-08: style.$color-01; // handle inner dot border
+	$facets-shared-slider-color-09: false; // active handle
+	$facets-shared-slider-color-10: false; // active handle border
+	$facets-shared-slider-color-11: false; // active handle inner dot
+	$facets-shared-slider-color-12: false; // active handle inner dot border
+	$facets-shared-slider-color-13: style.$color-05; // value
+	$facets-shared-slider-color-14: style.$color-03; // tick color
+	$facets-shared-slider-color-15: style.$color-05; // tick text color
+
+	// CONFIGURATION
+
+	$facets-shared-slider-on: true; // enable slider
+	$facets-shared-slider-spacing: 10px; // spacing for slider elements
+	$facets-shared-slider-bar-size: 6px; // bar height
+	$facets-shared-slider-back-bar-radius: 6px; // back bar border radius size
+	$facets-shared-slider-handle-size: 20px; // handle size
+	$facets-shared-slider-handle-radius: false; // handle border radius size
+	$facets-shared-slider-handle-size-inner: 40%; // handle inner dot size
+	$facets-shared-slider-handle-radius-inner: false; // handle inner border radius size
+	$facets-shared-slider-values-size: 14px; // value size
+	$facets-shared-slider-values-position: top; // set "top" to move values above handles
+	$facets-shared-slider-values-align: sides; // alignment of slider values (sides or center)
+	$facets-shared-slider-ticks-size: 17px; // if enabled, size of ticks between values
+
+	// LOGIC VARIABLES (leave as is)
+
+	$var-facets-shared-slider-spacing-half: calc($facets-shared-slider-spacing / 2); 
+	$var-facets-shared-slider-handle-size-half: calc(($facets-shared-slider-handle-size - $facets-shared-slider-bar-size) / 2);
+	$var-facets-shared-slider-handle-spacing: $facets-shared-slider-handle-size + $facets-shared-slider-spacing;
+	$var-facets-shared-slider-ticks-spacing: $facets-shared-slider-ticks-size + $var-facets-shared-slider-spacing-half;
+	$var-facets-shared-slider-sticky-spacing: $facets-shared-slider-values-size + $facets-shared-slider-spacing;
+	$var-facets-shared-slider-handles-plus-sticky: $var-facets-shared-slider-handle-size-half + $var-facets-shared-slider-sticky-spacing;
+	$var-facets-shared-slider-ticks-plus-sticky: $var-facets-shared-slider-ticks-spacing + $var-facets-shared-slider-sticky-spacing;
+
+	// LAYOUT VARIABLES FOR SLIDER LAYOUT (leave as is)
+
+	$var-facets-shared-slider-layout: default;
+	@if theme.$slider-ticks == true and theme.$slider-sticky-handles == true {
+		$var-facets-shared-slider-layout: ticksAndSticky;
+	} @else if theme.$slider-ticks == true and theme.$slider-sticky-handles == false {
+		$var-facets-shared-slider-layout: ticks;
+	} @else if theme.$slider-ticks == false and theme.$slider-sticky-handles == true {
+		$var-facets-shared-slider-layout: sticky;
+	}
+
+	// CSS BLOCK
+
+	@if $facets-shared-slider-on == true {
+		.ss__theme .ss__facets .ss__facet-slider {
+			&, .ss__facet-slider__slider {
+				margin: auto;
+			}
+			.ss__facet-slider__slider button, .ss__facet-slider__labels label {
+				margin: 0;
+				padding: 0;
+				&:focus {
+					outline: 0;
+				}
+			}
+			.ss__facet-slider__slider .ss__facet-slider__handles button .ss__facet-slider__handle .ss__facet-slider__handle__label.ss__facet-slider__handle__label--sticky, .ss__facet-slider__labels .ss__facet-slider__label {
+				font-size: $facets-shared-slider-values-size;
+				line-height: $facets-shared-slider-values-size;
+				@include mixins.if-exists((color: $facets-shared-slider-color-13));
+			}
+			.ss__facet-slider__slider {
+				display: block;
+				top: 0;
+				@include mixins.sizing(100%, $facets-shared-slider-bar-size);
+				@if $var-facets-shared-slider-layout == ticksAndSticky {
+					@if $facets-shared-slider-values-position == top {
+						margin: $var-facets-shared-slider-handles-plus-sticky auto $var-facets-shared-slider-ticks-spacing auto;
+					} @else {
+						margin: $var-facets-shared-slider-handle-size-half auto $var-facets-shared-slider-ticks-plus-sticky auto;
+					}
+				} @else if $var-facets-shared-slider-layout == ticks {
+					margin: $var-facets-shared-slider-handle-size-half auto $var-facets-shared-slider-ticks-spacing auto;
+				} @else if $var-facets-shared-slider-layout == sticky {
+					@if $facets-shared-slider-values-position == top {
+						margin: $var-facets-shared-slider-handles-plus-sticky auto $var-facets-shared-slider-handle-size-half auto;
+					} @else {
+						margin: $var-facets-shared-slider-handle-size-half auto $var-facets-shared-slider-handles-plus-sticky auto;
+					}
+				} @else if $var-facets-shared-slider-layout == default {
+					margin: $var-facets-shared-slider-handle-size-half auto;
+				}
+				.ss__facet-slider__segment, .ss__facet-slider__rail, .ss__facet-slider__handles {
+					height: 100%;
+				}
+				.ss__facet-slider__tick {
+					&:before, .ss__facet-slider__tick__label {
+						transform: translate(-50%, 0),
+					}
+					&:before {
+						top: calc($facets-shared-slider-ticks-size / 2);
+						@include mixins.if-exists((background-color: $facets-shared-slider-color-14));
+					}
+					.ss__facet-slider__tick__label {
+						top: $facets-shared-slider-ticks-size;
+						@include mixins.if-exists((color: $facets-shared-slider-color-15));
+						line-height: 1;
+					}
+				}
+				.ss__facet-slider__segment {
+					@include mixins.if-exists((background-color: $facets-shared-slider-color-01));
+					@if $facets-shared-slider-color-02 != false {
+						border: 1px solid $facets-shared-slider-color-02;
+					}
+					@if $facets-shared-slider-back-bar-radius != false {
+						@include mixins.border-radius($facets-shared-slider-back-bar-radius);
+					}
+				}
+				.ss__facet-slider__rail {
+					@include mixins.if-exists((background-color: $facets-shared-slider-color-03));
+					@if $facets-shared-slider-color-04 != false {
+						border: 1px solid $facets-shared-slider-color-04;
+					}
+				}
+				.ss__facet-slider__handles {
+					position: relative;
+					margin: 0 (calc($facets-shared-slider-handle-size / 2) - 2);
+					button {
+						.ss__facet-slider__handle {
+							@include mixins.transform(none);
+							@include mixins.sizing($facets-shared-slider-handle-size, $facets-shared-slider-handle-size);
+							line-height: $facets-shared-slider-handle-size;
+							@include mixins.if-exists((background-color: $facets-shared-slider-color-05));
+							@if $facets-shared-slider-color-06 != false {
+								border: 1px solid $facets-shared-slider-color-06;
+							}
+							@if $facets-shared-slider-handle-radius != false {
+								@include mixins.border-radius($facets-shared-slider-handle-radius);
+							}
+							&:after {
+								@if $facets-shared-slider-handle-size-inner != false {
+									@include mixins.sizing($facets-shared-slider-handle-size-inner, $facets-shared-slider-handle-size-inner);
+								}
+								@include mixins.if-exists((background-color: $facets-shared-slider-color-07));
+								@if $facets-shared-slider-color-08 != false {
+									border: 1px solid $facets-shared-slider-color-08;
+								}
+								@if $facets-shared-slider-handle-radius-inner != false {
+									@include mixins.border-radius($facets-shared-slider-handle-radius-inner);
+								}
+							}
+							.ss__facet-slider__handle__label.ss__facet-slider__handle__label--sticky {
+								background-color: transparent;
+								@if $var-facets-shared-slider-layout == ticksAndSticky {
+									@if $facets-shared-slider-values-position == top {
+										top: auto;
+										bottom: $var-facets-shared-slider-handle-spacing;
+									} @else {
+										top: $var-facets-shared-slider-handle-size-half + $var-facets-shared-slider-ticks-plus-sticky - $facets-shared-slider-bar-size;
+									}
+								} @else if $var-facets-shared-slider-layout == sticky {
+									@if $facets-shared-slider-values-position == top {
+										top: auto;
+										bottom: $var-facets-shared-slider-handle-spacing;
+									} @else {
+										top: $var-facets-shared-slider-handle-spacing;;
+									}
+								}
+							}
+						}
+						.ss__facet-slider__handle--active {
+							@include mixins.if-exists((background-color: $facets-shared-slider-color-09));
+							@if $facets-shared-slider-color-10 != false {
+								border: 1px solid $facets-shared-slider-color-10;
+							}
+							&:after {
+								@include mixins.if-exists((background-color: $facets-shared-slider-color-11));
+								@if $facets-shared-slider-color-12 != false {
+									border: 1px solid $facets-shared-slider-color-12;
+								}
+							}
+						}
+					}
+				}
+			}
+			.ss__facet-slider__labels {
+				@include mixins.flex-layout((flex-flow: row nowrap, align-items: center));
+				@if $facets-shared-slider-values-align == center {
+					@include mixins.flex-parent(justify-content, center);
+				}
+				@if $var-facets-shared-slider-layout == ticks or $var-facets-shared-slider-layout == default {
+					@if $facets-shared-slider-values-position == top {
+						order: -1;
+						margin: 0 0 $facets-shared-slider-spacing 0;
+					} @else {
+						margin: $facets-shared-slider-spacing 0 0 0;
+					}
+				}
+				.ss__facet-slider__label {
+					&:after {
+						padding: 0 5px;
+						@if $facets-shared-slider-values-align == sides {
+							display: none;
+						}
+					}
+					@if $facets-shared-slider-values-align == sides {
+						& ~ .ss__facet-slider__label {
+							margin-left: auto;
+						}
+					}
+				}
+			};
+		}
+	}

@@ -1,0 +1,29 @@
+// DO NOT REMOVE!!
+// This file used to add sass variables into components
+@use './_theme.scss';
+
+// Use sass:meta and sass:map for exports
+@use "sass:meta";
+@use "sass:map";
+
+// Map module-variables from theme file
+$exported: meta.module-variables(theme);
+
+:export {
+	styleShared          : map.get($exported, 'style-shared');
+	styleAutocomplete    : map.get($exported, 'style-autocomplete');
+	styleComponents      : map.get($exported, 'style-components');
+	styleRecommendations : map.get($exported, 'style-recommendations');
+	styleSearch          : map.get($exported, 'style-search');
+	bp01                 : map.get($exported, 'bp-01');
+	bp02                 : map.get($exported, 'bp-02');
+	bp03                 : map.get($exported, 'bp-03');
+	bp04                 : map.get($exported, 'bp-04');
+	columnsHidden        : map.get($exported, 'columns-hidden');
+	columnsSidebar       : map.get($exported, 'columns-sidebar');
+	columnsContent       : map.get($exported, 'columns-content');
+	slideoutWidth        : map.get($exported, 'slideout-width');
+	slideoutDirection    : map.get($exported, 'slideout-direction');
+	sliderTicks          : map.get($exported, 'slider-ticks');
+	sliderStickyHandles  : map.get($exported, 'slider-sticky-handles');	
+}

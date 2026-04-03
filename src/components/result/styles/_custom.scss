@@ -1,0 +1,202 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_custom' as style;
+
+//// RESULT
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$result-color-01: false; // name
+
+	// CONFIGURATION
+
+	$result-on: false; // enable result
+	$result-image-height: false; // fluid should use percentage, fixed should use pixels
+	$result-compact-image-height: 125%; // fluid should use percentage, fixed should use pixels (relates to compact grid layout)
+	
+	// CSS BLOCK
+
+	@if $result-on == true {
+		.ss__theme .ss__results {
+			.ss__result--grid.ss__result--item {
+				text-align: center;
+				&.ss__result--grid-compact {
+					.ss__result__inner {
+						@include mixins.gap(10px);
+						.ss__result__image {
+							@if $result-compact-image-height {
+								.ss__image {
+									@include mixins.if-exists((padding-bottom: $result-compact-image-height));
+								}
+							}
+						}
+						.ss__result__details {
+							& > p, & > div {
+								margin: 0 0 5px 0;
+								&:last-child {
+									margin-bottom: 0;
+								}
+							}
+							.ss__result__name a, .ss__result__pricing span {
+								font-size: 14px;
+							}
+							.ss__result__name a {
+								@include mixins.line-clamp(2);
+}
+						}
+					}
+				}
+				.ss__result__inner {
+					@include mixins.flex-layout;
+					@include mixins.gap(10px);
+					& > * {
+						min-width: 1px;
+						@include mixins.flex(1 1 100%);
+					}
+				}
+				.ss__result__image {
+					margin: 0;
+					.ss__image {
+						@include mixins.if-exists((padding-bottom: $result-image-height));
+					}
+				}
+				.ss__result__details {
+					& > p, & > div {
+						margin: 0 0 10px 0;
+						&:last-child {
+							margin-bottom: 0;
+						}
+					}
+					.ss__result__name {
+						a {
+							@include mixins.if-exists((color: $result-color-01));
+						}
+					}
+					.ss__result__pricing {}
+				}
+			}
+		}
+	}
+
+//// RESULT - BREAKPOINT 1
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$result-bp-01-on: false; // enable breakpoint
+	$result-bp-01-respond-at: theme.$bp-01;
+	$result-bp-01-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $result-bp-01-on == true {
+		@include mixins.respond-min($result-bp-01-respond-at) {
+			.ss__theme .ss__results {
+				.ss__result--grid.ss__result--item {
+					.ss__result__inner {}
+					.ss__result__image {
+						.ss__image {
+							@include mixins.if-exists((padding-bottom: $result-bp-01-image-height));
+						}
+					}
+					.ss__result__details {
+						.ss__result__name {}
+						.ss__result__pricing {}
+					}
+				}
+			}
+		}
+	}
+
+//// RESULT - BREAKPOINT 2
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$result-bp-02-on: false; // enable breakpoint
+	$result-bp-02-respond-at: theme.$bp-02;
+	$result-bp-02-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $result-bp-02-on == true {
+		@include mixins.respond-min($result-bp-02-respond-at) {
+			.ss__theme .ss__results {
+				.ss__result--grid.ss__result--item {
+					.ss__result__inner {}
+					.ss__result__image {
+						.ss__image {
+							@include mixins.if-exists((padding-bottom: $result-bp-02-image-height));
+						}
+					}
+					.ss__result__details {
+						.ss__result__name {}
+						.ss__result__pricing {}
+					}
+				}
+			}
+		}
+	}
+
+//// RESULT - BREAKPOINT 3
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$result-bp-03-on: false; // enable breakpoint
+	$result-bp-03-respond-at: theme.$bp-03;
+	$result-bp-03-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $result-bp-03-on == true {
+		@include mixins.respond-min($result-bp-03-respond-at) {
+			.ss__theme .ss__results {
+				.ss__result--grid.ss__result--item {
+					.ss__result__inner {}
+					.ss__result__image {
+						.ss__image {
+							@include mixins.if-exists((padding-bottom: $result-bp-03-image-height));
+						}
+					}
+					.ss__result__details {
+						.ss__result__name {}
+						.ss__result__pricing {}
+					}
+				}
+			}
+		}
+	}
+
+//// RESULT - BREAKPOINT 4
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$result-bp-04-on: false; // enable breakpoint
+	$result-bp-04-respond-at: theme.$bp-04;
+	$result-bp-04-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $result-bp-04-on == true {
+		@include mixins.respond-min($result-bp-04-respond-at) {
+			.ss__theme .ss__results {
+				.ss__result--grid.ss__result--item {
+					.ss__result__inner {}
+					.ss__result__image {
+						.ss__image {
+							@include mixins.if-exists((padding-bottom: $result-bp-04-image-height));
+						}
+					}
+					.ss__result__details {
+						.ss__result__name {}
+						.ss__result__pricing {}
+					}
+				}
+			}
+		}
+	}

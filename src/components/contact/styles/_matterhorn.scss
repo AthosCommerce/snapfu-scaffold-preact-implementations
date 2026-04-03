@@ -1,0 +1,192 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_matterhorn' as style;
+
+//// CONTACT
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$contact-color-01: style.$color-08; // link
+	$contact-color-02: style.$color-05; // link hover
+	$contact-color-03: false; // title
+
+	// CONFIGURATION
+
+	$contact-on: true; // enable contact
+	$contact-spacing: 20px; // spacing for details
+	$contact-title-font-size: 16px; // font size for title
+	$contact-title-spacing: 10px; // spacing for title
+
+	// CSS BLOCK
+
+	@if $contact-on == true {
+		.ss__theme .ss__contact {
+			a {
+				@include mixins.if-exists((color: $contact-color-01));
+				&:hover {
+					@include mixins.if-exists((color: $contact-color-02));
+				}
+			}
+			.ss__title {
+				@include mixins.if-exists((
+					font-size: $contact-title-font-size,
+					color: $contact-color-03
+				));
+				@if $contact-title-spacing != false {
+					margin: 0 0 $contact-title-spacing 0;
+				}
+			}
+			.ss__contact__cant-find, .ss__contact__detail {
+				@if $contact-spacing != false {
+					margin: 0 0 $contact-spacing 0;
+					&:last-child {
+						margin-bottom: 0;
+					}
+				}
+			}
+			.ss__contact__detail {}
+		}
+	}
+
+//// CONTACT - BREAKPOINT 1
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$contact-bp-01-on: false; // enable breakpoint
+	$contact-bp-01-respond-at: theme.$bp-01;
+	$contact-bp-01-spacing: false; // spacing for details
+	$contact-bp-01-title-font-size: false; // font size for title
+	$contact-bp-01-title-spacing: false; // spacing for title
+
+	// CSS BLOCK
+
+	@if $contact-bp-01-on == true {
+		@include mixins.respond-min($contact-bp-01-respond-at) {
+			.ss__theme .ss__contact {
+				.ss__title {
+					@include mixins.if-exists((font-size: $contact-bp-01-title-font-size));
+					@if $contact-bp-01-title-spacing != false {
+						margin: 0 0 $contact-bp-01-title-spacing 0;
+					}
+				}
+				.ss__contact__cant-find, .ss__contact__detail {
+					@if $contact-bp-01-spacing != false {
+						margin: 0 0 $contact-bp-01-spacing 0;
+						&:last-child {
+							margin-bottom: 0;
+						}
+					}
+				}
+				.ss__contact__detail {}
+			}
+		}
+	}
+	
+//// CONTACT - BREAKPOINT 2
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$contact-bp-02-on: false; // enable breakpoint
+	$contact-bp-02-respond-at: theme.$bp-02;
+	$contact-bp-02-spacing: false; // spacing for details
+	$contact-bp-02-title-font-size: false; // font size for title
+	$contact-bp-02-title-spacing: false; // spacing for title
+
+	// CSS BLOCK
+
+	@if $contact-bp-02-on == true {
+		@include mixins.respond-min($contact-bp-02-respond-at) {
+			.ss__theme .ss__contact {
+				.ss__title {
+					@include mixins.if-exists((font-size: $contact-bp-02-title-font-size));
+					@if $contact-bp-02-title-spacing != false {
+						margin: 0 0 $contact-bp-02-title-spacing 0;
+					}
+				}
+				.ss__contact__cant-find, .ss__contact__detail {
+					@if $contact-bp-02-spacing != false {
+						margin: 0 0 $contact-bp-02-spacing 0;
+						&:last-child {
+							margin-bottom: 0;
+						}
+					}
+				}
+				.ss__contact__detail {}
+			}
+		}
+	}
+	
+//// CONTACT - BREAKPOINT 3
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$contact-bp-03-on: false; // enable breakpoint
+	$contact-bp-03-respond-at: theme.$bp-03;
+	$contact-bp-03-spacing: false; // spacing for details
+	$contact-bp-03-title-font-size: false; // font size for title
+	$contact-bp-03-title-spacing: false; // spacing for title
+
+	// CSS BLOCK
+
+	@if $contact-bp-03-on == true {
+		@include mixins.respond-min($contact-bp-03-respond-at) {
+			.ss__theme .ss__contact {
+				.ss__title {
+					@include mixins.if-exists((font-size: $contact-bp-03-title-font-size));
+					@if $contact-bp-03-title-spacing != false {
+						margin: 0 0 $contact-bp-03-title-spacing 0;
+					}
+				}
+				.ss__contact__cant-find, .ss__contact__detail {
+					@if $contact-bp-03-spacing != false {
+						margin: 0 0 $contact-bp-03-spacing 0;
+						&:last-child {
+							margin-bottom: 0;
+						}
+					}
+				}
+				.ss__contact__detail {}
+			}
+		}
+	}
+	
+//// CONTACT - BREAKPOINT 4
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$contact-bp-04-on: false; // enable breakpoint
+	$contact-bp-04-respond-at: theme.$bp-04;
+	$contact-bp-04-spacing: false; // spacing for details
+	$contact-bp-04-title-font-size: false; // font size for title
+	$contact-bp-04-title-spacing: false; // spacing for title
+
+	// CSS BLOCK
+
+	@if $contact-bp-04-on == true {
+		@include mixins.respond-min($contact-bp-04-respond-at) {
+			.ss__theme .ss__contact {
+				.ss__title {
+					@include mixins.if-exists((font-size: $contact-bp-04-title-font-size));
+					@if $contact-bp-04-title-spacing != false {
+						margin: 0 0 $contact-bp-04-title-spacing 0;
+					}
+				}
+				.ss__contact__cant-find, .ss__contact__detail {
+					@if $contact-bp-04-spacing != false {
+						margin: 0 0 $contact-bp-04-spacing 0;
+						&:last-child {
+							margin-bottom: 0;
+						}
+					}
+				}
+				.ss__contact__detail {}
+			}
+		}
+	}	

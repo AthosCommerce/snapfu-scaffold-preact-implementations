@@ -1,0 +1,110 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_matterhorn' as style;
+
+//// BADGES - MANAGED
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$badges-managed-color-01: false; // add semi-transparent border color to badges (ex: rgba(0, 0, 0, 0.25))
+
+	// CONFIGURATION
+
+	$badges-managed-on: true; // enable badges
+	$badges-managed-spacing: 10px; // spacing around badges
+	$badges-managed-pill-border-radius: false; // adjust border radius value for pill badges
+	$badges-managed-overlay-top: false; // adjust top position for overlay badge
+	$badges-managed-overlay-bottom: auto; // adjust bottom position for overlay badge
+	$badges-managed-overlay-left-spacing: false; // adjust left spacing for left overlay badge
+	$badges-managed-overlay-right-spacing: false; // adjust right spacing for right overlay badge
+	$badges-managed-overlay-font-size: 12px; // font size for overlay badge
+	$badges-managed-callout-min-height: false; // min height for callout badges
+	$badges-managed-callout-align: left; // alignment for callout badge
+	$badges-managed-callout-font-size: 12px; // font size for callout badge
+
+	// LOGIC VARIABLES (leave as is)
+
+	$var-badges-managed-spacing-half: if($badges-managed-spacing != false, calc($badges-managed-spacing / 2), 0);
+
+	// CSS BLOCK
+
+	@if $badges-managed-on == true {
+		.ss__theme {
+			.ss__overlay-badge .ss__overlay-badge__grid-wrapper .ss__overlay-badge__grid-wrapper__slot, .ss__callout-badge {
+				& > div {
+					@if $badges-managed-spacing != false {
+						padding: $var-badges-managed-spacing-half $badges-managed-spacing;
+					}
+					@if $badges-managed-color-01 != false {
+						border: 1px solid $badges-managed-color-01;
+					}
+				}
+				.ss__badge-pill {
+					@if $badges-managed-pill-border-radius != false {
+						@include mixins.border-radius($badges-managed-pill-border-radius);
+					}
+				}
+			}
+			.ss__overlay-badge {
+				.ss__overlay-badge__grid-wrapper {
+					z-index: 1;
+					@if $badges-managed-spacing != false {
+						@include mixins.gap($badges-managed-spacing);
+					}
+					@include mixins.if-exists((
+						top: $badges-managed-overlay-top,
+						bottom: $badges-managed-overlay-bottom
+					));
+					.ss__overlay-badge__grid-wrapper__slot {
+						@if $badges-managed-spacing != false {
+							@include mixins.gap($var-badges-managed-spacing-half);
+						}
+						&:empty {
+							display: none;
+						}
+						& > div {
+							line-height: 1;
+							span {
+								@include mixins.if-exists((font-size: $badges-managed-overlay-font-size));
+							}
+						}
+					}
+					.ss__overlay-badge__grid-wrapper__slot--left {
+						@include mixins.if-exists((padding-left: $badges-managed-overlay-left-spacing));
+					}
+					.ss__overlay-badge__grid-wrapper__slot--right {
+						@include mixins.if-exists((padding-right: $badges-managed-overlay-right-spacing));
+					}
+				}
+			}
+			.ss__callout-badge {
+				@if $badges-managed-spacing != false {
+					@include mixins.gap($badges-managed-spacing);
+				}
+				@include mixins.if-exists((min-height: $badges-managed-callout-min-height));
+				@if $badges-managed-callout-align != false {
+					@if $badges-managed-callout-align == left {
+						@include mixins.flex-parent(justify-content, flex-start);
+					}
+					@if $badges-managed-callout-align == right {
+						@include mixins.flex-parent(justify-content, flex-end);
+					}
+				}
+				&:empty {
+					display: none;
+				}
+				& > div {
+					line-height: 1;
+					span {
+						@include mixins.if-exists((font-size: $badges-managed-callout-font-size));
+					}
+				}
+				.ss__badge-text {
+					padding: 0;
+				}
+			}
+		}
+	}

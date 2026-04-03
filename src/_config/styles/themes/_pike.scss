@@ -1,0 +1,47 @@
+// Use sass:color for color adjust
+@use "sass:color";
+
+//// COLORS
+//// --------------------------------------------------------------------------
+
+	$color-01: #ffffff; // base white: for autocomplete and text on dark background (slideout header)
+	$color-02: #f8f8f8; // lighter gray: active term background, dropdown, checkboxes
+	$color-03: #ebebeb; // light gray: borders for autocomplete, dropdown, checkboxes
+	$color-04: color.adjust($color-03, $lightness: -5%); // dark gray: active border for checkboxes, palette, etc.
+	$color-05: #515151; // darkest gray: main font color for p, div, and a tags
+	$color-06: #737373; // dark gray: msrp on pricing
+	$color-07: #1d4990; // alt color: for headers
+	$color-08: #00aeef; // alt color 2: for active selections such as dropdown, facets, buttons, etc.
+	$color-09: #2154a5; // custom color
+	$color-10: false; // custom color
+
+//// FONTS
+//// --------------------------------------------------------------------------
+
+	$font-family-01: 'Roboto', Helvetica, Arial; // main font family: used for most text elements
+	$font-family-02: 'Roboto', Helvetica, Arial; // header font family: used in header elements
+	$font-weight-01: 700; // main font weight: used for things like bold text and active selections
+	$font-weight-02: 700; // header font weight: used in header elements
+	$font-style: false; // font style: can be used in headers
+	$font-transform: false; // font transform: can be used in headers 
+
+//// ICONS
+//// --------------------------------------------------------------------------
+//// Gallery located here - https://athoscommerce.github.io/snap/packages/snap-preact/components/docs/?path=/story/atoms-icon--gallery
+
+	$icon-arrow-left: chevron-left;
+	$icon-arrow-right: chevron-right;
+	$icon-arrow-down: chevron-down;
+	$icon-arrow-up: chevron-up;
+	$icon-check: square;
+	$icon-close: close;
+	$icon-minus: minus;
+	$icon-plus: plus;
+	$icon-filter: filter;
+	$icon-sort: sort;
+
+//// MISCELLANEOUS
+//// --------------------------------------------------------------------------
+//// Extra settings for theme.
+
+	$miscellaneous-border-radius: false; // border-radius for checkboxes, grid, dropdowns, etc.

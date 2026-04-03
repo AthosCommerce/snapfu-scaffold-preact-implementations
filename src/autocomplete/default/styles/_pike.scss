@@ -1,0 +1,599 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_pike' as style;
+
+//// AUTOCOMPLETE
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$default-color-01: style.$color-01; // main background
+	$default-color-02: style.$color-03; // border around autocomplete
+	$default-color-03: style.$color-03; // borders between sections
+	$default-color-04: style.$color-02; // scrollbar top background
+	$default-color-05: style.$color-03; // scrollbar bottom background
+
+	// CONFIGURATION
+
+	$default-on: true; // enable autocomplete
+	$default-top: 50px; // ac top position
+	$default-left: 0; // ac left position
+	$default-right: 0; // ac right position
+	$default-radius: false; // value for border radius on autocomplete
+	$default-width: false; // width of ac container
+	$default-scrollbar-overflow: 54vh; // add max-height to enable scrollbar (vh units work well)
+	$default-scrollbar-width: 8px; // scrollbar width
+	$default-scrollbar-location: '.ss__autocomplete__content__results .ss__results'; // selector for overflow scroll ('&' for parent element)
+
+	// CSS BLOCK
+
+	@if $default-on == true {
+		.ss__autocomplete--target.ss__autocomplete--default {
+			@include mixins.position($type: absolute, $top: $default-top, $left: $default-left, $right: $default-right, $z: -1);
+			opacity: 0;
+			@include mixins.transition(opacity 0.10s ease);
+			.ss__autocomplete {
+				@include mixins.flex-layout;
+				@include mixins.gap(20px);
+				margin: 0 auto;
+				padding: 20px;
+				@include mixins.if-exists((width: $default-width));
+				&.ss__autocomplete--overflow {
+					#{$default-scrollbar-location} {
+						@if $default-scrollbar-overflow != false {
+							overflow-y: auto;
+							max-height: $default-scrollbar-overflow;
+						}
+						&::-webkit-scrollbar {
+							@include mixins.if-exists((width: $default-scrollbar-width));
+						}
+						&::-webkit-scrollbar-track {
+							@include mixins.if-exists((background-color: $default-color-04))
+						}
+						&::-webkit-scrollbar-thumb {
+							@include mixins.if-exists((background-color: $default-color-05));
+						}
+					}
+				}
+				& > div {
+					min-width: 1px;
+					@include mixins.flex(1 1 calc(100% + 40px));
+					padding: 0 20px;
+					margin: 0 -20px;
+					@if $default-color-03 != false {
+						padding-bottom: 20px;
+						border-bottom: 1px solid $default-color-03;
+						&:last-child {
+							padding-bottom: 0;
+							border-bottom-width: 0;
+						}
+					}
+				}
+			}
+		}
+		.ss__autocomplete--active {
+			.ss__autocomplete--target.ss__autocomplete--default {
+				z-index: 999999;
+				opacity: 1;
+				margin: 0 auto;
+				display: inline-block;
+				@include mixins.if-exists((background-color: $default-color-01));
+				@if $default-color-02 != false {
+					border: 1px solid $default-color-02;
+				}
+				@if $default-radius != false {
+					@include mixins.border-radius($default-radius);	
+				}
+				overflow: hidden;
+				&:empty {
+					display: none;
+				}
+			}
+		}
+	}
+
+//// AUTOCOMPLETE - TERMS
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$default-terms-color-01: style.$color-02; // background
+
+	// CSS BLOCK
+
+	@if $default-on == true {
+		.ss__autocomplete--target.ss__autocomplete--default .ss__autocomplete .ss__autocomplete__terms {
+			.ss__autocomplete__terms__suggestions {}
+			.ss__autocomplete__terms__trending {}
+			.ss__autocomplete__terms__history {}
+			.ss__autocomplete__title h5 {}
+			.ss__autocomplete__terms__options {
+				.ss__autocomplete__terms__option {}
+			}
+		}
+	}
+
+//// AUTOCOMPLETE - FACETS
+//// --------------------------------------------------------------------------
+
+	// CSS BLOCK
+
+	@if $default-on == true {
+		.ss__autocomplete--target.ss__autocomplete--default .ss__autocomplete.ss__autocomplete--no-facets .ss__autocomplete__facets {
+			display: none;
+		}
+		.ss__autocomplete--target.ss__autocomplete--default .ss__autocomplete .ss__autocomplete__facets {
+			.ss__facets {
+				.ss__facet {
+					.ss__facet__header {}
+					.ss__facet__options {
+						.ss__facet-list-options {}
+						.ss__grid {}
+						.ss__palette {}
+					}
+				}
+			}
+		}
+	}
+
+//// AUTOCOMPLETE - RESULTS
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$default-results-item-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $default-on == true {
+		.ss__autocomplete--target.ss__autocomplete--default .ss__autocomplete .ss__autocomplete__content__results {
+			&:after {
+				// note: pseudo element need to create spacing when there is overflow on results
+				content: '';
+				display: block;
+				height: 20px;
+				margin: 0 -20px;
+				background-color: $default-color-01;
+				position: relative;
+				z-index: 2;
+			}
+			.ss__autocomplete__title h5 {}
+			.ss__results {
+				.ss__result {
+					.ss__result__image-wrapper {
+						.ss__image {
+							@if $default-results-item-image-height != false {
+								padding-bottom: $default-results-item-image-height;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+//// AUTOCOMPLETE - SEE MORE RESULTS
+//// --------------------------------------------------------------------------
+
+	// CSS BLOCK
+
+	@if $default-on == true {
+		.ss__autocomplete--target.ss__autocomplete--default .ss__autocomplete .ss__autocomplete__content__info {
+			@if $default-color-02 != false {
+				margin: 0 -20px;
+				padding: 20px 20px 0 20px;
+				border-top: 1px solid $default-color-02;
+			}
+		}
+	}
+
+//// AUTOCOMPLETE - BREAKPOINT 1
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$default-bp-01-on: false; // enable breakpoint
+	$default-bp-01-respond-at: theme.$bp-01;
+	$default-bp-01-top: false; // ac top position
+	$default-bp-01-left: false; // ac left position
+	$default-bp-01-right: false; // ac right position
+	$default-bp-01-width: false; // width of ac container
+	$default-bp-01-scrollbar-overflow: false; // add max-height to enable scrollbar (vh units work well)
+	$default-bp-01-title-font-size: false; // font size for autocomplete headers
+	$default-bp-01-terms-font-size: false; // terms font size
+	$default-bp-01-results-item-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $default-bp-01-on == true {
+		@include mixins.respond-min($default-bp-01-respond-at) {
+			.ss__autocomplete--target.ss__autocomplete--default {
+				@include mixins.if-exists((
+					top: $default-bp-01-top,
+					left: $default-bp-01-left,
+					right: $default-bp-01-right
+				));
+				.ss__autocomplete {
+					@include mixins.if-exists((width: $default-bp-01-width));
+					@if $default-bp-01-scrollbar-overflow != false {
+						&.ss__autocomplete--overflow {
+							#{$default-scrollbar-location} {
+								@if $default-scrollbar-overflow == false {
+									overflow-y: auto;
+								}
+								max-height: $default-bp-01-scrollbar-overflow;
+							}
+						}
+					}
+					.ss__autocomplete__terms .ss__autocomplete__title h5, .ss__autocomplete__facets .ss__facets .ss__facet .ss__facet__header, .ss__autocomplete__content__results .ss__autocomplete__title h5, .ss__autocomplete__content__info a {
+						@include mixins.if-exists((font-size: $default-bp-01-title-font-size));
+					}
+					.ss__autocomplete__terms {
+						.ss__autocomplete__terms__suggestions {}
+						.ss__autocomplete__terms__trending {}
+						.ss__autocomplete__terms__history {}
+						.ss__autocomplete__title h5 {}
+						.ss__autocomplete__terms__options {
+							.ss__autocomplete__terms__option {
+								a {
+									@include mixins.if-exists((font-size: $default-bp-01-terms-font-size));
+								}
+							}
+						}
+					}
+					.ss__autocomplete__facets {
+						.ss__facets {
+							.ss__facet {
+								.ss__facet__header {}
+								.ss__facet__options {
+									.ss__facet-list-options {}
+									.ss__grid {}
+									.ss__palette {}
+								}
+							}
+						}
+					}
+					.ss__autocomplete__content__results {
+						.ss__autocomplete__title h5 {}
+						.ss__results {
+							.ss__result {
+								.ss__result__image-wrapper .ss__image {
+									@if $default-bp-01-results-item-image-height != false {
+										padding-bottom: $default-bp-01-results-item-image-height;
+									}
+								}
+							}
+						}
+					}
+					.ss__autocomplete__content__info a {}
+				}
+			}
+			.ss__autocomplete--active {
+				.ss__autocomplete--target.ss__autocomplete--default {}
+			}
+		}
+	}
+
+//// AUTOCOMPLETE - BREAKPOINT 2
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$default-bp-02-on: true; // enable breakpoint
+	$default-bp-02-respond-at: theme.$bp-02;
+	$default-bp-02-top: false; // ac top position
+	$default-bp-02-left: auto; // ac left position
+	$default-bp-02-right: false; // ac right position
+	$default-bp-02-width: 600px; // width of ac container
+	$default-bp-02-scrollbar-overflow: false; // add max-height to enable scrollbar (vh units work well)
+	$default-bp-02-title-font-size: false; // font size for autocomplete headers
+	$default-bp-02-terms-font-size: false; // terms font size
+	$default-bp-02-results-item-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $default-bp-02-on == true {
+		@include mixins.respond-min($default-bp-02-respond-at) {
+			.ss__autocomplete--target.ss__autocomplete--default {
+				@include mixins.if-exists((
+					top: $default-bp-02-top,
+					left: $default-bp-02-left,
+					right: $default-bp-02-right
+				));
+				.ss__autocomplete {
+					@include mixins.if-exists((width: $default-bp-02-width));
+					@if $default-bp-02-scrollbar-overflow != false {
+						&.ss__autocomplete--overflow {
+							#{$default-scrollbar-location} {
+								@if $default-scrollbar-overflow == false and $default-bp-01-scrollbar-overflow == false {
+									overflow-y: auto;
+								}
+								max-height: $default-bp-02-scrollbar-overflow;
+							}
+						}
+					}
+					.ss__autocomplete__terms .ss__autocomplete__title h5, .ss__autocomplete__facets .ss__facets .ss__facet .ss__facet__header, .ss__autocomplete__content__results .ss__autocomplete__title h5, .ss__autocomplete__content__info a {
+						@include mixins.if-exists((font-size: $default-bp-02-title-font-size));
+					}
+					.ss__autocomplete__terms {
+						.ss__autocomplete__terms__suggestions {}
+						.ss__autocomplete__terms__trending {}
+						.ss__autocomplete__terms__history {}
+						.ss__autocomplete__title h5 {}
+						.ss__autocomplete__terms__options {
+							.ss__autocomplete__terms__option {
+								a {
+									@include mixins.if-exists((font-size: $default-bp-02-terms-font-size));
+								}
+							}
+						}
+					}
+					.ss__autocomplete__facets {
+						.ss__facets {
+							.ss__facet {
+								.ss__facet__header {}
+								.ss__facet__options {
+									.ss__facet-list-options {}
+									.ss__grid {}
+									.ss__palette {}
+								}
+							}
+						}
+					}
+					.ss__autocomplete__content__results {
+						.ss__autocomplete__title h5 {}
+						.ss__results {
+							.ss__result {
+								.ss__result__image-wrapper .ss__image {
+									@if $default-bp-02-results-item-image-height != false {
+										padding-bottom: $default-bp-02-results-item-image-height;
+									}
+								}
+							}
+						}
+					}
+					.ss__autocomplete__content__info a {}
+				}
+			}
+			.ss__autocomplete--active {
+				.ss__autocomplete--target.ss__autocomplete--default {}
+			}
+		}
+	}
+
+//// AUTOCOMPLETE - BREAKPOINT 3
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$default-bp-03-on: true; // enable breakpoint
+	$default-bp-03-respond-at: theme.$bp-03;
+	$default-bp-03-top: false; // ac top position
+	$default-bp-03-left: false; // ac left position
+	$default-bp-03-right: false; // ac right position
+	$default-bp-03-width: 700px; // width of ac container
+	$default-bp-03-scrollbar-overflow: false; // add max-height to enable scrollbar (vh units work well)
+	$default-bp-03-title-font-size: false; // font size for autocomplete headers
+	$default-bp-03-terms-font-size: false; // terms font size
+	$default-bp-03-facets-width: 200px; // width of facets
+	$default-bp-03-results-item-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $default-bp-03-on == true {
+		@include mixins.respond-min($default-bp-03-respond-at) {
+			.ss__autocomplete--target.ss__autocomplete--default {
+				@include mixins.if-exists((
+					top: $default-bp-03-top,
+					left: $default-bp-03-left,
+					right: $default-bp-03-right
+				));
+				.ss__autocomplete {
+					@include mixins.if-exists((width: $default-bp-03-width));
+					@if $default-bp-03-scrollbar-overflow != false {
+						&.ss__autocomplete--overflow {
+							#{$default-scrollbar-location} {
+								@if $default-scrollbar-overflow == false and $default-bp-01-scrollbar-overflow == false and $default-bp-02-scrollbar-overflow == false {
+									overflow-y: auto;
+								}
+								max-height: $default-bp-03-scrollbar-overflow;
+							}
+						}
+					}
+					.ss__autocomplete__terms .ss__autocomplete__title h5, .ss__autocomplete__facets .ss__facets .ss__facet .ss__facet__header, .ss__autocomplete__content__results .ss__autocomplete__title h5, .ss__autocomplete__content__info a {
+						@include mixins.if-exists((font-size: $default-bp-03-title-font-size));
+					}
+					@if $default-color-03 != false {
+						& > div:not(.ss__autocomplete__terms) {
+							&, &:last-child {
+								padding-bottom: 0;
+								border-bottom-width: 0;
+							}
+						}
+					}
+					.ss__autocomplete__terms {
+						.ss__autocomplete__terms__suggestions {}
+						.ss__autocomplete__terms__trending {}
+						.ss__autocomplete__terms__history {}
+						.ss__autocomplete__title h5 {}
+						.ss__autocomplete__terms__options {
+							.ss__autocomplete__terms__option {
+								a {
+									@include mixins.if-exists((font-size: $default-bp-03-terms-font-size));
+								}
+							}
+						}
+					}
+					.ss__autocomplete__facets {
+						@include mixins.flex(0 1 auto);
+						width: $default-bp-03-facets-width;
+						.ss__facets {
+							@include mixins.flex-flow(row wrap);
+							.ss__facet {
+								@include mixins.flex(1 1 100%);
+								.ss__facet__header {}
+								.ss__facet__options {
+									.ss__facet-list-options {}
+									.ss__grid {}
+									.ss__palette {}
+								}
+							}
+						}
+					}
+					.ss__autocomplete__content {
+						@include mixins.flex;
+					}
+					.ss__autocomplete__content__results {
+						.ss__autocomplete__title h5 {}
+						.ss__results {
+							.ss__result {
+								.ss__result__image-wrapper .ss__image {
+									@if $default-bp-03-results-item-image-height != false {
+										padding-bottom: $default-bp-03-results-item-image-height;
+									}
+								}
+							}
+						}
+					}
+					.ss__autocomplete__content__info {
+						@if $default-color-02 != false {
+							margin: 0;
+							padding: 0;
+							border-top: 0;
+						}
+					}
+				}
+			}
+			.ss__autocomplete--active {
+				.ss__autocomplete--target.ss__autocomplete--default {}
+			}
+		}
+	}
+
+//// AUTOCOMPLETE - BREAKPOINT 4
+//// --------------------------------------------------------------------------
+
+	// CONFIGURATION
+
+	$default-bp-04-on: true; // enable breakpoint
+	$default-bp-04-respond-at: theme.$bp-04;
+	$default-bp-04-top: false; // ac top position
+	$default-bp-04-left: false; // ac left position
+	$default-bp-04-right: false; // ac right position
+	$default-bp-04-width: 940px; // width of ac container
+	$default-bp-04-scrollbar-overflow: 60vh; // add max-height to enable scrollbar (vh units work well)
+	$default-bp-04-title-font-size: false; // font size for autocomplete headers
+	$default-bp-04-terms-top: false; // keep terms on top
+	$default-bp-04-terms-width: 220px; // width of terms
+	$default-bp-04-terms-font-size: false; // terms font size
+	$default-bp-04-facets-width: 220px; // width of facets
+	$default-bp-04-results-item-image-height: false; // fluid should use percentage, fixed should use pixels
+
+	// CSS BLOCK
+
+	@if $default-bp-04-on == true {
+		@include mixins.respond-min($default-bp-04-respond-at) {
+			.ss__autocomplete--target.ss__autocomplete--default {
+				@include mixins.if-exists((
+					top: $default-bp-04-top,
+					left: $default-bp-04-left,
+					right: $default-bp-04-right
+				));
+				.ss__autocomplete {
+					@include mixins.if-exists((width: $default-bp-04-width));
+					@if $default-bp-04-scrollbar-overflow != false {
+						&.ss__autocomplete--overflow {
+							#{$default-scrollbar-location} {
+								@if $default-scrollbar-overflow == false and $default-bp-01-scrollbar-overflow == false and $default-bp-02-scrollbar-overflow == false and $default-bp-03-scrollbar-overflow == false {
+									overflow-y: auto;
+								}
+								max-height: $default-bp-04-scrollbar-overflow;
+							}
+						}
+					}
+					.ss__autocomplete__terms .ss__autocomplete__title h5, .ss__autocomplete__facets .ss__facets .ss__facet .ss__facet__header, .ss__autocomplete__content__results .ss__autocomplete__title h5, .ss__autocomplete__content__info a {
+						@include mixins.if-exists((font-size: $default-bp-04-title-font-size));
+					}
+					.ss__autocomplete__terms {
+						@if $default-bp-04-terms-top == false {
+							width: $default-bp-04-terms-width;
+							@include mixins.flex(0 1 auto);
+							@include mixins.flex-flow(row wrap);
+							@include mixins.flex-parent(align-content, flex-start);
+							@if $default-color-03 != false {
+								padding-bottom: 0;
+								border-bottom-width: 0;
+							}
+							& > div {
+								@include mixins.flex(1 1 100%);
+							}
+						}
+						.ss__autocomplete__title h5 {
+							@if $default-bp-04-terms-top == false {
+								padding: 0;
+								margin: 0 0 10px 0;
+							}
+						}
+						.ss__autocomplete__terms__suggestions {}
+						.ss__autocomplete__terms__trending {}
+						.ss__autocomplete__terms__history {}
+						.ss__autocomplete__terms__options {
+							@if $default-bp-04-terms-top == false {
+								display: block;
+							}
+							.ss__autocomplete__terms__option {
+								a {
+									@if $default-bp-04-terms-top == false {
+										padding: 10px 0;
+										@include mixins.transition(padding-left 0.5s ease);
+									}
+									@include mixins.if-exists((font-size: $default-bp-04-terms-font-size));
+								}
+							}
+							.ss__autocomplete__terms__option--active {
+								a {
+									@if $default-bp-04-terms-top == false {
+										padding-left: 20px;
+										@if $default-terms-color-01 != false {
+											background-color: $default-terms-color-01;
+										}
+									}
+								}
+							}
+						}
+					}
+					.ss__autocomplete__facets {
+						@include mixins.if-exists((width: $default-bp-04-facets-width));
+						.ss__facets {
+							.ss__facet {
+								.ss__facet__header {}
+								.ss__facet__options {
+									.ss__facet-list-options {}
+									.ss__grid {}
+									.ss__palette {}
+								}
+							}
+						}
+					}
+					.ss__autocomplete__content__results {
+						.ss__autocomplete__title h5 {}
+						.ss__results {
+							.ss__result {
+								.ss__result__image-wrapper .ss__image {
+									@if $default-bp-04-results-item-image-height != false {
+										padding-bottom: $default-bp-04-results-item-image-height;
+									}
+								}
+							}
+						}
+					}
+					.ss__autocomplete__content__info a {}
+				}
+			}
+			.ss__autocomplete--active {
+				.ss__autocomplete--target.ss__autocomplete--default {}
+			}
+		}
+	}

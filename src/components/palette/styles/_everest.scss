@@ -1,0 +1,169 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_everest' as style;
+
+//// PALETTE
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$palette-color-01: style.$color-05; // default palette font
+	$palette-color-02: false; // border inner color
+
+	// CONFIGURATION
+
+	$palette-on: true; // enable palette
+	$palette-spacing: 5px; // spacing for palette elements
+	$palette-border-on: true; // adds border to inactive and active elements
+	$palette-border-brightness: false; // brightness of palette border
+	$palette-radius: if(style.$miscellaneous-border-radius != false, style.$miscellaneous-border-radius, false); // value for border radius on palette
+	$palette-grid-width: 48px; // grid palette width
+	$palette-grid-label-on: true; // enable grid palette label styles
+	$palette-grid-label-height: 12px; // font size and height for grid palette label
+	$palette-list-spacing: 34px; // spacing for list palette
+	$palette-list-align: left; // alignment for list palette
+	$palette-list-vertical: -4px; // top position of palette
+	$palette-list-horizontal: 0; // left or right position of palette
+	$palette-list-size: 24px; // size for list palette
+
+	// LOGIC VARIABLES (leave as is)
+
+	$var-palette-border-inner: if($palette-color-02 != false, $palette-color-02, #ffffff);
+	$var-palette-border-brightness: if($palette-border-brightness != false, $palette-border-brightness, 0.15);
+
+	// CSS BLOCK
+
+	@if $palette-on == true {
+		.ss__theme .ss__palette {
+			.ss__palette__options {
+				.ss__palette__option {
+					.ss__palette__action {
+						background-color: transparent;
+						.ss__palette__block {
+							position: relative;
+							.ss__palette__color {
+								&, &::before, &::after {
+									@include mixins.position-fill;
+									@if $palette-radius != false {
+										@include mixins.border-radius($palette-radius);
+									}
+								}
+								&:before, &:after {
+									content: '';
+									display: block;
+								}
+								&:before {
+									border: 5px solid $var-palette-border-inner;
+									margin: 1px;
+									opacity: 0;
+								}
+								&:after {
+									border: 1px solid #000000;
+									@if $palette-border-on == true {
+										opacity: $var-palette-border-brightness;
+									} @else {
+										opacity: 0;
+									}
+								}
+							}
+							@if $palette-border-on == false {
+								.ss__palette__color--has-borders, .ss__palette__color:not([style]) {
+									&:after {
+										opacity: $var-palette-border-brightness;
+									}
+								}
+							}
+						}
+						.ss__palette__label {
+							@include mixins.if-exists((color: $palette-color-01));
+						}
+					}
+				}
+				.ss__oos {
+					opacity: 0.50;
+					&, * {
+						cursor: not-allowed;
+					}
+				}
+				.ss__active {
+					.ss__palette__action {
+						.ss__palette__block {
+							.ss__palette__color {
+								&:before {
+									opacity: 1;
+								}
+								&:after {
+									opacity: calc($var-palette-border-brightness * 2);
+								}
+							}
+						}
+						.ss__palette__label {
+							@include mixins.if-exists((font-weight: style.$font-weight-01));
+							color: inherit;
+						}
+					}
+				}
+				.ss__palette__option--more {
+					.ss__palette__action {}
+				}
+			}
+		}
+		.ss__theme .ss__palette--grid {
+			.ss__palette__options {
+				@include mixins.grid-layout($palette-spacing, $palette-grid-width);
+				@include mixins.flex-parent(align-items, center);
+				.ss__palette__option {
+					.ss__palette__action {
+						display: block;
+						width: 100%;
+						.ss__palette__block {
+							height: 0;
+							padding-bottom: 100%;
+						}
+						.ss__palette__label {
+							@if $palette-grid-label-on == true {
+								display: block;
+								@include mixins.if-exists((
+									font-size: $palette-grid-label-height,
+									line-height: $palette-grid-label-height + 2
+								));
+								text-align: center;
+								@include mixins.ellipsis;
+								margin: 5px 0 0 0;
+							}
+						}
+					}
+				}
+			}
+		}
+		.ss__theme .ss__palette--list {
+			.ss__palette__options {
+				.ss__palette__option {
+					min-height: $palette-list-size;
+					padding: $palette-spacing 0 0 0;
+					margin: 0 0 $palette-spacing 0;
+					&:last-child {
+						margin-bottom: 0;
+					}
+					.ss__palette__action {
+						position: relative;
+						display: block;
+						padding-#{$palette-list-align}: $palette-list-spacing;
+						.ss__palette__block {
+							@include mixins.position($type: absolute, $top: $palette-list-vertical);
+							#{$palette-list-align}: $palette-list-horizontal;
+							@include mixins.icon-sizing($palette-list-size);
+							.ss__palette__color:before {
+								border-width: 3px;
+							}
+						}
+						.ss__palette__label {
+							@include mixins.inline-block(middle);
+						}
+					}
+				}
+			}
+		}
+	}

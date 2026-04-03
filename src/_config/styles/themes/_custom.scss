@@ -1,0 +1,47 @@
+// Use sass:color for color adjust
+@use "sass:color";
+
+//// COLORS
+//// --------------------------------------------------------------------------
+
+	$color-01: false; // base white: for autocomplete and text on dark background (slideout header)
+	$color-02: false; // lighter gray: active term background, dropdown, checkboxes
+	$color-03: false; // light gray: borders for autocomplete, dropdown, checkboxes
+	$color-04: false; // dark gray: active border for checkboxes, palette, etc.
+	$color-05: false; // darkest gray: main font color for p, div, and a tags
+	$color-06: false; // dark gray: msrp on pricing
+	$color-07: false; // alt color: for headers
+	$color-08: false; // alt color 2: for active selections such as dropdown, facets, buttons, etc.
+	$color-09: false; // custom color
+	$color-10: false; // custom color
+
+//// FONTS
+//// --------------------------------------------------------------------------
+
+	$font-family-01: false; // main font family: used for most text elements
+	$font-family-02: false; // header font family: used in header elements
+	$font-weight-01: false; // main font weight: used for things like bold text and active selections
+	$font-weight-02: false; // header font weight: used in header elements
+	$font-style: false; // font style: can be used in headers
+	$font-transform: false; // font transform: can be used in headers 
+
+//// ICONS
+//// --------------------------------------------------------------------------
+//// Gallery located here - https://athoscommerce.github.io/snap/packages/snap-preact/components/docs/?path=/story/atoms-icon--gallery
+
+	$icon-arrow-left: chevron-left;
+	$icon-arrow-right: chevron-right;
+	$icon-arrow-down: chevron-down;
+	$icon-arrow-up: chevron-up;
+	$icon-check: check;
+	$icon-close: close;
+	$icon-minus: minus;
+	$icon-plus: plus;
+	$icon-filter: filter;
+	$icon-sort: sort;
+
+//// MISCELLANEOUS
+//// --------------------------------------------------------------------------
+//// Extra settings for theme.
+
+	$miscellaneous-border-radius: false; // border-radius for checkboxes, grid, dropdowns, etc.

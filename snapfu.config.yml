@@ -1,0 +1,14 @@
+# scaffold descriptor file
+name: 'Implementations'
+framework: 'preact'
+
+# custom scaffold variables
+variables: [
+  {
+    name: 'theme',
+    message: 'Choose a theme:',
+    type: 'list',
+    choices: ['custom', 'everest', 'matterhorn', 'pike'],
+    default: 'custom',
+  }
+]

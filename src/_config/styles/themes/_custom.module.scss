@@ -1,0 +1,40 @@
+// DO NOT REMOVE!!
+// This file used to add sass variables into components
+// Note: To change theme, replace style in @use
+@use './_custom.scss';
+
+// Use sass:meta and sass:map for exports
+@use "sass:meta";
+@use "sass:map";
+
+// Map module-variables from theme file
+$exported: meta.module-variables(custom);
+
+:export {
+	color01    : map.get($exported, 'color-01');
+	color02    : map.get($exported, 'color-02');
+	color03    : map.get($exported, 'color-03');
+	color04    : map.get($exported, 'color-04');
+	color05    : map.get($exported, 'color-05');
+	color06    : map.get($exported, 'color-06');
+	color07    : map.get($exported, 'color-07');
+	color08    : map.get($exported, 'color-08');
+	color09    : map.get($exported, 'color-09');
+	color10    : map.get($exported, 'color-10');
+	family01   : map.get($exported, 'font-family-01');
+	family02   : map.get($exported, 'font-family-02');
+	weight01   : map.get($exported, 'font-weight-01');
+	weight02   : map.get($exported, 'font-weight-02');
+	style      : map.get($exported, 'font-style');
+	transform  : map.get($exported, 'font-transform');
+	arrowLeft  : map.get($exported, 'icon-arrow-left');
+	arrowRight : map.get($exported, 'icon-arrow-right');
+	arrowDown  : map.get($exported, 'icon-arrow-down');
+	arrowUp    : map.get($exported, 'icon-arrow-up');
+	check      : map.get($exported, 'icon-check');
+	close      : map.get($exported, 'icon-close');
+	minus      : map.get($exported, 'icon-minus');
+	plus       : map.get($exported, 'icon-plus');
+	filter      : map.get($exported, 'icon-filter');
+	sort       : map.get($exported, 'icon-sort');
+}

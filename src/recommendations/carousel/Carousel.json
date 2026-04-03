@@ -1,0 +1,58 @@
+{
+	"type": "snap/recommendation/default",
+	"name": "carousel",
+	"label": "Carousel",
+	"description": "Carousel recommendations template.",
+	"component": "Carousel",
+	"orientation": "horizontal",
+	"parameters": [
+		{
+			"name": "layout",
+			"label": "Layout",
+			"description": "For a smaller carousel, specify \"mini\". Leave blank for default. This is useful for compact designs, such as cart slideout menus.",
+			"defaultValue": ""
+		},
+		{
+			"name": "title",
+			"label": "Title",
+			"description": "Title for recommendations.",
+			"defaultValue": "Recommended For You"
+		},
+		{
+			"name": "titleLink",
+			"label": "Title Link",
+			"description": "Link for recommendations title. \"Title\" must be set.",
+			"defaultValue": ""
+		},
+		{
+			"name": "description",
+			"label": "Description",
+			"description": "Descriptive text that will appear under the title.",
+			"defaultValue": ""
+		},
+		{
+			"name": "perView",
+			"label": "Slides Per View",
+			"description": "Number of recommendations seen in desktop view.",
+			"defaultValue": "5"
+		},
+		{
+			"name": "perGroup",
+			"label": "Slides Per Group",
+			"description": "Number of recommendations to paginate by in desktop view.",
+			"defaultValue": "5"
+		},
+		{
+			"name": "rows",
+			"label": "Number of Rows",
+			"description": "Add a number to set recommendation results in a grid.",
+			"defaultValue": ""
+		},
+		{
+			"name": "limit",
+			"label": "Limit",
+			"description": "Limit the amount of recommendations displayed. The maximum amount and default is 20.",
+			"defaultValue": ""
+		}
+	]
+}

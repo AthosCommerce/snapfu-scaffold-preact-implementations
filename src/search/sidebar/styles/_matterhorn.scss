@@ -1,0 +1,22 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_matterhorn' as style;
+
+//// SIDEBAR
+//// --------------------------------------------------------------------------
+	
+	// CONFIGURATION
+
+	$sidebar-on: true; // enable sidebar
+
+	// CSS BLOCK
+
+	@if $sidebar-on == true {
+		.ss__loaded #athos-sidebar {
+			min-height: 1px;
+		}
+		#athos-sidebar {}
+		.ss__theme.ss__sidebar {}
+	}

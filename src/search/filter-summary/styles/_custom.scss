@@ -1,0 +1,155 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_custom' as style;
+
+//// FILTER SUMMARY
+//// --------------------------------------------------------------------------
+//// Note: If using this layout, "List Option" should probably be set to true in _config/styles/shared/_${style}.scss.
+
+	// COLORS
+
+	$summary-color-01: false; // title
+	$summary-color-02: false; // inline title color
+	$summary-color-03: false; // grid link
+	$summary-color-04: false; // grid background color
+	$summary-color-05: false; // grid border color
+	$summary-color-06: false; // grid icon color
+	$summary-color-07: false; // list link
+
+	// CONFIGURATION
+
+	$summary-on: false; // enable filter summary
+	$summary-grid-spacing: 10px; // spacing for summary item
+	$summary-grid-icon-size: 10px; // icon size
+	$summary-grid-icon-spacing: 30px; // spacing for icon
+	$summary-grid-icon-align: left; // icon alignment left or right
+	$summary-grid-icon-vertical: 10px; // adjust vertical position of icon
+	$summary-grid-icon-horizontal: 10px; // left or right
+
+	// LOGIC VARIABLES (leave as is)
+	
+	$var-summary-grid-spacing-half: calc($summary-grid-spacing / 2);
+
+	// CSS BLOCK
+
+	@if $summary-on {
+		.ss__theme .ss__filter-summary {
+			.ss__summary {
+				.ss__block__header {
+					.ss__title {
+						@include mixins.if-exists((color: $summary-color-01));
+					}
+				}
+				.ss__block__section {
+					.ss__list {
+						.ss__list__option .ss__list__link .ss__filter-summary__value, .ss__list__option--clear a {
+							font-weight: 400;
+						}
+						.ss__list__option {
+							.ss__title {
+								font-size: inherit;
+								margin: 0;
+								@include mixins.if-exists((color: $summary-color-02));
+							}
+						}
+						.ss__list__option--clear {}
+					}
+				}
+			}
+			&.ss__filter-summary--inline {
+				.ss__summary {
+					margin: 0 0 20px 0;
+					.ss__block__section {
+						.ss__list {}
+					}
+				}
+			}
+		}
+		.ss__theme .ss__filter-summary--grid {
+			.ss__summary {
+				.ss__block__section {
+					.ss__list {
+						@include mixins.flex-layout((align-items: center));
+						@include mixins.gap($summary-grid-spacing);
+						.ss__list__option {
+							&, &:last-child {
+								margin: 0;
+							}
+							.ss__list__link {
+								position: relative;
+								display: block;
+								padding: $var-summary-grid-spacing-half $summary-grid-spacing;
+								padding-#{$summary-grid-icon-align}: $summary-grid-icon-spacing;
+								@include mixins.if-exists((
+									color: $summary-color-03,
+									background-color: $summary-color-04
+								));
+								@if $summary-color-05 != false {
+									border: 1px solid $summary-color-05;
+								}
+								@if style.$miscellaneous-border-radius {
+									@include mixins.border-radius(style.$miscellaneous-border-radius);
+								}
+								.ss__icon__wrapper {
+									@include mixins.position($type: absolute, $top: $summary-grid-icon-vertical);
+									#{$summary-grid-icon-align}: $summary-grid-icon-horizontal;
+									@include mixins.icon-sizing($summary-grid-icon-size);
+									.ss__icon {
+										@include mixins.if-exists((fill: $summary-color-06));
+									}
+								}
+								.ss__filter-summary__label {
+									@include mixins.if-exists((font-weight: style.$font-weight-01));
+								}
+								.ss__filter-summary__value {}
+							}
+						}
+						.ss__list__option--clear {}
+					}
+				}
+			}
+			&.ss__filter-summary--inline {
+				.ss__summary {
+					.ss__block__section {
+						.ss__list {}
+					}
+				}
+			}
+		}
+		.ss__theme .ss__filter-summary--list {
+			.ss__summary {
+				.ss__block__section {
+					.ss__list {
+						.ss__list__option {
+							.ss__list__link {
+								@include mixins.if-exists((color: $summary-color-07));
+								.ss__filter-summary__label {
+									@include mixins.if-exists((font-weight: style.$font-weight-01));
+								}
+								.ss__filter-summary__value {}
+							}
+						}
+						.ss__list__option--clear {}
+					}
+				}
+			}
+			&.ss__filter-summary--inline {
+				.ss__summary {
+					.ss__block__section {
+						.ss__list {
+							@include mixins.flex-layout((align-items: center));
+							@include mixins.gap($summary-grid-spacing);
+							.ss__list__option {
+								margin: 0;
+								.ss__list__link .ss__checkbox__icon {
+									top: 2px;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}

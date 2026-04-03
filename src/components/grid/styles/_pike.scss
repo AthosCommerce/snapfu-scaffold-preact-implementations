@@ -1,0 +1,99 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_pike' as style;
+
+//// GRID
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$grid-color-01: style.$color-02; // default grid background
+	$grid-color-02: style.$color-03; // default grid border
+	$grid-color-03: style.$color-05; // default grid font
+	$grid-color-04: style.$color-08; // active grid background
+	$grid-color-05: style.$color-08; // active grid border
+	$grid-color-06: style.$color-01; // active grid font color
+
+	// CONFIGURATION
+
+	$grid-on: true; // enable grid
+	$grid-width: 48px; // grid width
+	$grid-spacing: 5px; // padding for grid label
+	$grid-label-height: 12px; // font size and height for grid label	
+
+	// CSS BLOCK
+
+	@if $grid-on == true {
+		.ss__theme .ss__grid {
+			.ss__grid__options {
+				@include mixins.grid-layout($grid-spacing, $grid-width);
+				@include mixins.flex-parent(align-items, center);
+				.ss__grid__option {
+					.ss__grid__action {
+						display: block;
+						position: relative;
+						@include mixins.sizing(100%, 0);
+						padding-bottom: 100%;
+						.ss__grid__block, .ss__grid__label {
+							position: absolute;
+							@include mixins.position($left: 0, $right: 0);
+						}
+						.ss__grid__block {
+							@include mixins.position($top: 0, $bottom: 0, $z: 1);
+							@include mixins.if-exists((
+								background-color: $grid-color-01
+							));
+							@if $grid-color-02 != false {
+								border: 1px solid $grid-color-02;
+							} @else {
+								border: 1px solid transparent;
+							}
+							@if style.$miscellaneous-border-radius {
+								@include mixins.border-radius(style.$miscellaneous-border-radius);
+							}
+						}
+						.ss__grid__label {
+							@include mixins.position($top: 50%, $z: 2);
+							margin: auto;
+							@include mixins.transform(translateY(-50%));
+							max-width: calc(100% - #{($grid-spacing * 2)});
+							max-height: calc(100% - #{($grid-spacing * 2)});
+							overflow: hidden;
+							text-align: center;
+							@include mixins.if-exists((
+								color: $grid-color-03,
+								font-size: $grid-label-height,
+								line-height: $grid-label-height + 2
+							));
+						}
+					}
+				}
+				.ss__oos {
+					opacity: 0.50;
+					&, * {
+						cursor: not-allowed;
+					}
+				}
+				.ss__active {
+					.ss__grid__action {
+						.ss__grid__block {
+							@include mixins.if-exists((
+								background-color: $grid-color-04
+							));
+							@if $grid-color-05 != false {
+								border: 1px solid $grid-color-05;
+							}
+						}
+						.ss__grid__label {
+							@include mixins.if-exists((
+								font-weight: style.$font-weight-01,
+								color: $grid-color-06
+							));
+						}
+					}
+				}
+			}
+		}
+	}

@@ -1,0 +1,39 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_custom' as style;
+
+//// HEADER
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$header-color-01: false; // query
+	$header-color-02: false; // original query and did you mean link
+
+	// CONFIGURATION
+
+	$header-on: false; // enable header
+
+	// CSS BLOCK
+
+	@if $header-on == true {
+		.ss__theme.ss__header {
+			margin: 0 0 30px 0;
+			.ss__title {
+				margin: 0;
+				&.ss__title--has-results {}
+				&.ss__title--no-results {}
+				.ss__query {
+					@include mixins.if-exists((color: $header-color-01));
+				}
+			}
+			.ss__oq, .ss__did-you-mean {
+				margin: 10px 0 0 0;
+			}
+			.ss__oq .ss__oq__link, .ss__did-you-mean .ss__did-you-mean__link {
+				@include mixins.if-exists((color: $header-color-02));
+			}
+		}
+	}

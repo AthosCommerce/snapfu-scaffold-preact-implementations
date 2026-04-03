@@ -1,0 +1,98 @@
+// use theme and variables
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/themes/_theme';
+@use '../../../_config/styles/themes/_everest' as style;
+
+//// DROPDOWN MENUS
+//// --------------------------------------------------------------------------
+
+	// COLORS
+
+	$dropdown-color-01: style.$color-02; // button background
+	$dropdown-color-02: style.$color-03; // button border
+	$dropdown-color-03: false; // button font
+	$dropdown-color-04: style.$color-02; // dropdown background
+	$dropdown-color-05: style.$color-03; // dropdown border
+	$dropdown-color-06: false; // icon color
+
+	// CONFIGURATION
+
+	$dropdown-on: true; // enable dropdown
+	$dropdown-button-height: 35px; // height for the visible element
+	$dropdown-spacing: 10px; // spacing that controls padding and alignment of dropdown icon
+	$dropdown-icon-size: false; // icon size
+	$dropdown-icon-align: right; // left or right
+	$dropdown-content-spacing: 5px; // gap between dropdown (in px, em, %, etc)
+
+	// CSS BLOCK
+
+	@if $dropdown-on == true {
+		.ss__theme {
+			.ss__dropdown.ss__dropdown--theme {
+				&.ss__dropdown--open {
+					.ss__dropdown__button .ss__icon__wrapper {
+						@include mixins.transform(rotate(180deg));
+					}
+				}
+				.ss__dropdown__button, .ss__dropdown__content {
+					@if $dropdown-color-01 != false and $dropdown-color-01 == $dropdown-color-04 {
+						background: $dropdown-color-01;
+					}
+					@if $dropdown-color-02 != false and $dropdown-color-02 == $dropdown-color-05 {
+						border: 1px solid $dropdown-color-02;
+					}
+					@if style.$miscellaneous-border-radius {
+						@include mixins.border-radius(style.$miscellaneous-border-radius);
+					}
+				}
+				.ss__dropdown__button {
+					@include mixins.flex-layout((flex-flow: row nowrap, align-items: center));
+					@include mixins.gap($dropdown-spacing);
+					padding: 0 $dropdown-spacing;
+					@if $dropdown-color-01 != false and $dropdown-color-01 != $dropdown-color-04 {
+						background: $dropdown-color-01;
+					}
+					@if $dropdown-color-02 != false and $dropdown-color-02 != $dropdown-color-05 {
+						border: 1px solid $dropdown-color-02;
+					}
+					@if $dropdown-button-height != false {
+						height: $dropdown-button-height;
+						line-height: $dropdown-button-height;
+					}
+					.ss__dropdown__label {
+						@include mixins.if-exists((color: $dropdown-color-03));
+						@include mixins.ellipsis;
+					}
+					.ss__icon__wrapper {
+						@include mixins.icon-align($dropdown-icon-align);
+						@include mixins.transition(transform ease 0.5s);
+						@include mixins.icon-sizing($dropdown-icon-size);
+						.ss__icon {
+							@include mixins.if-exists((fill: $dropdown-color-06));
+						}
+					}
+				}
+				.ss__dropdown__content {
+					@if $dropdown-color-04 != false and $dropdown-color-01 != $dropdown-color-04 {
+						background: $dropdown-color-04;
+					}
+					@if $dropdown-color-05 != false and $dropdown-color-02 != $dropdown-color-05 {
+						border: 1px solid $dropdown-color-05;
+					}
+					padding: $dropdown-spacing;
+					@include mixins.if-exists((margin-top: $dropdown-content-spacing));
+					right: 0;
+					z-index: 3;
+					min-width: 1px;
+					@include mixins.transition(opacity 0.5s ease);
+					.ss__list {
+						.ss__list__option {}
+						.ss__active {
+							.ss__list__link {}
+						}
+					}
+				}
+			}
+		}
+	}
