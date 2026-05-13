@@ -29,12 +29,15 @@
 			"all"
 		],
 		"tags": [],
-		"version": "1.1.5",
+		"version": "1.5.0",
 		"scaffold": "snapfu-scaffold-preact-implementations"
 	},
 	"prettier": "@searchspring/prettier",
 	"dependencies": {
-		"@athoscommerce/snap-preact": "1.1.5"
+		"@athoscommerce/snap-preact": "1.5.0",
+		"mobx": "6.15.1",
+		"mobx-react-lite": "4.1.1",
+		"preact": "10.28.4"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.21.4",
